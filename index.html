@@ -205,6 +205,36 @@ body{padding:0}
   .alert,.hero-grid{grid-template-columns:1fr}
 }
 
+
+/* V10 — minimal focused R&D home */
+.home-focus-grid{display:grid;grid-template-columns:1fr 1.15fr;gap:14px;margin-top:18px}
+.home-stage-card,.home-delivery-card,.home-section{padding:22px}
+.home-stage-card h2,.home-delivery-card h2,.home-section h2{margin-top:8px}
+.stage-path{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:20px 0 16px;font-size:11px;color:#777}
+.stage-path span{padding:7px 9px;border:1px solid var(--line);border-radius:999px}
+.stage-path span:nth-child(even){padding:0;border:0}
+.stage-path .stage-current{background:#f1f1ef;color:#111;border-color:#f1f1ef;font-weight:700}
+.home-note{border-top:1px solid var(--line);padding-top:14px;font-size:11px;color:var(--muted)}
+.deliver-row{display:grid;grid-template-columns:28px 1fr;gap:10px;padding:11px 0;border-bottom:1px solid var(--line)}
+.deliver-row:last-child{border-bottom:0}
+.deliver-row>span{font:700 8px "Space Mono";color:#777;padding-top:2px}
+.deliver-row b{display:block;font-size:11px}
+.deliver-row small{display:block;color:var(--muted);font-size:9px;margin-top:3px;line-height:1.45}
+.home-section{margin-top:14px}
+.owner-table{margin-top:14px;border-top:1px solid var(--line)}
+.owner-row{display:grid;grid-template-columns:120px 1fr 110px;gap:14px;align-items:center;padding:12px 0;border-bottom:1px solid var(--line);font-size:11px}
+.owner-row span{color:var(--muted)}
+.owner-row em,.pending-row em{font:700 7px "Space Mono";font-style:normal;justify-self:end;border:1px solid #3a3a3a;border-radius:999px;padding:5px 7px;color:#bdbdb8;white-space:nowrap}
+.home-bottom-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:14px}
+.pending-row{display:grid;grid-template-columns:18px 1fr auto;gap:9px;align-items:center;padding:11px 0;border-bottom:1px solid var(--line);font-size:11px}
+.pending-row>span{color:#777}
+.home-links{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px}
+@media(max-width:900px){
+ .home-focus-grid,.home-bottom-grid{grid-template-columns:1fr}
+ .owner-row{grid-template-columns:90px 1fr}
+ .owner-row em{grid-column:2;justify-self:start}
+}
+
 </style>
 </head>
 <body>
@@ -212,79 +242,73 @@ body{padding:0}
 <header class="top">
  <div class="logo">Universal Limbs</div>
  <nav class="nav internal-only">
-  <button class="active" onclick="showPage('home',this)">Home</button><button onclick="showPage('timeline',this)">Timeline</button><button onclick="showPage('tasks',this)">Tasks</button><button onclick="showPage('team',this)">Team</button><button onclick="showPage('files',this)">Files</button><button onclick="showPage('workflow',this)">Workflow</button><button onclick="showPage('budget',this)">Budget</button>
+  <button class="active" onclick="showPage('home',this)">Home</button>
+  <button onclick="showPage('tasks',this)">Tasks</button>
+  <button onclick="showPage('files',this)">Files</button>
+  <button onclick="showPage('workflow',this)">Workflow</button>
+  <button onclick="showPage('budget',this)">Budget</button>
  </nav>
  <div class="tools"><a class="btn" href="https://docs.google.com/spreadsheets/d/1Cf-Qrm9P4SmOiynSsROKjqrrjdEQIn6SukNvNQSpMGU/edit?usp=sharing" target="_blank">Drive ↗</a><a class="btn internal-only" href="ANQUIDO_LINK" target="_blank">Anquido ↗</a><button class="mode dark" onclick="toggleMode()" id="modeBtn">Internal ▾</button></div>
 </header>
 <main>
 <section class="page active" id="home">
- <h1>R&D</h1>
+ <div class="eyebrow">R&amp;D HOME</div>
+ <h1>R&amp;D</h1>
+ <p>One page to see where we are, who owns the work, what must be delivered, and what still needs an owner.</p>
 
- <div class="alert internal-only">
-  <div class="card weekly-priority-card">
-   <div class="weekly-priority-header">
-    <div><div class="eyebrow">August 17</div><div class="bigdate">R&D priorities</div></div>
-    <div class="weekly-deadline">THU · AUG 6</div>
+ <div class="home-focus-grid internal-only">
+  <div class="card home-stage-card">
+   <div class="eyebrow">CURRENT STAGE</div>
+   <h2>Simplified Yale Hand — MVP 1</h2>
+   <p>Current engineering stage</p>
+   <div class="stage-path">
+    <span class="stage-current">Design requirements</span><span>→</span><span>Concept</span><span>→</span><span>CAD</span><span>→</span><span>Prototype</span>
    </div>
-   <p class="weekly-intro">These are the five things we need to move forward this week.</p>
-   <div class="weekly-priority-list">
-    <div class="weekly-priority-item"><div class="priority-number">01</div><div class="priority-content"><strong>Brazil presentation</strong><span>Prepare university presentation</span></div><div class="priority-status">IN PROGRESS</div></div>
-    <div class="weekly-priority-item"><div class="priority-number">02</div><div class="priority-content"><strong>Concept design</strong><span>Phase 1 concept ready for review</span></div><div class="priority-status">IN PROGRESS</div></div>
-    <div class="weekly-priority-item"><div class="priority-number">03</div><div class="priority-content"><strong>Design matrix</strong><span>Finalize first design requirements</span></div><div class="priority-status">DRAFT</div></div>
-    <div class="weekly-priority-item"><div class="priority-number">04</div><div class="priority-content"><strong>CAD package → Mahmoud</strong><span>Send approved requirements for CAD</span></div><div class="priority-status waiting">WAITING</div></div>
-    <div class="weekly-priority-item urgent-priority"><div class="priority-number">05</div><div class="priority-content"><strong>Send UTFPR test-jig assignment</strong><span>Send assignment to UTFPR Mechatronics Engineering team</span></div><div class="priority-status urgent">URGENT</div></div>
-   </div>
-   <div class="weekly-goal-footer"><span>WEEKLY FOCUS</span><strong>5 priorities · UTFPR assignment is urgent</strong></div>
-  </div>
-  <div class="card"><div class="eyebrow">Upcoming meetings</div><h2 style="margin-top:8px">MVP 1 team meeting</h2><p>Target time: 6:00 AM PST. Sahitya still needs to send the invite.</p><div class="actionrow"><button class="mini">REMIND SAHITYA</button></div></div>
- </div>
-
- <div class="hero-grid">
-  <div class="card">
-   <div class="eyebrow">Current focus</div><h2 style="margin-top:10px">Simplified Yale Hand</h2><p>First four-month engineering focus: Aug–Nov 2026.</p>
-   <div class="phasebar"><span></span><span></span><span></span></div>
-   <div class="metric"><span>Now</span><strong>Design requirements</strong></div><div class="metric"><span>Next</span><strong>Concept → CAD → Prototype</strong></div>
-   <div class="testflow"><div class="teststep current">Subsystem</div><div class="teststep">Integration</div><div class="teststep">System</div><div class="teststep">Clinical readiness</div></div>
+   <div class="home-note"><b>Focus:</b> Lock the requirements before CAD and physical testing.</div>
   </div>
 
-  <div class="card hero-object phase1-image">
-   <img class="phase1-art" src="phase1_concept.png" alt="Phase 1 pediatric prosthetic concept placeholder">
-   <div class="glass g1"><b>PHASE 1 REFERENCE</b><br>Simplified Yale Hand direction</div>
-   <div class="glass g2"><b>MATHEW</b><br>Concept + industrial design</div>
-   <div class="glass g3"><b>NEXT</b><br>UTFPR test jig</div>
-   <div class="glass g4"><b>VISUAL STANDARD</b><br>Exploded view required</div>
-   <div class="placeholder">CONCEPT REFERENCE · PLACEHOLDER ONLY · FINAL DESIGN COMING SOON</div>
+  <div class="card home-delivery-card">
+   <div class="eyebrow">REQUIRED TO DELIVER</div>
+   <h2>4 main outputs</h2>
+   <div class="deliver-row"><span>01</span><div><b>University R&amp;D package</b><small>Test rig + presentation + calculations + design requirements</small></div></div>
+   <div class="deliver-row"><span>02</span><div><b>Design requirements package</b><small>Differential + wrist + bypass socket + design requirements</small></div></div>
+   <div class="deliver-row"><span>03</span><div><b>R&amp;D system</b><small>Google Site + GitHub + process + file locations</small></div></div>
+   <div class="deliver-row"><span>04</span><div><b>Testing &amp; documentation system</b><small>Design intake + testing/research + reporting + survey</small></div></div>
   </div>
  </div>
 
- <div class="dashboard-grid internal-only">
-  <div class="card bigcard">
-   <div class="eyebrow">Workload</div><h2 style="margin-top:7px">Who is working on what?</h2>
-   <div class="taskbar"><span>Brazil presentation</span><div class="bartrack"><div class="barfill" style="width:55%"></div></div><b>55%</b></div>
-   <div class="taskbar"><span>Concept design</span><div class="bartrack"><div class="barfill" style="width:15%"></div></div><b>15%</b></div>
-   <div class="taskbar"><span>Design matrix</span><div class="bartrack"><div class="barfill" style="width:35%"></div></div><b>35%</b></div>
-   <div class="taskbar"><span>CAD design</span><div class="bartrack"><div class="barfill wait"></div></div><b>WAIT</b></div>
-   <p><b>Placeholder progress values.</b> Owners update progress; the dashboard should not invent it.</p>
-   <button class="btn" onclick="showPage('tasks')">Update tasks →</button>
+ <div class="card home-section internal-only">
+  <div class="eyebrow">OWNERSHIP</div>
+  <h2>Who is working on what?</h2>
+  <div class="owner-table">
+   <div class="owner-row"><b>Mathew</b><span>Concept + industrial design</span><em>IN PROGRESS</em></div>
+   <div class="owner-row"><b>Ganesh</b><span>Simulation / validation + test-rig support</span><em>IN PROGRESS</em></div>
+   <div class="owner-row"><b>Mahmoud</b><span>CAD design</span><em>WAITING</em></div>
+   <div class="owner-row"><b>Abhay</b><span>R&amp;D research / Bowden cable research</span><em>RESEARCH</em></div>
+   <div class="owner-row"><b>Rasna</b><span>Requirements + coordination</span><em>IN PROGRESS</em></div>
+  </div>
+ </div>
+
+ <div class="home-bottom-grid internal-only">
+  <div class="card home-section">
+   <div class="eyebrow">OPEN WORK</div>
+   <h2>Pending — can anyone take this?</h2>
+   <div class="pending-row"><span>○</span><b>Prosthetic-user survey</b><em>NEEDS OWNER</em></div>
+   <div class="pending-row"><span>○</span><b>Design Intake SOP</b><em>NEEDS OWNER</em></div>
+   <div class="pending-row"><span>○</span><b>Testing &amp; Research SOP</b><em>NEEDS OWNER</em></div>
+   <div class="pending-row"><span>○</span><b>Testing documentation support</b><em>NEEDS OWNER</em></div>
   </div>
 
-  <div class="card bigcard">
-   <div class="eyebrow">Needs action</div><h2 style="margin-top:7px">Your next moves</h2>
-   <div class="file-row"><span><span class="statusdot"></span>Survey</span><b>Rasna</b></div>
-   <div class="file-row"><span><span class="statusdot"></span>Send Yale paper + jig brief</span><b>Ganesh</b></div>
-   <div class="file-row"><span><span class="statusdot"></span>Bowden cable research</span><b>Abhay</b></div>
-   <div class="file-row"><span><span class="statusdot"></span>CAD design</span><b>Waiting</b></div>
-   <div class="actionrow"><button class="mini">UPDATE</button><button class="mini">NEED MORE TIME</button><button class="mini">NEED HELP</button></div>
-  </div>
-
-  <div class="card bigcard">
-   <div class="eyebrow">Documents</div><h2 style="margin-top:7px">What needs review?</h2>
-   <div class="file-row"><span>Survey</span><span class="badge">APPROVAL</span></div><div class="file-row"><span>Part number standard</span><span class="badge">REVIEW</span></div><div class="file-row"><span>Phase 1 concept</span><span class="badge">DRAFT</span></div><div class="file-row"><span>Q1 budget</span><span class="badge">DRAFT / REVIEW</span></div><div class="file-row"><span>Brazil presentation</span><span class="badge">IN PROGRESS</span></div>
-  </div>
-
-  <div class="card bigcard">
-   <div class="eyebrow">Quick access</div><h2 style="margin-top:7px">Do it here</h2>
-   <div class="file-row"><a href="SURVEY_LINK" target="_blank">Survey + comments ↗</a></div><div class="file-row"><a href="DESIGN_INTAKE_LINK" target="_blank">+ Design request ↗</a></div><div class="file-row"><a href="BRAZIL_PRESENTATION_UPLOAD_LINK" target="_blank">Brazil presentation upload ↗</a></div><div class="file-row"><a href="GANESH_UPLOAD_LINK" target="_blank">Ganesh upload ↗</a></div><div class="file-row"><a href="REIMBURSEMENT_LINK" target="_blank">Reimbursement ↗</a></div><div class="file-row"><button style="border:0;background:none;padding:0" onclick="showPage('files')">Find a file →</button></div>
+  <div class="card home-section">
+   <div class="eyebrow">SOURCE OF TRUTH</div>
+   <h2>Where to find everything</h2>
+   <p>Use these pages instead of searching through Slack.</p>
+   <div class="home-links">
+    <button class="btn dark" onclick="showPage('files')">FILES →</button>
+    <button class="btn" onclick="showPage('tasks')">TASKS →</button>
+    <button class="btn" onclick="showPage('workflow')">WORKFLOW →</button>
+    <a class="btn" href="https://docs.google.com/spreadsheets/d/1Cf-Qrm9P4SmOiynSsROKjqrrjdEQIn6SukNvNQSpMGU/edit?usp=sharing" target="_blank" rel="noopener">R&amp;D TRACKER ↗</a>
+   </div>
   </div>
  </div>
 </section>
