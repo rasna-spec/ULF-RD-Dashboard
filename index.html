@@ -20,7 +20,7 @@
   --panel2:rgba(246,243,250,.07);
 }
 *{box-sizing:border-box;font-size:12px}
-html,body{margin:0;min-height:100%;background:var(--bg);color:var(--ink);font-family:"Space Mono",ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;overflow-x:hidden;letter-spacing:.18em;text-transform:uppercase}
+html,body{margin:0;min-height:100%;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",Arial,sans-serif;overflow-x:hidden;letter-spacing:0;text-transform:none}
 body{background:radial-gradient(circle at 50% 46%,rgba(246,243,250,.055),transparent 50%),linear-gradient(180deg,#181a1c,#101214)}
 button,a{font:inherit;color:inherit}
 .logo{width:24px;height:24px;object-fit:contain;display:block}
@@ -53,7 +53,7 @@ button,a{font:inherit;color:inherit}
 .year.active {
   background: transparent !important;
   color: var(--ink) !important;
-  border-bottom: 1px solid var(--warn) !important;
+  border-bottom: 1px solid var(--yellow) !important;
   border-radius: 0 !important;
 }
 .top-year{justify-self:end;font-weight:700}
@@ -172,41 +172,106 @@ button,a{font:inherit;color:inherit}
   .nav{grid-template-columns:1fr}
   .feedback{align-items:flex-start;flex-direction:column}
 }
-  /* FONT OVERRIDE — clean minimal mono style */
+/* FONT STYLE — clean iOS-style sans font */
 body,
 button,
 a,
 input,
 textarea,
-select,
-.card h2,
-.folder h2,
-.image-body h3,
-.title,
-.kicker,
-.nav-label,
-.side-title,
-.year,
-.top-year,
-.brand,
-.status,
-.pill {
-  font-family: "Space Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace !important;
+select {
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Arial, sans-serif !important;
   font-size: 12px !important;
   font-weight: 400 !important;
-  letter-spacing: 0.35em !important;
+  letter-spacing: 0 !important;
+  text-transform: none !important;
+}
+
+/* Small uppercase labels / headings only */
+.landing-title,
+.landing-enter,
+.brand-word,
+.brand .sub,
+.year,
+.top-year,
+.nav button,
+.kicker,
+.title,
+.carousel-title,
+.update-title,
+.update-line strong,
+.quick-card h2,
+.time-tab,
+.milestone-label strong,
+.visual-hint,
+.simple-folder h3,
+.folder-card h3,
+.resource-tab,
+.resource-row strong,
+.portal-preview div,
+.feedback,
+.pill {
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Arial, sans-serif !important;
+  font-size: 12px !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.14em !important;
   text-transform: uppercase !important;
 }
 
-/* Keep section titles small and consistent */
+/* Keep main titles calm and consistent */
 .title {
   font-size: 12px !important;
-  font-weight: 700 !important;
+  font-weight: 600 !important;
   line-height: 1.6 !important;
-  letter-spacing: 0.35em !important;
+  letter-spacing: 0.16em !important;
   text-transform: uppercase !important;
-  margin-bottom: 18px !important;
+  margin-bottom: 12px !important;
 }
+
+/* Body/details should stay easy to read */
+.lead,
+.quick-card p,
+.update-line span,
+.goal-summary,
+.year-note,
+.resource-row span,
+.modal p {
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Arial, sans-serif !important;
+  font-size: 12px !important;
+  font-weight: 400 !important;
+  letter-spacing: 0.02em !important;
+  line-height: 1.65 !important;
+  text-transform: none !important;
+}
+
+/* Clean yellow underline for selected tabs */
+.year,
+.nav button,
+.time-tab,
+.resource-tab {
+  background: transparent !important;
+  border-radius: 0 !important;
+}
+
+.year.active,
+.nav button.active,
+.time-tab.active,
+.resource-tab.active {
+  background: transparent !important;
+  color: var(--ink) !important;
+  border-bottom-color: var(--yellow) !important;
+}
+
+/* Remove default browser focus rectangle unless keyboard focus is visible */
+button:focus {
+  outline: none;
+}
+
+button:focus-visible,
+a:focus-visible {
+  outline: 1px solid var(--yellow);
+  outline-offset: 4px;
+}
+
 </style>
 </head>
 <body>
