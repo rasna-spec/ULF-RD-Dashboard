@@ -161,6 +161,41 @@ button,a{font:inherit;color:inherit}
   .nav{grid-template-columns:1fr}
   .feedback{align-items:flex-start;flex-direction:column}
 }
+  /* FONT OVERRIDE — clean minimal mono style */
+body,
+button,
+a,
+input,
+textarea,
+select,
+.card h2,
+.folder h2,
+.image-body h3,
+.title,
+.kicker,
+.nav-label,
+.side-title,
+.year,
+.top-year,
+.brand,
+.status,
+.pill {
+  font-family: "Space Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace !important;
+  font-size: 12px !important;
+  font-weight: 400 !important;
+  letter-spacing: 0.35em !important;
+  text-transform: uppercase !important;
+}
+
+/* Keep section titles small and consistent */
+.title {
+  font-size: 12px !important;
+  font-weight: 700 !important;
+  line-height: 1.6 !important;
+  letter-spacing: 0.35em !important;
+  text-transform: uppercase !important;
+  margin-bottom: 18px !important;
+}
 </style>
 </head>
 <body>
