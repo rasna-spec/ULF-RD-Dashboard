@@ -911,6 +911,45 @@ a:focus-visible {
   display:none;
 }
 
+
+/* V21 — documents moved into dashboard */
+.document-grid {
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:14px;
+}
+
+.document-card {
+  position:relative;
+  border:1px solid var(--line);
+  background:var(--panel);
+  border-radius:18px;
+  padding:16px;
+  min-height:168px;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  overflow:hidden;
+}
+
+.document-card h2 {
+  margin:0 0 8px;
+  font-size:12px;
+  font-weight:700;
+}
+
+.document-card p {
+  margin:0;
+  color:var(--muted);
+  line-height:1.6;
+}
+
+@media(max-width:900px) {
+  .document-grid {
+    grid-template-columns:1fr;
+  }
+}
+
 </style>
 </head>
 
@@ -936,7 +975,6 @@ a:focus-visible {
       <nav class="nav" aria-label="R&D sections">
         <button class="active" type="button" data-view="dashboard"><span>Dashboard</span></button>
         <button type="button" data-view="goal"><span>Goal</span></button>
-        <button type="button" data-view="documents"><span>Documents</span></button>
         <button type="button" data-view="resources"><span>Resources</span></button>
         <button type="button" data-view="portal"><span>External portal</span></button>
       </nav>
@@ -1054,33 +1092,50 @@ a:focus-visible {
         </section>
 
         <section class="dashboard-section">
-          <section class="quick-cards">
-            <article class="quick-card">
-              <div>
-                <h2 class="quick-title">Current goal</h2>
-                <div class="quick-rule"></div>
-              </div>
-              <div class="actions"><button class="pill primary" data-jump="goal" type="button">Open goal</button></div>
+          <h1 class="section-heading">Documents</h1>
+          <div class="section-rule"></div>
+
+          <section class="document-grid">
+            <article class="document-card">
+              <div class="folder-icon"></div>
+              <h2>Current goals</h2>
+              <p>Open the current R&amp;D direction and timeline.</p>
+              <div class="actions"><button class="pill primary" data-jump="goal" type="button">Open</button></div>
             </article>
 
-            <article class="quick-card">
-              <span class="info-dot">i<span class="info-tip">CAD drafts, screenshots, test notes, review comments, and external collaborator files.</span></span>
-              <div>
-                <h2 class="quick-title">Upload</h2>
-                <div class="quick-rule"></div>
-                <p>Submit project files.</p>
-              </div>
-              <div class="actions"><a class="pill primary" href="PASTE_GOOGLE_FORM_UPLOAD_LINK_HERE" target="_blank" rel="noopener">Upload file</a></div>
+            <article class="document-card">
+              <div class="folder-icon"></div>
+              <h2>Surveys</h2>
+              <p>Open prosthetic-user survey and feedback files.</p>
+              <div class="actions"><a class="pill primary" href="prosthetic-user-survey.html" target="_blank" rel="noopener">Open</a></div>
             </article>
 
-            <article class="quick-card">
-              <span class="info-dot">i<span class="info-tip">Test bench package, design requirements, survey, budget, and reference documents.</span></span>
-              <div>
-                <h2 class="quick-title">Downloads</h2>
-                <div class="quick-rule"></div>
-                <p>Open key files.</p>
-              </div>
-              <div class="actions"><button class="pill primary" data-jump="documents" type="button">Open docs</button></div>
+            <article class="document-card">
+              <div class="folder-icon"></div>
+              <h2>Budget</h2>
+              <p>Open budget approval and funding tracker.</p>
+              <div class="actions"><a class="pill primary" href="https://docs.google.com/spreadsheets/d/1GkG42z72UtrJ5_tYGXVXwijDe_5T6Ae6/edit?usp=drivesdk&amp;ouid=101706660835918185079&amp;rtpof=true&amp;sd=true&amp;urp=gmail_link" target="_blank" rel="noopener">Open</a></div>
+            </article>
+
+            <article class="document-card">
+              <div class="folder-icon"></div>
+              <h2>Test bench package</h2>
+              <p>Open test rig building page and handoff package.</p>
+              <div class="actions"><a class="pill primary" href="test-rig-building.html" target="_blank" rel="noopener">Open</a></div>
+            </article>
+
+            <article class="document-card">
+              <div class="folder-icon"></div>
+              <h2>Design requirements</h2>
+              <p>Open design requirement tracker and status notes.</p>
+              <div class="actions"><a class="pill primary" href="https://docs.google.com/spreadsheets/d/1Cf-Qrm9P4SmOiynSsROKjqrrjdEQIn6SukNvNQSpMGU/edit?usp=sharing" target="_blank" rel="noopener">Open</a></div>
+            </article>
+
+            <article class="document-card">
+              <div class="folder-icon"></div>
+              <h2>Reference visuals</h2>
+              <p>Open inspiration visuals inside the Goal section.</p>
+              <div class="actions"><button class="pill primary" data-jump="goal" type="button">Open</button></div>
             </article>
           </section>
         </section>
@@ -1148,20 +1203,6 @@ a:focus-visible {
             <h3>Budget</h3>
             <div class="actions"><a class="pill primary" href="https://docs.google.com/spreadsheets/d/1GkG42z72UtrJ5_tYGXVXwijDe_5T6Ae6/edit?usp=drivesdk&ouid=101706660835918185079&rtpof=true&sd=true&urp=gmail_link" target="_blank" rel="noopener">Open</a></div>
           </article>
-        </div>
-      </section>
-
-      <section id="documents" class="view">
-        <div class="kicker">documents</div>
-        <h1 class="title">File folders</h1>
-        <div class="rule"></div>
-
-        <div class="folder-grid">
-          <article class="folder-card"><div class="folder-icon"></div><h3>Survey</h3><div class="actions"><a class="pill primary" href="prosthetic-user-survey.html" target="_blank" rel="noopener">Open</a><a class="pill" href="PASTE_GOOGLE_FORM_UPLOAD_LINK_HERE" target="_blank" rel="noopener">Upload</a></div></article>
-          <article class="folder-card"><div class="folder-icon"></div><h3>Budget</h3><div class="actions"><a class="pill primary" href="https://docs.google.com/spreadsheets/d/1GkG42z72UtrJ5_tYGXVXwijDe_5T6Ae6/edit?usp=drivesdk&ouid=101706660835918185079&rtpof=true&sd=true&urp=gmail_link" target="_blank" rel="noopener">Open</a></div></article>
-          <article class="folder-card"><div class="folder-icon"></div><h3>Test bench package</h3><div class="actions"><a class="pill primary" href="test-rig-building.html" target="_blank" rel="noopener">Open</a><a class="pill" href="PASTE_GOOGLE_FORM_UPLOAD_LINK_HERE" target="_blank" rel="noopener">Upload</a></div></article>
-          <article class="folder-card"><div class="folder-icon"></div><h3>Design requirements</h3><div class="actions"><a class="pill primary" href="https://docs.google.com/spreadsheets/d/1Cf-Qrm9P4SmOiynSsROKjqrrjdEQIn6SukNvNQSpMGU/edit?usp=sharing" target="_blank" rel="noopener">Open</a></div></article>
-          <article class="folder-card"><div class="folder-icon"></div><h3>Reference visuals</h3><div class="actions"><button class="pill primary" data-jump="goal" type="button">Open goal</button></div></article>
         </div>
       </section>
 
