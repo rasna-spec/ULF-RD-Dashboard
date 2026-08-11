@@ -508,36 +508,6 @@ select {
 
 
 /* V9 — simple dashboard additions */
-body[data-theme="light"] {
-  --bg:#f6f3fa;
-  --ink:#181a1c;
-  --muted:rgba(24,26,28,.62);
-  --quiet:rgba(24,26,28,.38);
-  --line:rgba(24,26,28,.14);
-  --line2:rgba(24,26,28,.25);
-  --panel:rgba(24,26,28,.035);
-  --panel2:rgba(24,26,28,.07);
-}
-
-body[data-theme="light"],
-body[data-theme="light"] .landing {
-  background:#f6f3fa !important;
-  color:#181a1c !important;
-}
-
-body[data-theme="light"] body,
-body[data-theme="light"] .shell {
-  background:#f6f3fa !important;
-}
-
-body[data-theme="light"] .modal-card {
-  background:#f6f3fa !important;
-}
-
-body[data-theme="light"] .feedback {
-  background:rgba(246,243,250,.92) !important;
-}
-
 .mode-toggle,
 .lang-toggle {
   display:flex;
@@ -770,17 +740,6 @@ body[data-theme="light"] .feedback {
 }
 
 /* Keep the card readable in both dark and light modes */
-body[data-theme="light"] .carousel {
-  background:rgba(252,204,0,.16) !important;
-  border-color:rgba(99,57,181,.30) !important;
-}
-
-body[data-theme="light"] .carousel .update-title,
-body[data-theme="light"] .carousel .update-line strong,
-body[data-theme="light"] .carousel .pill.primary {
-  color:#6339b5 !important;
-}
-
 .quick-card .info-dot {
   position:absolute;
   top:12px;
@@ -846,6 +805,79 @@ body.app-open .feedback {
   display:flex !important;
 }
 
+
+/* V13 — dark only + remove yellow rectangle bug */
+.mode-toggle,
+.mode-btn {
+  display:none !important;
+}
+
+.top-actions {
+  justify-self:end !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:flex-end !important;
+  gap:0 !important;
+}
+
+.year,
+.year-btn,
+.years button,
+.year-toggle button {
+  background:transparent !important;
+  border:0 !important;
+  border-bottom:1px solid transparent !important;
+  border-radius:0 !important;
+  box-shadow:none !important;
+  outline:none !important;
+  padding:0 0 7px !important;
+  min-width:auto !important;
+  min-height:auto !important;
+}
+
+.year.active,
+.year-btn.active,
+.years button.active,
+.year-toggle button.active {
+  background:transparent !important;
+  color:var(--ink) !important;
+  border-bottom:1px solid var(--yellow) !important;
+  box-shadow:none !important;
+}
+
+/* Remove any accidental decorative yellow blocks */
+.top::before,
+.top::after,
+.brand::before,
+.brand::after,
+.years::before,
+.years::after,
+.year-toggle::before,
+.year-toggle::after,
+.top-actions::before,
+.top-actions::after {
+  content:none !important;
+  display:none !important;
+}
+
+/* Keep the header clean in narrow Google Sites embeds */
+@media(max-width:1050px){
+  .top {
+    display:grid !important;
+    grid-template-columns:1fr !important;
+    gap:18px !important;
+  }
+
+  .years,
+  .year-toggle {
+    justify-self:start !important;
+  }
+
+  .top-actions {
+    justify-self:start !important;
+  }
+}
+
 </style>
 </head>
 <body data-theme="dark" class="landing-open">
@@ -864,10 +896,6 @@ body.app-open .feedback {
       <div class="brand"><img class="logo" src="ul-logo.png" alt="Universal Limbs logo"><span class="brand-word">ULF</span><span class="bar"></span><span class="sub">r&amp;d dashboard</span></div>
       <div class="years"><button class="year active" type="button" data-year="1">Year 1</button><button class="year" type="button" data-year="2">Year 2</button></div>
       <div class="top-actions">
-        <div class="mode-toggle" aria-label="Theme toggle">
-          <button class="mode-btn active" type="button" data-theme-choice="dark">Dark</button>
-          <button class="mode-btn" type="button" data-theme-choice="light">Light</button>
-        </div>
         <div class="top-year">2026</div>
       </div>
     </header>
@@ -1122,14 +1150,6 @@ const modalText=document.getElementById('modalText');
 document.querySelectorAll('.visual-dot').forEach(dot=>dot.addEventListener('click',()=>{modalTitle.textContent=dot.dataset.modalTitle;modalImg.src=dot.dataset.modalImg;modalText.textContent=dot.dataset.modalText;modal.classList.add('active');modal.setAttribute('aria-hidden','false');}));
 document.getElementById('modalClose').addEventListener('click',()=>{modal.classList.remove('active');modal.setAttribute('aria-hidden','true');});
 modal.addEventListener('click',e=>{if(e.target===modal){modal.classList.remove('active');modal.setAttribute('aria-hidden','true');}});
-
-document.querySelectorAll('.mode-btn').forEach(btn=>{
-  btn.addEventListener('click',()=>{
-    document.querySelectorAll('.mode-btn').forEach(x=>x.classList.remove('active'));
-    btn.classList.add('active');
-    document.body.dataset.theme = btn.dataset.themeChoice;
-  });
-});
 
 document.querySelectorAll('.lang-btn').forEach(btn=>{
   btn.addEventListener('click',()=>{
