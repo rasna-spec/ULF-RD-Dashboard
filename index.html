@@ -950,6 +950,155 @@ a:focus-visible {
   }
 }
 
+
+/* V22 — team, resources, goal cleanup, year 2 empty, test rig details */
+.side-team {
+  margin-top:28px;
+  padding-top:18px;
+  border-top:1px solid var(--line);
+  max-width:160px;
+}
+
+.side-team-title {
+  color:var(--quiet);
+  margin-bottom:12px;
+  font-weight:700;
+}
+
+.side-team-row {
+  display:grid;
+  grid-template-columns:22px 1fr auto;
+  gap:8px;
+  align-items:center;
+  color:var(--muted);
+  margin-bottom:10px;
+}
+
+.side-initial {
+  width:20px;
+  height:20px;
+  border-radius:999px;
+  background:var(--purple);
+  color:#fff;
+  display:grid;
+  place-items:center;
+  font-size:11px;
+  font-weight:700;
+}
+
+.side-bell,
+.mini-pill {
+  border:1px solid var(--line2);
+  border-radius:999px;
+  padding:4px 7px;
+  text-decoration:none;
+  color:var(--muted);
+  width:max-content;
+}
+
+.side-bell {
+  font-size:11px;
+}
+
+.team-actions {
+  display:flex;
+  gap:8px;
+  margin-top:12px;
+  flex-wrap:wrap;
+}
+
+.mini-pill.bell {
+  border-color:var(--yellow);
+  color:var(--yellow);
+}
+
+.carousel-head.no-title {
+  justify-content:flex-end;
+}
+
+.resource-simple-section {
+  margin-bottom:28px;
+}
+
+.owner-tag {
+  color:var(--muted);
+  margin-bottom:34px;
+  display:inline-flex;
+  border:1px solid var(--line);
+  border-radius:999px;
+  padding:7px 10px;
+}
+
+.year2-empty {
+  min-height:360px;
+}
+
+.empty-card {
+  border:1px solid var(--line);
+  background:var(--panel);
+  border-radius:18px;
+  padding:28px;
+  color:var(--muted);
+}
+
+.portal-actions {
+  margin:0 0 22px;
+}
+
+.test-rig-card {
+  max-height:82vh;
+  overflow:auto;
+}
+
+.detail-section {
+  border-top:1px solid var(--line);
+  padding-top:14px;
+  margin-top:14px;
+}
+
+.detail-section h3 {
+  margin:0 0 8px;
+  font-size:12px;
+}
+
+.detail-section p {
+  margin:0;
+  color:var(--muted);
+  line-height:1.6;
+}
+
+.detail-grid {
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:10px;
+  margin-top:16px;
+}
+
+.detail-grid div {
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:12px;
+}
+
+.detail-grid strong {
+  display:block;
+  margin-bottom:6px;
+}
+
+.detail-grid span {
+  color:var(--muted);
+}
+
+@media(max-width:900px) {
+  .side-team {
+    max-width:none;
+  }
+
+  .detail-grid {
+    grid-template-columns:1fr;
+  }
+}
+
 </style>
 </head>
 
@@ -978,7 +1127,34 @@ a:focus-visible {
         <button type="button" data-view="resources"><span>Resources</span></button>
         <button type="button" data-view="portal"><span>External portal</span></button>
       </nav>
-    </aside>
+        <div class="side-team"><div class="side-team-title">Team</div>
+          <div class="side-team-row">
+            <span class="side-initial">R</span>
+            <span>Rasna</span>
+            <a class="side-bell" href="mailto:rasna@universallimbs.com?subject=Friendly%20R%26D%20reminder&body=Hi%2C%0A%0AYou%20received%20a%20friendly%20reminder%20from%20a%20team%20member.%0A%0AThis%20is%20not%20meant%20to%20be%20rude%20%E2%80%94%20it%20is%20a%20kind%20nudge%20because%20your%20team%20has%20your%20back.%20The%20deadline%20is%20coming%20up%20soon%2C%20and%20the%20team%20would%20love%20to%20see%20an%20update.%0A%0AIf%20you%20need%20help%2C%20please%20update%20your%20status%20or%20ask%20for%20support.%0A%0AThank%20you.&cc=sahitya%40universallimbs.com" title="Send reminder">Bell</a>
+          </div>
+          <div class="side-team-row">
+            <span class="side-initial">S</span>
+            <span>Sahitya</span>
+            <a class="side-bell" href="mailto:sahitya@universallimbs.com?subject=Friendly%20R%26D%20reminder&body=Hi%2C%0A%0AYou%20received%20a%20friendly%20reminder%20from%20a%20team%20member.%0A%0AThis%20is%20not%20meant%20to%20be%20rude%20%E2%80%94%20it%20is%20a%20kind%20nudge%20because%20your%20team%20has%20your%20back.%20The%20deadline%20is%20coming%20up%20soon%2C%20and%20the%20team%20would%20love%20to%20see%20an%20update.%0A%0AIf%20you%20need%20help%2C%20please%20update%20your%20status%20or%20ask%20for%20support.%0A%0AThank%20you.&cc=sahitya%40universallimbs.com" title="Send reminder">Bell</a>
+          </div>
+          <div class="side-team-row">
+            <span class="side-initial">S</span>
+            <span>Saja</span>
+            <a class="side-bell" href="mailto:saja@universallimbs.com?subject=Friendly%20R%26D%20reminder&body=Hi%2C%0A%0AYou%20received%20a%20friendly%20reminder%20from%20a%20team%20member.%0A%0AThis%20is%20not%20meant%20to%20be%20rude%20%E2%80%94%20it%20is%20a%20kind%20nudge%20because%20your%20team%20has%20your%20back.%20The%20deadline%20is%20coming%20up%20soon%2C%20and%20the%20team%20would%20love%20to%20see%20an%20update.%0A%0AIf%20you%20need%20help%2C%20please%20update%20your%20status%20or%20ask%20for%20support.%0A%0AThank%20you.&cc=sahitya%40universallimbs.com" title="Send reminder">Bell</a>
+          </div>
+          <div class="side-team-row">
+            <span class="side-initial">A</span>
+            <span>Ana</span>
+            <a class="side-bell" href="mailto:ana@universallimbs.com?subject=Friendly%20R%26D%20reminder&body=Hi%2C%0A%0AYou%20received%20a%20friendly%20reminder%20from%20a%20team%20member.%0A%0AThis%20is%20not%20meant%20to%20be%20rude%20%E2%80%94%20it%20is%20a%20kind%20nudge%20because%20your%20team%20has%20your%20back.%20The%20deadline%20is%20coming%20up%20soon%2C%20and%20the%20team%20would%20love%20to%20see%20an%20update.%0A%0AIf%20you%20need%20help%2C%20please%20update%20your%20status%20or%20ask%20for%20support.%0A%0AThank%20you.&cc=sahitya%40universallimbs.com" title="Send reminder">Bell</a>
+          </div>
+          <div class="side-team-row">
+            <span class="side-initial">M</span>
+            <span>Maria</span>
+            <a class="side-bell" href="mailto:maria@universallimbs.com?subject=Friendly%20R%26D%20reminder&body=Hi%2C%0A%0AYou%20received%20a%20friendly%20reminder%20from%20a%20team%20member.%0A%0AThis%20is%20not%20meant%20to%20be%20rude%20%E2%80%94%20it%20is%20a%20kind%20nudge%20because%20your%20team%20has%20your%20back.%20The%20deadline%20is%20coming%20up%20soon%2C%20and%20the%20team%20would%20love%20to%20see%20an%20update.%0A%0AIf%20you%20need%20help%2C%20please%20update%20your%20status%20or%20ask%20for%20support.%0A%0AThank%20you.&cc=sahitya%40universallimbs.com" title="Send reminder">Bell</a>
+          </div>
+        </div>
+      </aside>
 
     <main class="stage" aria-live="polite">
       <section id="dashboard" class="view active">
@@ -1013,32 +1189,52 @@ a:focus-visible {
               <article class="team-member">
                 <div class="team-photo">R</div>
                 <div class="team-name">Rasna</div>
-                <div class="team-role">Founder / R&amp;D direction</div>
+                <div class="team-role">Founder / R&D direction</div>
                 <span class="info-dot">i<span class="info-tip">Owns project direction, priorities, partner alignment, and final decision flow.</span></span>
+                <div class="team-actions">
+                  <a class="mini-pill bell" href="mailto:rasna@universallimbs.com?subject=Friendly%20R%26D%20reminder&body=Hi%2C%0A%0AYou%20received%20a%20friendly%20reminder%20from%20a%20team%20member.%0A%0AThis%20is%20not%20meant%20to%20be%20rude%20%E2%80%94%20it%20is%20a%20kind%20nudge%20because%20your%20team%20has%20your%20back.%20The%20deadline%20is%20coming%20up%20soon%2C%20and%20the%20team%20would%20love%20to%20see%20an%20update.%0A%0AIf%20you%20need%20help%2C%20please%20update%20your%20status%20or%20ask%20for%20support.%0A%0AThank%20you.&cc=sahitya%40universallimbs.com" title="Send reminder">Bell</a>
+                  <a class="mini-pill" href="mailto:rasna@universallimbs.com?subject=R%26D%20task%20assignment&body=Hi%2C%0A%0AA%20task%20has%20been%20assigned%20or%20requested%20for%20your%20review.%0A%0ATask%3A%0ADeadline%3A%0ASupport%20needed%3A%0A%0APlease%20update%20your%20status%20when%20you%20can.%0A%0AThank%20you.&cc=sahitya%40universallimbs.com" title="Assign task">Assign</a>
+                </div>
               </article>
               <article class="team-member">
                 <div class="team-photo">S</div>
                 <div class="team-name">Sahitya</div>
                 <div class="team-role">Project manager</div>
                 <span class="info-dot">i<span class="info-tip">Coordinates assignments, timelines, files, team follow-up, and external handoff.</span></span>
+                <div class="team-actions">
+                  <a class="mini-pill bell" href="mailto:sahitya@universallimbs.com?subject=Friendly%20R%26D%20reminder&body=Hi%2C%0A%0AYou%20received%20a%20friendly%20reminder%20from%20a%20team%20member.%0A%0AThis%20is%20not%20meant%20to%20be%20rude%20%E2%80%94%20it%20is%20a%20kind%20nudge%20because%20your%20team%20has%20your%20back.%20The%20deadline%20is%20coming%20up%20soon%2C%20and%20the%20team%20would%20love%20to%20see%20an%20update.%0A%0AIf%20you%20need%20help%2C%20please%20update%20your%20status%20or%20ask%20for%20support.%0A%0AThank%20you.&cc=sahitya%40universallimbs.com" title="Send reminder">Bell</a>
+                  <a class="mini-pill" href="mailto:sahitya@universallimbs.com?subject=R%26D%20task%20assignment&body=Hi%2C%0A%0AA%20task%20has%20been%20assigned%20or%20requested%20for%20your%20review.%0A%0ATask%3A%0ADeadline%3A%0ASupport%20needed%3A%0A%0APlease%20update%20your%20status%20when%20you%20can.%0A%0AThank%20you.&cc=sahitya%40universallimbs.com" title="Assign task">Assign</a>
+                </div>
               </article>
               <article class="team-member">
                 <div class="team-photo">S</div>
                 <div class="team-name">Saja</div>
-                <div class="team-role">Prosthetic / rehab lead</div>
+                <div class="team-role">Director of prosthetic services</div>
                 <span class="info-dot">i<span class="info-tip">Provides prosthetic, rehab, and clinical practicality feedback.</span></span>
+                <div class="team-actions">
+                  <a class="mini-pill bell" href="mailto:saja@universallimbs.com?subject=Friendly%20R%26D%20reminder&body=Hi%2C%0A%0AYou%20received%20a%20friendly%20reminder%20from%20a%20team%20member.%0A%0AThis%20is%20not%20meant%20to%20be%20rude%20%E2%80%94%20it%20is%20a%20kind%20nudge%20because%20your%20team%20has%20your%20back.%20The%20deadline%20is%20coming%20up%20soon%2C%20and%20the%20team%20would%20love%20to%20see%20an%20update.%0A%0AIf%20you%20need%20help%2C%20please%20update%20your%20status%20or%20ask%20for%20support.%0A%0AThank%20you.&cc=sahitya%40universallimbs.com" title="Send reminder">Bell</a>
+                  <a class="mini-pill" href="mailto:saja@universallimbs.com?subject=R%26D%20task%20assignment&body=Hi%2C%0A%0AA%20task%20has%20been%20assigned%20or%20requested%20for%20your%20review.%0A%0ATask%3A%0ADeadline%3A%0ASupport%20needed%3A%0A%0APlease%20update%20your%20status%20when%20you%20can.%0A%0AThank%20you.&cc=sahitya%40universallimbs.com" title="Assign task">Assign</a>
+                </div>
               </article>
               <article class="team-member">
                 <div class="team-photo">A</div>
                 <div class="team-name">Ana</div>
-                <div class="team-role">Finance</div>
+                <div class="team-role">Director of finance</div>
                 <span class="info-dot">i<span class="info-tip">Supports budget tracking, funding readiness, and financial documentation.</span></span>
+                <div class="team-actions">
+                  <a class="mini-pill bell" href="mailto:ana@universallimbs.com?subject=Friendly%20R%26D%20reminder&body=Hi%2C%0A%0AYou%20received%20a%20friendly%20reminder%20from%20a%20team%20member.%0A%0AThis%20is%20not%20meant%20to%20be%20rude%20%E2%80%94%20it%20is%20a%20kind%20nudge%20because%20your%20team%20has%20your%20back.%20The%20deadline%20is%20coming%20up%20soon%2C%20and%20the%20team%20would%20love%20to%20see%20an%20update.%0A%0AIf%20you%20need%20help%2C%20please%20update%20your%20status%20or%20ask%20for%20support.%0A%0AThank%20you.&cc=sahitya%40universallimbs.com" title="Send reminder">Bell</a>
+                  <a class="mini-pill" href="mailto:ana@universallimbs.com?subject=R%26D%20task%20assignment&body=Hi%2C%0A%0AA%20task%20has%20been%20assigned%20or%20requested%20for%20your%20review.%0A%0ATask%3A%0ADeadline%3A%0ASupport%20needed%3A%0A%0APlease%20update%20your%20status%20when%20you%20can.%0A%0AThank%20you.&cc=sahitya%40universallimbs.com" title="Assign task">Assign</a>
+                </div>
               </article>
               <article class="team-member">
                 <div class="team-photo">M</div>
                 <div class="team-name">Maria</div>
-                <div class="team-role">University liaison</div>
+                <div class="team-role">University Partnership Lead</div>
                 <span class="info-dot">i<span class="info-tip">Supports university collaboration, partner communication, and student handoff.</span></span>
+                <div class="team-actions">
+                  <a class="mini-pill bell" href="mailto:maria@universallimbs.com?subject=Friendly%20R%26D%20reminder&body=Hi%2C%0A%0AYou%20received%20a%20friendly%20reminder%20from%20a%20team%20member.%0A%0AThis%20is%20not%20meant%20to%20be%20rude%20%E2%80%94%20it%20is%20a%20kind%20nudge%20because%20your%20team%20has%20your%20back.%20The%20deadline%20is%20coming%20up%20soon%2C%20and%20the%20team%20would%20love%20to%20see%20an%20update.%0A%0AIf%20you%20need%20help%2C%20please%20update%20your%20status%20or%20ask%20for%20support.%0A%0AThank%20you.&cc=sahitya%40universallimbs.com" title="Send reminder">Bell</a>
+                  <a class="mini-pill" href="mailto:maria@universallimbs.com?subject=R%26D%20task%20assignment&body=Hi%2C%0A%0AA%20task%20has%20been%20assigned%20or%20requested%20for%20your%20review.%0A%0ATask%3A%0ADeadline%3A%0ASupport%20needed%3A%0A%0APlease%20update%20your%20status%20when%20you%20can.%0A%0AThank%20you.&cc=sahitya%40universallimbs.com" title="Assign task">Assign</a>
+                </div>
               </article>
             </div>
           </section>
@@ -1050,8 +1246,7 @@ a:focus-visible {
 
           <div class="dashboard-grid">
             <section class="carousel" aria-label="Latest updates carousel">
-              <div class="carousel-head">
-                <div class="carousel-title">Latest updates</div>
+              <div class="carousel-head no-title">
                 <div class="carousel-controls">
                   <button class="carousel-btn" type="button" id="prevUpdate">‹</button>
                   <button class="carousel-btn" type="button" id="nextUpdate">›</button>
@@ -1144,8 +1339,8 @@ a:focus-visible {
       <section id="goal" class="view">
         <div class="goal-top">
           <div>
-            <div class="kicker">goal</div>
             <h1 class="title">Design direction</h1>
+            <div class="owner-tag">Owner: Rasna Mantha</div>
             <div class="rule"></div>
           </div>
 
@@ -1207,44 +1402,41 @@ a:focus-visible {
       </section>
 
       <section id="resources" class="view">
-        <div class="kicker">resources</div>
-        <h1 class="title">Resource center</h1>
-        <div class="rule"></div>
-
-        <div class="resource-tabs">
-          <button class="resource-tab active" type="button" data-resource="playbooks">Playbooks</button>
-          <button class="resource-tab" type="button" data-resource="links">Links</button>
-          <button class="resource-tab" type="button" data-resource="sops">SOPs</button>
-          <button class="resource-tab" type="button" data-resource="presentations">Presentations</button>
-        </div>
-
-        <div id="res-playbooks" class="resource-panel active">
+        <section class="resource-simple-section">
+          <h1 class="section-heading">Playbooks</h1>
+          <div class="section-rule"></div>
           <div class="resource-list">
-            <div class="resource-row"><strong>R&D Playbook</strong><span>Placeholder for team process and decision rules.</span><a class="pill primary" href="#">Add link</a></div>
-            <div class="resource-row"><strong>Testing Playbook</strong><span>Placeholder for test setup, logging, and review method.</span><a class="pill primary" href="#">Add link</a></div>
+            <div class="resource-row"><strong>R&amp;D Playbook</strong><span>Team process and decision rules placeholder.</span><a class="pill primary" href="#">Add link</a></div>
+            <div class="resource-row"><strong>Testing Playbook</strong><span>Test setup, logging, and review method placeholder.</span><a class="pill primary" href="#">Add link</a></div>
           </div>
-        </div>
+        </section>
 
-        <div id="res-links" class="resource-panel">
+        <section class="resource-simple-section">
+          <h1 class="section-heading">SOPs</h1>
+          <div class="section-rule"></div>
+          <div class="resource-list">
+            <div class="resource-row"><strong>Design Intake SOP</strong><span>Requesting concept, CAD, and design work.</span><a class="pill primary" href="#">Add link</a></div>
+            <div class="resource-row"><strong>Document Upload SOP</strong><span>Naming, versioning, and handoff process.</span><a class="pill primary" href="#">Add link</a></div>
+          </div>
+        </section>
+
+        <section class="resource-simple-section">
+          <h1 class="section-heading">Links</h1>
+          <div class="section-rule"></div>
           <div class="resource-list">
             <div class="resource-row"><strong>Project Software</strong><span>Current project management software placeholder.</span><a class="pill primary" href="PASTE_PROJECT_MANAGEMENT_SOFTWARE_LINK_HERE" target="_blank" rel="noopener">Open</a></div>
             <div class="resource-row"><strong>Drive Folder</strong><span>Main Google Drive folder placeholder.</span><a class="pill primary" href="PASTE_GOOGLE_DRIVE_FOLDER_LINK_HERE" target="_blank" rel="noopener">Open</a></div>
           </div>
-        </div>
+        </section>
 
-        <div id="res-sops" class="resource-panel">
+        <section class="resource-simple-section">
+          <h1 class="section-heading">Presentations</h1>
+          <div class="section-rule"></div>
           <div class="resource-list">
-            <div class="resource-row"><strong>Design Intake SOP</strong><span>Placeholder for requesting concept/CAD/design work.</span><a class="pill primary" href="#">Add link</a></div>
-            <div class="resource-row"><strong>Document Upload SOP</strong><span>Placeholder for naming, versioning, and handoff.</span><a class="pill primary" href="#">Add link</a></div>
+            <div class="resource-row"><strong>UTFPR Presentation</strong><span>Partner-facing presentation placeholder.</span><a class="pill primary" href="PASTE_PRESENTATION_LINK_HERE" target="_blank" rel="noopener">Open</a></div>
+            <div class="resource-row"><strong>Project Overview Deck</strong><span>General R&amp;D overview presentation placeholder.</span><a class="pill primary" href="#">Add link</a></div>
           </div>
-        </div>
-
-        <div id="res-presentations" class="resource-panel">
-          <div class="resource-list">
-            <div class="resource-row"><strong>UTFPR Presentation</strong><span>Placeholder for partner-facing presentation.</span><a class="pill primary" href="PASTE_PRESENTATION_LINK_HERE" target="_blank" rel="noopener">Open</a></div>
-            <div class="resource-row"><strong>Project Overview Deck</strong><span>Placeholder for general R&D overview presentation.</span><a class="pill primary" href="#">Add link</a></div>
-          </div>
-        </div>
+        </section>
       </section>
 
       <section id="portal" class="view">
@@ -1260,6 +1452,7 @@ a:focus-visible {
           <h1 class="title">Student entry point</h1>
           <div class="rule"></div>
           <div class="portal-preview"><img src="testbench-architecture.webp" alt="Automated test rig architecture preview"><div>Primary external deliverable: automated test bench building package.</div></div>
+          <div class="actions portal-actions"><button class="pill primary" type="button" id="openTestRigDetails">Details</button></div>
           <section class="quick-cards">
             <article class="quick-card"><div><h2>Current goal</h2><p>Build the test bench package for repeatable prosthetic-hand testing.</p></div></article>
             <article class="quick-card"><div><h2>Upload</h2><p>Submit CAD files, build notes, screenshots, and questions.</p></div><div class="actions"><a class="pill primary" href="PASTE_GOOGLE_FORM_UPLOAD_LINK_HERE" target="_blank" rel="noopener">Upload</a></div></article>
@@ -1272,6 +1465,7 @@ a:focus-visible {
           <h1 class="title">Entrada do estudante</h1>
           <div class="rule"></div>
           <div class="portal-preview"><img src="testbench-architecture.webp" alt="Prévia da arquitetura da bancada de teste"><div>Entrega principal: pacote de construção da bancada de teste automatizada.</div></div>
+          <div class="actions portal-actions"><button class="pill primary" type="button" id="openTestRigDetailsPt">Detalhes</button></div>
           <section class="quick-cards">
             <article class="quick-card"><div><h2>Objetivo atual</h2><p>Construir o pacote da bancada de teste para ensaios repetíveis da mão protética.</p></div></article>
             <article class="quick-card"><div><h2>Enviar</h2><p>Envie arquivos CAD, notas de construção, imagens e perguntas.</p></div><div class="actions"><a class="pill primary" href="PASTE_GOOGLE_FORM_UPLOAD_LINK_HERE" target="_blank" rel="noopener">Enviar</a></div></article>
@@ -1279,6 +1473,15 @@ a:focus-visible {
           </section>
         </div>
       </section>
+
+      <section id="year2-empty" class="view year2-empty">
+        <h1 class="title">Year 2</h1>
+        <div class="rule"></div>
+        <div class="empty-card">
+          <p>Year 2 is intentionally empty for now.</p>
+        </div>
+      </section>
+
     </main>
   </section>
 </div>
@@ -1321,7 +1524,18 @@ document.querySelectorAll('.year').forEach(button => {
   button.addEventListener('click', () => {
     document.querySelectorAll('.year').forEach(item => item.classList.remove('active'));
     button.classList.add('active');
-    document.querySelector('.top-year').textContent = button.dataset.year === '1' ? '2026' : '2027';
+
+    const isYear2 = button.dataset.year === '2';
+    document.querySelector('.top-year').textContent = isYear2 ? '2027' : '2026';
+
+    if (isYear2) {
+      document.querySelectorAll('.nav button').forEach(item => item.classList.remove('active'));
+      document.querySelectorAll('.view').forEach(view => view.classList.remove('active'));
+      document.getElementById('year2-empty').classList.add('active');
+      window.scrollTo(0, 0);
+    } else {
+      activateView('dashboard');
+    }
   });
 });
 
@@ -1401,6 +1615,73 @@ modal.addEventListener('click', event => {
     modal.setAttribute('aria-hidden', 'true');
   }
 });
+
+const testRigModal = document.getElementById('testRigModal');
+const testRigClose = document.getElementById('testRigClose');
+const openTestRigDetails = document.getElementById('openTestRigDetails');
+const openTestRigDetailsPt = document.getElementById('openTestRigDetailsPt');
+
+function openTestRigModal() {
+  if (!testRigModal) return;
+  testRigModal.classList.add('active');
+  testRigModal.setAttribute('aria-hidden', 'false');
+}
+
+if (openTestRigDetails) openTestRigDetails.addEventListener('click', openTestRigModal);
+if (openTestRigDetailsPt) openTestRigDetailsPt.addEventListener('click', openTestRigModal);
+
+if (testRigClose) {
+  testRigClose.addEventListener('click', () => {
+    testRigModal.classList.remove('active');
+    testRigModal.setAttribute('aria-hidden', 'true');
+  });
+}
+
+if (testRigModal) {
+  testRigModal.addEventListener('click', event => {
+    if (event.target === testRigModal) {
+      testRigModal.classList.remove('active');
+      testRigModal.setAttribute('aria-hidden', 'true');
+    }
+  });
+}
+
 </script>
+
+<div class="modal" id="testRigModal" aria-hidden="true">
+  <div class="modal-card test-rig-card">
+    <div class="modal-top">
+      <strong>Test rig details</strong>
+      <button class="modal-close" type="button" id="testRigClose">×</button>
+    </div>
+
+    <div class="detail-section">
+      <h3>Purpose</h3>
+      <p>Build a benchtop rig that pulls the prosthetic tendon cable, measures input force, measures grip force, logs data, and helps decide if a printed hand is ready for field testing.</p>
+    </div>
+
+    <div class="detail-grid">
+      <div><strong>1. Linear actuator</strong><span>Provides controlled tendon pull.</span></div>
+      <div><strong>2. Cable load cell</strong><span>Measures cable tension.</span></div>
+      <div><strong>3. Bowden / tendon cable</strong><span>Transfers force to the hand.</span></div>
+      <div><strong>4. Fixed bed</strong><span>Rigid base for repeatable testing.</span></div>
+      <div><strong>5. Wrist mount</strong><span>Holds the printed hand securely.</span></div>
+      <div><strong>6. Grip target load cell</strong><span>Measures grasp force.</span></div>
+      <div><strong>7. DAQ controller</strong><span>Collects sensor data.</span></div>
+      <div><strong>8. Python interface</strong><span>Logs force, cycles, and results.</span></div>
+    </div>
+
+    <div class="detail-section">
+      <h3>Required outputs</h3>
+      <p>CAD + assembly, BOM + wiring, Python logging file, calibration steps, test report, photos of failures, and recommendation memo.</p>
+    </div>
+
+    <div class="detail-section">
+      <h3>Core tests</h3>
+      <p>Force transfer, fatigue, slip, creep, off-axis load, and basic environmental wear.</p>
+    </div>
+  </div>
+</div>
+
 </body>
 </html>
