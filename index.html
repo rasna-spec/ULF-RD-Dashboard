@@ -787,15 +787,74 @@ body[data-theme="light"] .carousel .pill.primary {
   right:12px;
 }
 
+
+/* V12 landing click fix */
+body.landing-open {
+  overflow:hidden !important;
+}
+
+body.app-open {
+  overflow:auto !important;
+}
+
+#landing {
+  position:fixed !important;
+  inset:0 !important;
+  z-index:50 !important;
+  min-height:100dvh !important;
+  width:100% !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  padding:0 !important;
+  background:#000 !important;
+}
+
+#landing .landing-card {
+  position:relative !important;
+  z-index:55 !important;
+  width:100% !important;
+  max-width:360px !important;
+  margin:0 auto !important;
+  display:flex !important;
+  flex-direction:column !important;
+  align-items:center !important;
+  justify-content:center !important;
+  text-align:center !important;
+}
+
+#enterApp {
+  position:relative !important;
+  z-index:60 !important;
+  cursor:pointer !important;
+  pointer-events:auto !important;
+}
+
+#app {
+  display:none !important;
+}
+
+#app.active {
+  display:block !important;
+}
+
+.feedback {
+  display:none !important;
+}
+
+body.app-open .feedback {
+  display:flex !important;
+}
+
 </style>
 </head>
-<body data-theme="dark">
+<body data-theme="dark" class="landing-open">
 
 <section class="landing" id="landing">
   <div class="landing-card">
     <img class="logo large" src="ul-logo.png" alt="Universal Limbs logo">
     <div class="landing-title">R&amp;D home</div>
-    <button class="landing-enter" type="button" id="enterApp">Click here</button>
+    <button class="landing-enter" type="button" id="enterApp" onclick="enterDashboard()">Click here</button>
   </div>
 </section>
 
@@ -1006,7 +1065,19 @@ body[data-theme="light"] .carousel .pill.primary {
 <script>
 const landing=document.getElementById('landing');
 const app=document.getElementById('app');
-document.getElementById('enterApp').addEventListener('click',()=>{landing.style.display='none';app.classList.add('active');});
+
+function enterDashboard(){
+  if (landing) landing.style.display='none';
+  if (app) app.classList.add('active');
+  document.body.classList.remove('landing-open');
+  document.body.classList.add('app-open');
+  window.scrollTo(0,0);
+}
+
+const enterButton=document.getElementById('enterApp');
+if (enterButton) {
+  enterButton.addEventListener('click', enterDashboard);
+}
 
 function activateView(id){
   document.querySelectorAll('.nav button').forEach(b=>b.classList.toggle('active',b.dataset.view===id));
