@@ -1,418 +1,336 @@
-
 <!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Universal Limbs — R&D Action Dashboard</title>
+<title>Universal Limbs — R&D Dashboard</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#050505;--paper:#0a0a0a;--card:#111111;--ink:#f4f4f2;--muted:#9b9b97;--line:#292929;--soft:#191919;--glass:rgba(20,20,20,.72)}
-*{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--ink);font-family:"DM Sans",Arial,sans-serif}
-button,a,input{font:inherit;color:inherit} button{cursor:pointer}
-.app{width:min(1540px,97vw);margin:18px auto;background:var(--paper);border-radius:28px;overflow:hidden;min-height:920px;box-shadow:0 15px 60px #00000012}
-.top{height:72px;display:flex;align-items:center;padding:0 28px;border-bottom:1px solid var(--line);gap:20px;position:sticky;top:0;background:rgba(9,9,9,.94);backdrop-filter:blur(14px);z-index:20}
-.logo{font-weight:700;min-width:185px}.logo small{display:block;font:700 8px "Space Mono";letter-spacing:.12em;color:#888;margin-top:2px}
-.nav{display:flex;gap:5px;flex:1;justify-content:center}.nav button{border:0;background:transparent;padding:10px 14px;border-radius:999px;font-size:12px}.nav button.active{background:#f2f2ef;color:#0b0b0b}
-.tools{display:flex;gap:8px}.mode,.btn{border:1px solid var(--line);background:#151515;padding:9px 12px;border-radius:999px;font-size:11px;font-weight:600;text-decoration:none;display:inline-flex;align-items:center;gap:6px}
-.btn.dark,.mode.dark{background:#f2f2ef;color:#0b0b0b;border-color:#f2f2ef}.page{display:none;padding:26px}.page.active{display:block}
-.eyebrow{font:700 9px "Space Mono",monospace;letter-spacing:.13em;text-transform:uppercase;color:#777}
-h1{font-size:38px;line-height:1;margin:8px 0 6px;letter-spacing:-.045em}h2{font-size:21px;margin:0;letter-spacing:-.03em}h3{font-size:14px;margin:0}
-p{color:var(--muted);font-size:12px;line-height:1.55}.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px}
-.alert{display:grid;grid-template-columns:1.2fr 1fr .9fr;gap:12px;margin-top:18px}.alert .card{min-height:132px}
-.bigdate{font-size:30px;font-weight:700;letter-spacing:-.04em;margin:6px 0}.hero-grid{display:grid;grid-template-columns:245px 1fr 285px;gap:14px;margin-top:14px}
-.hero-object{min-height:370px;position:relative;overflow:hidden;background:radial-gradient(circle at 50% 42%,#262626 0,#171717 38%,#0d0d0d 76%);display:flex;align-items:center;justify-content:center}
-.hero-object:before{content:"";position:absolute;width:430px;height:430px;border-radius:50%;background:radial-gradient(circle,#5a5a5a55 0,#25252555 40%,transparent 70%)}
-.prosthetic{width:78%;height:76%;position:relative;filter:drop-shadow(0 24px 24px #000);transform:rotate(-7deg)}
-.socket{position:absolute;left:4%;top:34%;width:28%;height:36%;border-radius:38px 20px 20px 38px;background:linear-gradient(120deg,#777,#2d2d2d 55%,#171717);border:1px solid #555}
-.palm{position:absolute;left:29%;top:30%;width:30%;height:42%;border-radius:42% 35% 32% 40%;background:linear-gradient(130deg,#8b8b8b,#353535 58%,#171717);border:1px solid #555}
-.joint{position:absolute;width:13px;height:13px;border-radius:50%;background:#bdbdbd;box-shadow:0 0 0 5px #303030}
-.finger{position:absolute;height:12%;border-radius:999px;background:linear-gradient(180deg,#888,#333 58%,#171717);border:1px solid #555;transform-origin:left center}
-.f1{width:42%;left:52%;top:18%;transform:rotate(-10deg)}.f2{width:45%;left:53%;top:33%;transform:rotate(-3deg)}.f3{width:42%;left:52%;top:48%;transform:rotate(7deg)}.f4{width:35%;left:49%;top:61%;transform:rotate(17deg)}.thumb{width:31%;left:40%;top:64%;transform:rotate(45deg)}
-.cable{position:absolute;left:13%;top:48%;width:50%;height:3px;background:#b8b8b8;transform:rotate(-4deg);opacity:.8}
-.glass{position:absolute;background:var(--glass);border:1px solid #3a3a3a;box-shadow:0 10px 30px #00000066;backdrop-filter:blur(13px);border-radius:14px;padding:10px 12px;font-size:10px}
-.g1{left:4%;top:6%}.g2{right:4%;top:8%}.g3{right:5%;bottom:8%}.g4{left:6%;bottom:8%}
-.placeholder{position:absolute;bottom:13px;left:50%;transform:translateX(-50%);font:700 8px "Space Mono";letter-spacing:.12em;color:#777;white-space:nowrap}
-.metric{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:12px 0;border-bottom:1px solid var(--line)}.metric:last-child{border:0}.metric strong{font-size:14px}
-.phasebar{display:flex;height:12px;border-radius:99px;overflow:hidden;background:#252525;margin:16px 0 9px}.phasebar span:nth-child(1){width:33%;background:#f1f1ef}.phasebar span:nth-child(2){width:33%;background:#777}.phasebar span:nth-child(3){width:34%;background:#333}
-.dashboard-grid{display:grid;grid-template-columns:1.2fr 1.05fr 1fr 1fr;gap:14px;margin-top:14px}.bigcard{min-height:260px}
-.taskbar{display:grid;grid-template-columns:135px 1fr 48px;gap:10px;align-items:center;padding:9px 0;border-bottom:1px solid var(--line);font-size:11px}.bartrack{height:8px;background:#292929;border-radius:99px;overflow:hidden}.barfill{height:100%;background:#f1f1ef;border-radius:99px}.barfill.wait{width:6%!important;background:#777}.barfill.need{background:repeating-linear-gradient(45deg,#f1f1ef,#f1f1ef 4px,#777 4px,#777 8px)}
-.badge{font:700 8px "Space Mono";padding:5px 7px;border:1px solid var(--line);border-radius:999px;white-space:nowrap}.badge.dark{background:#f1f1ef;color:#111;border-color:#f1f1ef}
-.actionrow{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}.mini{border:1px solid var(--line);background:#151515;border-radius:999px;padding:7px 9px;font-size:9px;font-weight:700}
-.person{display:grid;grid-template-columns:34px 1fr auto;gap:10px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}.avatar{width:34px;height:34px;border-radius:50%;background:#f1f1ef;color:#111;display:grid;place-items:center;font-weight:700;font-size:10px}
-.file-row{display:flex;justify-content:space-between;gap:10px;padding:11px 0;border-bottom:1px solid var(--line);font-size:11px}.file-row:last-child{border:0}.statusdot{width:8px;height:8px;border-radius:50%;background:#111;display:inline-block;margin-right:6px}
-.testflow{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-top:16px}.teststep{padding:11px 8px;border:1px solid var(--line);border-radius:12px;font-size:9px;text-align:center;background:#151515}.teststep.current{background:#f1f1ef;color:#111}
-.timeline{margin-top:18px;overflow:auto}.months,.g-row{display:grid;grid-template-columns:190px repeat(12,1fr);align-items:center;min-width:1100px}.months div{font:700 8px "Space Mono";color:#777;text-align:center;padding:10px 2px;border-bottom:1px solid var(--line)}.months div:first-child{text-align:left}.g-row{min-height:70px;border-bottom:1px solid var(--line)}.g-name strong{font-size:12px;display:block}.g-name span{font-size:9px;color:#777}.bar{height:31px;border-radius:8px;color:white;font-size:9px;font-weight:700;display:flex;align-items:center;padding:0 10px;grid-row:1}.bar.a{grid-column:2/6;background:#f1f1ef;color:#111}.bar.b{grid-column:6/10;background:#777}.bar.c{grid-column:10/14;background:#333;color:#ddd}
-.columns{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.search{width:100%;border:1px solid var(--line);background:#151515;color:#f4f4f2;border-radius:14px;padding:14px;margin:15px 0;outline:none}
-.workflow-wrap{margin-top:20px;display:grid;grid-template-columns:minmax(440px,1.1fr) minmax(320px,.9fr);gap:18px;align-items:stretch}.workflow-loop{position:relative;min-height:520px;background:#0d0d0d;border:1px solid var(--line);border-radius:22px;overflow:hidden}.loop-ring{position:absolute;width:330px;height:330px;border:1px dashed #555;border-radius:50%;left:50%;top:50%;transform:translate(-50%,-50%)}.loop-ring:after{content:"↻";position:absolute;inset:0;display:grid;place-items:center;font-size:64px;color:#2c2c2c}.loop-step{position:absolute;z-index:2;background:#151515;border:1px solid #383838;border-radius:999px;padding:12px 16px;font-size:10px;font-weight:700;white-space:nowrap}.loop-step.repeat{border-color:#8a8a8a;background:#f1f1ef;color:#111}.ls1{left:50%;top:8%;transform:translateX(-50%)}.ls2{right:8%;top:27%}.ls3{right:5%;bottom:27%}.ls4{left:50%;bottom:8%;transform:translateX(-50%)}.ls5{left:7%;bottom:27%}.ls6{left:8%;top:27%}.loop-center{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:3;width:170px;text-align:center}.loop-center strong{font-size:17px;display:block}.loop-center span{font-size:10px;color:var(--muted);line-height:1.45;display:block;margin-top:6px}.testing-sequence{display:flex;flex-direction:column;gap:10px}.test-card{background:#111;border:1px solid var(--line);border-radius:18px;padding:17px;display:grid;grid-template-columns:42px 1fr auto;gap:12px;align-items:center}.test-num{width:42px;height:42px;border-radius:50%;background:#f1f1ef;color:#111;display:grid;place-items:center;font:700 11px "Space Mono"}.test-card h3{font-size:15px}.test-card p{margin:4px 0 0}.test-tag{font:700 8px "Space Mono";border:1px solid #444;border-radius:999px;padding:6px 8px;color:#bbb}.workflow-rule{margin-top:14px;background:#111;border:1px solid var(--line);border-radius:16px;padding:16px;font-size:12px;line-height:1.55}.workflow-rule strong{color:#fff}@media(max-width:900px){.workflow-wrap{grid-template-columns:1fr}.workflow-loop{min-height:480px}}
-.partner-only{display:none}body.partner .internal-only{display:none!important}body.partner .partner-only{display:block!important}body.partner .nav{display:none}body.partner .logo{min-width:auto}.partner-shell{max-width:1120px;margin:auto}
-.nudge{border:1px dashed #aaa;background:#121212;border-radius:16px;padding:15px;margin-top:14px}
-@media(max-width:980px){.hero-grid,.dashboard-grid,.columns,.alert{grid-template-columns:1fr}.nav{overflow:auto;justify-content:flex-start}.hero-object{min-height:300px}.tools{display:none}.testflow{grid-template-columns:1fr 1fr}}
-
-a{color:#f1f1ef}
-.card{box-shadow:inset 0 1px 0 #ffffff08}
-.hero-object .glass{color:#efefed}
-.mini{color:#ededeb}
-input::placeholder{color:#777}
-body{background:radial-gradient(circle at 50% 0,#1b1b1b 0,#080808 42%,#050505 80%)}
-.app{box-shadow:0 20px 80px #00000088}
-
-/* Google Sites embed compatibility */
-html,body{min-height:100%;overflow-x:hidden}
-body{padding:0}
-.app{min-height:900px}
-@media(max-width:700px){
-  .app{width:100%;margin:0;border-radius:0;min-height:100vh}
-  .top{padding:0 14px}
-  .page{padding:18px 14px}
+:root {
+  --bg:#050505; --panel:#0b0b0b; --card:#111111; --ink:#f4f4f2;
+  --muted:#9b9b97; --quiet:#6f6f6a; --line:#292929; --white:#f1f1ef;
 }
-
-
-/* V6 HOME: actual Phase 1 concept placeholder */
-.phase1-hero{
-  position:relative;
-  overflow:hidden;
-  min-height:330px;
-  background:
-    radial-gradient(circle at 50% 48%, rgba(255,255,255,.09), transparent 42%),
-    linear-gradient(135deg,#181818 0%,#0b0b0b 72%);
+* { box-sizing:border-box; }
+html,body {
+  margin:0; padding:0; min-height:100%;
+  background:radial-gradient(circle at 50% 0,#1b1b1b 0,#080808 42%,#050505 80%);
+  color:var(--ink); font-family:"DM Sans",Arial,sans-serif;
 }
-.phase1-hero:after{
-  content:"";
-  position:absolute;inset:0;
-  background:linear-gradient(90deg,rgba(8,8,8,.25),transparent 24%,transparent 72%,rgba(8,8,8,.45));
-  pointer-events:none;
+button,a,input { font:inherit; color:inherit; }
+.app {
+  width:min(1540px,97vw); min-height:920px; margin:18px auto;
+  background:var(--panel); border:1px solid #181818; border-radius:28px;
+  overflow:hidden; box-shadow:0 20px 80px #00000088;
 }
-.phase1-hero img{
-  width:100%;height:100%;min-height:330px;
-  object-fit:cover;
-  object-position:center;
-  display:block;
-  filter:grayscale(100%) contrast(1.03) brightness(.72);
-  opacity:.88;
+.top {
+  height:72px; display:flex; align-items:center; gap:20px; padding:0 28px;
+  border-bottom:1px solid var(--line); background:rgba(9,9,9,.94);
+  backdrop-filter:blur(14px); position:sticky; top:0; z-index:20;
 }
-.phase1-hero .glass{
-  position:absolute;z-index:2;
-  background:rgba(12,12,12,.72);
-  border:1px solid rgba(255,255,255,.16);
-  color:#f4f4f2;
-  backdrop-filter:blur(12px);
-  -webkit-backdrop-filter:blur(12px);
-  box-shadow:0 12px 35px rgba(0,0,0,.35);
+.logo { min-width:210px; font-weight:800; letter-spacing:-.02em; }
+.logo small {
+  display:block; margin-top:2px; font:700 8px "Space Mono",monospace;
+  letter-spacing:.14em; color:#777; text-transform:uppercase;
 }
-.phase1-hero .concept-tag{left:22px;top:22px;padding:12px 14px;border-radius:14px}
-.phase1-hero .owner-tag{right:22px;top:22px;padding:12px 14px;border-radius:14px}
-@media(max-width:800px){
-  .phase1-hero{min-height:280px}
-  .phase1-hero img{min-height:280px}
+.nav { display:flex; gap:5px; flex:1; justify-content:center; overflow:auto; }
+.nav button {
+  border:0; background:transparent; color:var(--muted); padding:10px 14px;
+  border-radius:999px; font-size:12px; font-weight:700; cursor:pointer; white-space:nowrap;
 }
-
-
-.workflow-loop-card{margin-top:24px;border:1px solid var(--line);border-radius:22px;background:#101010;padding:28px;min-height:520px;display:grid;place-items:center}
-.loop-wrap{width:min(620px,90vw);height:430px;position:relative}
-.loop-ring{position:absolute;width:320px;height:320px;border:2px dashed #555;border-radius:50%;left:50%;top:50%;transform:translate(-50%,-50%)}
-.loop-ring:after{content:"↻";position:absolute;right:-18px;top:135px;font-size:38px;color:#f2f2ef;background:#101010;padding:2px 6px}
-.loop-center{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);text-align:center}
-.loop-center b{display:block;font-size:22px}.loop-center span{display:block;color:var(--muted);font-size:12px;margin-top:6px}
-.loop-node{position:absolute;min-width:118px;padding:12px 14px;border:1px solid #3a3a3a;border-radius:14px;background:#171717;text-align:center}
-.loop-node small{display:block;color:#8d8d89;font-family:monospace;font-size:9px;margin-bottom:4px}
-.loop-node b{font-size:12px}
-.n1{left:50%;top:0;transform:translateX(-50%)}.n2{right:4%;top:72px}.n3{right:0;bottom:90px}.n4{right:24%;bottom:0}.n5{left:24%;bottom:0}.n6{left:0;bottom:90px}.n7{left:4%;top:72px}
-.workflow-subhead{margin-top:34px}.test-gates{display:grid;grid-template-columns:1fr auto 1fr auto 1fr auto 1fr;gap:10px;align-items:stretch;margin-top:18px}
-.gate{border:1px solid var(--line);border-radius:16px;background:#121212;padding:18px;display:flex;flex-direction:column;gap:8px}
-.gate span{font-family:monospace;color:#888;font-size:10px}.gate b{font-size:15px}.gate small{color:var(--muted);line-height:1.45}
-.gate.current{border-color:#777;background:#191919}.gate-arrow{display:grid;place-items:center;color:#777;font-size:22px}
-.workflow-rule{margin-top:18px;border:1px solid var(--line);border-radius:16px;padding:16px 18px;background:#101010}
-@media(max-width:850px){.test-gates{grid-template-columns:1fr}.gate-arrow{transform:rotate(90deg)}.loop-wrap{transform:scale(.82)}}
-
-
-/* V7 — Phase 1 hero image + minimal team profiles */
-.hero-object.phase1-image{
-  padding:0;
-  min-height:370px;
-  background:#0d0d0d;
+.nav button.active { background:var(--white); color:#0b0b0b; }
+.tools { display:flex; gap:8px; }
+.btn {
+  border:1px solid var(--line); background:#151515; color:var(--ink);
+  padding:9px 12px; border-radius:999px; font-size:11px; font-weight:700;
+  text-decoration:none; display:inline-flex; align-items:center; gap:6px; white-space:nowrap;
 }
-.hero-object.phase1-image .phase1-art{
-  position:absolute;
-  inset:0;
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  object-position:center;
-  filter:grayscale(100%) brightness(.58) contrast(1.08);
-  opacity:.90;
+.btn.light { background:var(--white); color:#111; border-color:var(--white); }
+.page { display:none; padding:26px; }
+.page.active { display:block; }
+.eyebrow {
+  font:700 9px "Space Mono",monospace; letter-spacing:.13em;
+  text-transform:uppercase; color:#777;
 }
-.hero-object.phase1-image:after{
-  content:"";
-  position:absolute;
-  inset:0;
-  background:
-    linear-gradient(90deg,rgba(5,5,5,.82) 0%,rgba(5,5,5,.18) 25%,rgba(5,5,5,.12) 68%,rgba(5,5,5,.76) 100%),
-    linear-gradient(0deg,rgba(5,5,5,.78) 0%,transparent 30%,rgba(5,5,5,.18) 100%);
-  z-index:1;
-  pointer-events:none;
+h1 {
+  font-size:clamp(42px,6.5vw,86px); line-height:.88; margin:8px 0 10px;
+  letter-spacing:-.065em; font-weight:900;
 }
-.hero-object.phase1-image .glass,
-.hero-object.phase1-image .placeholder{z-index:3}
-.team-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:18px}
-.team-card{display:flex;align-items:center;gap:14px;min-height:94px}
-.avatar{
-  width:48px;height:48px;border-radius:50%;overflow:hidden;flex:0 0 48px;
-  background:#f1f1ef;color:#111;border:1px solid #333;
-  display:grid;place-items:center;font-weight:700;font-size:11px;
+h2 { font-size:22px; line-height:1.05; margin:0; letter-spacing:-.035em; font-weight:800; }
+h3 { font-size:14px; margin:0; font-weight:800; }
+p { color:var(--muted); font-size:12px; line-height:1.55; }
+.lead { max-width:820px; font-size:13px; }
+.card {
+  background:var(--card); border:1px solid var(--line); border-radius:18px;
+  padding:18px; box-shadow:inset 0 1px 0 #ffffff08;
 }
-.avatar img{width:100%;height:100%;object-fit:cover;object-position:center;display:block}
-.team-copy{min-width:0;flex:1}
-.team-copy b{font-size:13px}
-.team-copy p{margin:3px 0 0;font-size:10px}
-.team-photo-note{margin-top:16px;padding:14px 16px;border:1px dashed #3a3a3a;border-radius:14px;background:#0e0e0e}
-@media(max-width:980px){.team-grid{grid-template-columns:1fr 1fr}}
-@media(max-width:650px){.team-grid{grid-template-columns:1fr}}
-
-
-/* V8 — Weekly priorities */
-.weekly-priority-card{padding:20px 22px!important}
-.weekly-priority-header{display:flex;justify-content:space-between;align-items:flex-start;gap:16px}
-.weekly-deadline{border:1px solid #3a3a3a;background:#181818;border-radius:999px;padding:7px 10px;font:700 8px "Space Mono",monospace;letter-spacing:.08em;color:#f4f4f2;white-space:nowrap}
-.weekly-intro{margin:7px 0 13px}
-.weekly-priority-list{border-top:1px solid var(--line)}
-.weekly-priority-item{display:grid;grid-template-columns:28px 1fr auto;gap:9px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}
-.priority-number{font:700 8px "Space Mono",monospace;color:#70706d}
-.priority-content{min-width:0}.priority-content strong{display:block;font-size:11px;color:#f4f4f2}.priority-content span{display:block;margin-top:2px;font-size:9px;color:#777}
-.priority-status{font:700 7px "Space Mono",monospace;letter-spacing:.04em;padding:5px 7px;border:1px solid #3a3a3a;border-radius:999px;color:#d9d9d6;white-space:nowrap}.priority-status.waiting{color:#888}
-.weekly-goal-footer{display:flex;justify-content:space-between;align-items:center;gap:10px;padding-top:12px}.weekly-goal-footer span{font:700 8px "Space Mono",monospace;letter-spacing:.09em;color:#777}.weekly-goal-footer strong{font-size:10px}
-.alert{grid-template-columns:1.35fr 1fr .9fr}
-.alert .weekly-priority-card{min-height:132px}
-@media(max-width:980px){.alert{grid-template-columns:1fr}.weekly-priority-item{grid-template-columns:24px 1fr}.priority-status{grid-column:2;justify-self:start;margin-top:2px}}
-
-
-/* V9 — simplified home */
-.alert{grid-template-columns:1.55fr .75fr}
-.hero-grid{grid-template-columns:245px 1fr}
-.urgent-priority{
-  border-left:3px solid #d94b4b;
-  padding-left:10px;
-  background:rgba(150,30,30,.08);
+.grid-top { display:grid; grid-template-columns:1.15fr .85fr; gap:14px; margin-top:18px; }
+.stage-path { display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin:20px 0 16px; font-size:11px; color:#777; }
+.stage-path span { padding:7px 9px; border:1px solid var(--line); border-radius:999px; }
+.stage-path span.arrow { padding:0; border:0; }
+.stage-path .current { background:var(--white); color:#111; border-color:var(--white); font-weight:800; }
+.note { border-top:1px solid var(--line); padding-top:14px; font-size:11px; color:var(--muted); }
+.summary-strip {
+  display:grid; grid-template-columns:repeat(4,1fr); gap:1px; border:1px solid var(--line);
+  border-radius:18px; overflow:hidden; margin-top:14px; background:var(--line);
 }
-.priority-status.urgent{
-  color:#ff6b6b;
-  border-color:#8c3535;
-  background:rgba(170,35,35,.14);
+.summary-item { background:#101010; padding:18px; min-height:96px; }
+.summary-item span {
+  display:block; font:700 8px "Space Mono",monospace; letter-spacing:.14em;
+  color:#777; text-transform:uppercase; margin-bottom:8px;
 }
-@media(max-width:980px){
-  .alert,.hero-grid{grid-template-columns:1fr}
+.summary-item b { display:block; font-size:18px; line-height:1.1; }
+.summary-item small { display:block; margin-top:7px; color:var(--muted); font-size:10px; line-height:1.4; }
+.quarter-board { margin-top:14px; border:1px solid var(--line); border-radius:18px; overflow:hidden; }
+.quarter-row { display:grid; grid-template-columns:150px 1fr 1fr 1fr; border-bottom:1px solid var(--line); }
+.quarter-row:last-child { border-bottom:0; }
+.quarter-head { background:#0d0d0d; color:#777; font:700 8px "Space Mono",monospace; letter-spacing:.12em; text-transform:uppercase; }
+.quarter-cell { padding:16px; border-right:1px solid var(--line); min-height:95px; }
+.quarter-cell:last-child { border-right:0; }
+.quarter-cell b { display:block; font-size:12px; margin-bottom:6px; }
+.quarter-cell p { margin:0; font-size:11px; }
+.status {
+  display:inline-flex; align-items:center; gap:7px; font:700 8px "Space Mono",monospace;
+  letter-spacing:.08em; text-transform:uppercase; padding:6px 8px;
+  border:1px solid #3a3a3a; border-radius:999px; color:#d8d8d4; margin-top:10px;
 }
-
-
-/* V10 — minimal focused R&D home */
-.home-focus-grid{display:grid;grid-template-columns:1fr 1.15fr;gap:14px;margin-top:18px}
-.home-stage-card,.home-delivery-card,.home-section{padding:22px}
-.home-stage-card h2,.home-delivery-card h2,.home-section h2{margin-top:8px}
-.stage-path{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:20px 0 16px;font-size:11px;color:#777}
-.stage-path span{padding:7px 9px;border:1px solid var(--line);border-radius:999px}
-.stage-path span:nth-child(even){padding:0;border:0}
-.stage-path .stage-current{background:#f1f1ef;color:#111;border-color:#f1f1ef;font-weight:700}
-.home-note{border-top:1px solid var(--line);padding-top:14px;font-size:11px;color:var(--muted)}
-.deliver-row{display:grid;grid-template-columns:28px 1fr;gap:10px;padding:11px 0;border-bottom:1px solid var(--line)}
-.deliver-row:last-child{border-bottom:0}
-.deliver-row>span{font:700 8px "Space Mono";color:#777;padding-top:2px}
-.deliver-row b{display:block;font-size:11px}
-.deliver-row small{display:block;color:var(--muted);font-size:9px;margin-top:3px;line-height:1.45}
-.home-section{margin-top:14px}
-.owner-table{margin-top:14px;border-top:1px solid var(--line)}
-.owner-row{display:grid;grid-template-columns:120px 1fr 110px;gap:14px;align-items:center;padding:12px 0;border-bottom:1px solid var(--line);font-size:11px}
-.owner-row span{color:var(--muted)}
-.owner-row em,.pending-row em{font:700 7px "Space Mono";font-style:normal;justify-self:end;border:1px solid #3a3a3a;border-radius:999px;padding:5px 7px;color:#bdbdb8;white-space:nowrap}
-.home-bottom-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:14px}
-.pending-row{display:grid;grid-template-columns:18px 1fr auto;gap:9px;align-items:center;padding:11px 0;border-bottom:1px solid var(--line);font-size:11px}
-.pending-row>span{color:#777}
-.home-links{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px}
-@media(max-width:900px){
- .home-focus-grid,.home-bottom-grid{grid-template-columns:1fr}
- .owner-row{grid-template-columns:90px 1fr}
- .owner-row em{grid-column:2;justify-self:start}
+.status:before { content:""; width:6px; height:6px; border-radius:50%; background:var(--white); }
+.owner-table,.simple-list { margin-top:14px; border-top:1px solid var(--line); }
+.owner-row,.list-row {
+  display:grid; grid-template-columns:130px 1fr 120px; gap:14px; align-items:center;
+  padding:12px 0; border-bottom:1px solid var(--line); font-size:11px;
 }
-
+.owner-row span,.list-row span { color:var(--muted); }
+.owner-row em,.list-row em {
+  font:700 7px "Space Mono",monospace; font-style:normal; justify-self:end;
+  border:1px solid #3a3a3a; border-radius:999px; padding:5px 7px;
+  color:#bdbdb8; white-space:nowrap; text-transform:uppercase;
+}
+.two-col { display:grid; grid-template-columns:1.1fr .9fr; gap:14px; margin-top:14px; }
+.link-table { border-top:1px solid var(--line); margin-top:38px; }
+.link-row {
+  display:grid; grid-template-columns:1.2fr .8fr 2fr .8fr .6fr .6fr; gap:18px;
+  align-items:start; border-bottom:1px solid var(--line); padding:16px 0; font-size:12px;
+}
+.link-header { color:#777; font:700 8px "Space Mono",monospace; letter-spacing:.13em; text-transform:uppercase; }
+.link-doc { color:#fff; font-weight:800; }
+.muted { color:var(--muted); }
+.open { color:#fff; text-decoration:none; font:700 10px "Space Mono",monospace; text-transform:uppercase; }
+.open:hover { text-decoration:underline; }
+.warning {
+  border:1px dashed #555; border-radius:16px; padding:14px 16px; margin-top:18px;
+  color:var(--muted); font-size:12px; line-height:1.55;
+}
+.page-title-small { font-size:clamp(38px,5vw,64px); }
+@media(max-width:980px) {
+  .grid-top,.two-col,.summary-strip { grid-template-columns:1fr; }
+  .quarter-row,.owner-row,.list-row,.link-row { grid-template-columns:1fr; gap:6px; }
+  .quarter-cell { border-right:0; border-bottom:1px solid var(--line); }
+  .quarter-cell:last-child { border-bottom:0; }
+  .tools { display:none; }
+  .app { width:100%; margin:0; border-radius:0; }
+  .page { padding:18px 14px; }
+  .top { padding:0 14px; }
+}
 </style>
 </head>
 <body>
 <div class="app">
-<header class="top">
- <div class="logo">Universal Limbs</div>
- <nav class="nav internal-only">
-  <button class="active" onclick="showPage('home',this)">Home</button>
-  <button onclick="showPage('tasks',this)">Tasks</button>
-  <button onclick="showPage('files',this)">Files</button>
-  <button onclick="showPage('workflow',this)">Workflow</button>
-  <button onclick="showPage('budget',this)">Budget</button>
- </nav>
- <div class="tools"><a class="btn" href="https://docs.google.com/spreadsheets/d/1Cf-Qrm9P4SmOiynSsROKjqrrjdEQIn6SukNvNQSpMGU/edit?usp=sharing" target="_blank">Drive ↗</a><a class="btn internal-only" href="ANQUIDO_LINK" target="_blank">Anquido ↗</a><button class="mode dark" onclick="toggleMode()" id="modeBtn">Internal ▾</button></div>
-</header>
-<main>
-<section class="page active" id="home">
- <div class="eyebrow">R&amp;D HOME</div>
- <h1>R&amp;D</h1>
- <p>One page to see where we are, who owns the work, what must be delivered, and what still needs an owner.</p>
+  <header class="top">
+    <div class="logo">Universal Limbs<small>R&D Dashboard</small></div>
+    <nav class="nav">
+      <button class="active" onclick="showPage('home', this)">Home</button>
+      <button onclick="showPage('roadmap', this)">Roadmap</button>
+      <button onclick="showPage('owners', this)">Owners</button>
+      <button onclick="showPage('quicklinks', this)">Quick Links</button>
+      <button onclick="showPage('process', this)">Process</button>
+    </nav>
+    <div class="tools"><a class="btn light" href="https://docs.google.com/spreadsheets/d/1Cf-Qrm9P4SmOiynSsROKjqrrjdEQIn6SukNvNQSpMGU/edit?usp=sharing" target="_blank" rel="noopener">Tracker ↗</a></div>
+  </header>
 
- <div class="home-focus-grid internal-only">
-  <div class="card home-stage-card">
-   <div class="eyebrow">CURRENT STAGE</div>
-   <h2>Simplified Yale Hand — MVP 1</h2>
-   <p>Current engineering stage</p>
-   <div class="stage-path">
-    <span class="stage-current">Design requirements</span><span>→</span><span>Concept</span><span>→</span><span>CAD</span><span>→</span><span>Prototype</span>
-   </div>
-   <div class="home-note"><b>Focus:</b> Lock the requirements before CAD and physical testing.</div>
-  </div>
+  <main>
+    <section class="page active" id="home">
+      <div class="eyebrow">R&D Home</div>
+      <h1>R&D</h1>
+      <p class="lead">One page to see the goal, current quarter, owner map, and what must be delivered next.</p>
 
-  <div class="card home-delivery-card">
-   <div class="eyebrow">REQUIRED TO DELIVER</div>
-   <h2>4 main outputs</h2>
-   <div class="deliver-row"><span>01</span><div><b>University R&amp;D package</b><small>Test rig + presentation + calculations + design requirements</small></div></div>
-   <div class="deliver-row"><span>02</span><div><b>Design requirements package</b><small>Differential + wrist + bypass socket + design requirements</small></div></div>
-   <div class="deliver-row"><span>03</span><div><b>R&amp;D system</b><small>Google Site + GitHub + process + file locations</small></div></div>
-   <div class="deliver-row"><span>04</span><div><b>Testing &amp; documentation system</b><small>Design intake + testing/research + reporting + survey</small></div></div>
-  </div>
- </div>
-
- <div class="card home-section internal-only">
-  <div class="eyebrow">OWNERSHIP</div>
-  <h2>Who is working on what?</h2>
-  <div class="owner-table">
-   <div class="owner-row"><b>Mathew</b><span>Concept + industrial design</span><em>IN PROGRESS</em></div>
-   <div class="owner-row"><b>Ganesh</b><span>Simulation / validation + test-rig support</span><em>IN PROGRESS</em></div>
-   <div class="owner-row"><b>Mahmoud</b><span>CAD design</span><em>WAITING</em></div>
-   <div class="owner-row"><b>Abhay</b><span>R&amp;D research / Bowden cable research</span><em>RESEARCH</em></div>
-   <div class="owner-row"><b>Rasna</b><span>Requirements + coordination</span><em>IN PROGRESS</em></div>
-  </div>
- </div>
-
- <div class="home-bottom-grid internal-only">
-  <div class="card home-section">
-   <div class="eyebrow">OPEN WORK</div>
-   <h2>Pending — can anyone take this?</h2>
-   <div class="pending-row"><span>○</span><b>Prosthetic-user survey</b><em>NEEDS OWNER</em></div>
-   <div class="pending-row"><span>○</span><b>Design Intake SOP</b><em>NEEDS OWNER</em></div>
-   <div class="pending-row"><span>○</span><b>Testing &amp; Research SOP</b><em>NEEDS OWNER</em></div>
-   <div class="pending-row"><span>○</span><b>Testing documentation support</b><em>NEEDS OWNER</em></div>
-  </div>
-
-  <div class="card home-section">
-   <div class="eyebrow">SOURCE OF TRUTH</div>
-   <h2>Where to find everything</h2>
-   <p>Use these pages instead of searching through Slack.</p>
-   <div class="home-links">
-    <button class="btn dark" onclick="showPage('files')">FILES →</button>
-    <button class="btn" onclick="showPage('tasks')">TASKS →</button>
-    <button class="btn" onclick="showPage('workflow')">WORKFLOW →</button>
-    <a class="btn" href="https://docs.google.com/spreadsheets/d/1Cf-Qrm9P4SmOiynSsROKjqrrjdEQIn6SukNvNQSpMGU/edit?usp=sharing" target="_blank" rel="noopener">R&amp;D TRACKER ↗</a>
-   </div>
-  </div>
- </div>
-</section>
-
-<section class="page" id="timeline">
- <div class="eyebrow">Plan · subject to change</div><h1>Timeline</h1><p>Anquido holds the detailed live plan. This page shows the engineering story.</p>
- <div class="card timeline"><div class="months"><div>Focus</div><div>AUG</div><div>SEP</div><div>OCT</div><div>NOV</div><div>DEC</div><div>JAN</div><div>FEB</div><div>MAR</div><div>APR</div><div>MAY</div><div>JUN</div><div>JUL</div></div>
- <div class="g-row"><div class="g-name"><strong>01 Simplified Yale Hand</strong><span>First 4-month focus</span></div><div class="bar a">AUG → NOV</div></div>
- <div class="g-row"><div class="g-name"><strong>02 SoftFoot Pro Integration</strong><span>Review progress before moving forward</span></div><div class="bar b">DEC → MAR</div></div>
- <div class="g-row"><div class="g-name"><strong>03 Pneumatic energy storage</strong><span>Future mechanical / non-electronic concept</span></div><div class="bar c">DATE AFTER REVIEW</div></div></div>
-
-</section>
-
-<section class="page" id="tasks">
- <div class="eyebrow">Action system</div><h1>Tasks</h1><p>Every task needs an owner, deadline, progress update and next action.</p>
- <div class="columns">
-  <div class="card"><h2>Assigned</h2><div class="file-row"><span>Survey</span><b>Rasna</b></div><div class="file-row"><span>Yale paper + test-jig brief</span><b>Ganesh</b></div><div class="file-row"><span>Transmission-ratio video</span><b>Ganesh</b></div><div class="file-row"><span>Anquido updates</span><b>Sahitya</b></div></div>
-  <div class="card"><h2>Needs owner / hand-off</h2><div class="file-row"><span>Bowden cable research</span><b>Assign Abhay</b></div><div class="file-row"><span>CAD design</span><b>Waiting for requirements</b></div><div class="file-row"><span>First design requirements</span><b>Full-team sync</b></div></div>
-  <div class="card"><h2>Reminder rules</h2><div class="file-row"><span>On assignment</span><b>Email</b></div><div class="file-row"><span>2 days before</span><b>Progress check</b></div><div class="file-row"><span>Deadline day</span><b>Update</b></div><div class="file-row"><span>Not complete</span><b>Extension request</b></div><div class="file-row"><span>Overdue</span><b>Daily nudge</b></div></div>
- </div>
-</section>
-
-<section class="page" id="team">
- <div class="eyebrow">People</div>
- <h1>Team</h1>
- <p>Simple roles, clear ownership. Add a photo URL later; initials remain as the fallback.</p>
- <div class="team-grid">
-  <div class="card team-card"><div class="avatar">A</div><div class="team-copy"><b>Abhay</b><p>R&D Research</p></div><span class="badge">RESEARCH</span></div>
-  <div class="card team-card"><div class="avatar">N</div><div class="team-copy"><b>Nili</b><p>Design Validation & Management</p></div><span class="badge">VALIDATION</span></div>
-  <div class="card team-card"><div class="avatar">G</div><div class="team-copy"><b>Ganesh</b><p>Simulation & Validation</p></div><span class="badge">SIMULATION</span></div>
-  <div class="card team-card"><div class="avatar">M</div><div class="team-copy"><b>Mahmoud</b><p>CAD Design</p></div><span class="badge">CAD</span></div>
-  <div class="card team-card"><div class="avatar">M</div><div class="team-copy"><b>Mathew</b><p>Concept & Industrial Design</p></div><span class="badge">DESIGN</span></div>
-  <div class="card team-card"><div class="avatar">S</div><div class="team-copy"><b>Sahitya</b><p>Program Management</p></div><span class="badge">PROGRAM</span></div>
-  <div class="card team-card"><div class="avatar">Y</div><div class="team-copy"><b>Yahia</b><p>Project Management</p></div><span class="badge">PM</span></div>
-  <div class="card team-card"><div class="avatar">N</div><div class="team-copy"><b>Nicole</b><p>Technical Planning & Operations</p></div><span class="badge">OPS</span></div>
-  <div class="card team-card"><div class="avatar">R</div><div class="team-copy"><b>Rasna</b><p>Project Direction + Coordination</p></div><span class="badge">R&D</span></div>
- </div>
- <div class="team-photo-note">
-  <b>Admin photo setup</b>
-  <p>Replace an initial inside any <code>.avatar</code> with <code>&lt;img src="PHOTO_URL" alt="Name"&gt;</code>. The layout will crop it automatically.</p>
- </div>
-</section>
-
-<section class="page" id="files"><div class="eyebrow">Source of truth</div><h1>Files</h1>
- <div class="actionrow"><a class="btn dark" href="https://docs.google.com/spreadsheets/d/1Cf-Qrm9P4SmOiynSsROKjqrrjdEQIn6SukNvNQSpMGU/edit?usp=sharing" target="_blank" rel="noopener">Open R&amp;D tracker ↗</a></div><input class="search" placeholder="Search: survey, design intake, CAD, Brazil, print report..."/>
- <div class="columns"><div class="card"><h2>Design</h2><div class="file-row">Design Intake SOP <span>↗</span></div><div class="file-row">Part Number Standard <span>↗</span></div><div class="file-row">Design Matrix <span>↗</span></div><div class="file-row">Concept Versions <span>↗</span></div><div class="file-row">CAD Versions <span>↗</span></div></div>
- <div class="card"><h2>Build + Test</h2><div class="file-row">3D Printing Playbook <span>↗</span></div><div class="file-row">Print Report <span>↗</span></div><div class="file-row">UTFPR Test Jig <span>↗</span></div><div class="file-row">Test Procedures <span>↗</span></div><div class="file-row">Test Results <span>↗</span></div></div>
- <div class="card"><h2>Program</h2><div class="file-row">Survey <span>↗</span></div><div class="file-row">Q1 Budget <span>↗</span></div><div class="file-row">3DFY Printing <span>↗</span></div><div class="file-row">Brazil Presentation <span>↗</span></div><div class="file-row">Research Papers <span>↗</span></div></div></div>
-</section>
-
-
-<section class="page" id="workflow">
-  <div class="eyebrow">ENGINEERING WORKFLOW</div>
-  <h1>Build → test → improve</h1>
-  <p class="lead">The design process is a loop. We repeat testing and improvement until the required performance is met.</p>
-
-  <div class="workflow-loop-card">
-    <div class="loop-wrap">
-      <div class="loop-ring"></div>
-      <div class="loop-center">
-        <b>REPEAT</b>
-        <span>until performance<br>requirements are met</span>
+      <div class="summary-strip">
+        <div class="summary-item"><span>Goal</span><b>Low-cost adaptive body-powered prosthetic arm</b><small>Child-first design, scalable later to adults.</small></div>
+        <div class="summary-item"><span>Current focus</span><b>Simplified Yale Hand — MVP 1</b><small>Lock requirements before CAD and physical testing.</small></div>
+        <div class="summary-item"><span>Timeline</span><b>24 months</b><small>Quarterly phases with review gates.</small></div>
+        <div class="summary-item"><span>Funding</span><b>Pending</b><small>Budget and grant support still required.</small></div>
       </div>
-      <div class="loop-node n1"><small>01</small><b>Research</b></div>
-      <div class="loop-node n2"><small>02</small><b>Problem<br>definition</b></div>
-      <div class="loop-node n3"><small>03</small><b>Concept</b></div>
-      <div class="loop-node n4"><small>04</small><b>CAD</b></div>
-      <div class="loop-node n5"><small>05</small><b>Prototype</b></div>
-      <div class="loop-node n6"><small>06</small><b>Test</b></div>
-      <div class="loop-node n7"><small>07</small><b>Improve</b></div>
-    </div>
-  </div>
 
-  <div class="eyebrow workflow-subhead">TESTING ORDER</div>
-  <h2>One test stage at a time</h2>
-  <div class="test-gates">
-    <div class="gate current"><span>01</span><b>Subsystem testing</b><small>Test → improve → retest until passed</small></div>
-    <div class="gate-arrow">→</div>
-    <div class="gate"><span>02</span><b>Integration testing</b><small>Starts after subsystem requirements are met</small></div>
-    <div class="gate-arrow">→</div>
-    <div class="gate"><span>03</span><b>System testing</b><small>Starts after integration requirements are met</small></div>
-    <div class="gate-arrow">→</div>
-    <div class="gate"><span>04</span><b>Clinical trial readiness</b><small>After engineering testing is complete</small></div>
-  </div>
+      <div class="grid-top">
+        <div class="card">
+          <div class="eyebrow">Current stage</div>
+          <h2>Simplified Yale Hand — MVP 1</h2>
+          <p>Current engineering stage</p>
+          <div class="stage-path">
+            <span class="current">Design requirements</span><span class="arrow">→</span><span>Concept</span><span class="arrow">→</span><span>CAD</span><span class="arrow">→</span><span>Prototype</span><span class="arrow">→</span><span>Testing</span>
+          </div>
+          <div class="note"><b>Rule:</b> do not move to CAD until the requirements are clear enough for the team to design against.</div>
+        </div>
 
-  <div class="workflow-rule"><b>Rule:</b> Do not move to the next testing stage until the current stage meets its required performance.</div>
-</section>
+        <div class="card">
+          <div class="eyebrow">This quarter must deliver</div>
+          <h2>4 outputs</h2>
+          <div class="simple-list">
+            <div class="list-row"><b>01</b><span>Design requirements package</span><em>Required</em></div>
+            <div class="list-row"><b>02</b><span>Concept direction + simplified architecture</span><em>Required</em></div>
+            <div class="list-row"><b>03</b><span>University R&D / test-rig package</span><em>Required</em></div>
+            <div class="list-row"><b>04</b><span>Testing and documentation system</span><em>Required</em></div>
+          </div>
+        </div>
+      </div>
 
-<section class="page" id="budget"><div class="eyebrow">Q1 first</div><h1>Budget</h1><p>Do not show fake totals. Start with what we know and build the first-quarter budget.</p><div class="columns"><div class="card"><h2>3DFY printing support</h2><div class="file-row"><span>Resin</span><b>Up to 10 parts/mo</b></div><div class="file-row"><span>PA12 SLS</span><b>Up to 10 parts/mo*</b></div><div class="file-row"><span>Other FDM</span><b>Up to 50 parts/mo</b></div><p>*Subject to available equipment/capacity.</p></div><div class="card"><h2>Q1 categories</h2><div class="file-row">Materials <span>—</span></div><div class="file-row">Printing outside partner capacity <span>—</span></div><div class="file-row">Testing / jig <span>—</span></div><div class="file-row">Shipping <span>—</span></div><div class="file-row">Software <span>—</span></div></div><div class="card"><h2>Next action</h2><p>Build the Aug–Nov budget first. Add amounts only after the team confirms requirements.</p><a class="btn dark" href="BUDGET_LINK" target="_blank">Open budget ↗</a></div></div></section>
+      <div class="two-col">
+        <div class="card">
+          <div class="eyebrow">Who is working on what?</div>
+          <h2>Owner map</h2>
+          <div class="owner-table">
+            <div class="owner-row"><b>Rasna</b><span>Requirements, direction, coordination</span><em>Lead</em></div>
+            <div class="owner-row"><b>Matthew</b><span>Concept + industrial design</span><em>In progress</em></div>
+            <div class="owner-row"><b>Ganesh</b><span>Simulation / validation + test-rig support</span><em>In progress</em></div>
+            <div class="owner-row"><b>Mahmoud</b><span>CAD design</span><em>Waiting</em></div>
+            <div class="owner-row"><b>Abhay</b><span>R&D / Bowden cable research</span><em>Research</em></div>
+          </div>
+        </div>
 
-<section class="page partner-only" id="partner"><div class="partner-shell">
- <div class="eyebrow">Universal Limbs × UTFPR</div><h1>Test-jig collaboration</h1><p>Mechatronics Engineering · one page · Brazil-related information only.</p>
- <div class="hero-grid" style="grid-template-columns:1fr 1.2fr">
-  <div class="card"><div class="eyebrow">Your assignment</div><h2 style="margin-top:8px">Prepare the test jig</h2><div class="file-row"><span>01 Review</span><b>Yale paper + brief</b></div><div class="file-row"><span>02 Build</span><b>Agreed jig</b></div><div class="file-row"><span>03 Document</span><b>Setup + results</b></div><div class="metric"><span>Execution target</span><strong>Mid-August</strong></div></div>
-  <div class="card hero-object" style="min-height:300px"><div class="prosthetic"><div class="socket"></div><div class="palm"></div><div class="cable"></div><div class="finger f1"></div><div class="finger f2"></div><div class="finger f3"></div><div class="finger f4"></div><div class="finger thumb"></div></div><div class="glass g1"><b>PROJECT</b><br>Simplified Yale Hand</div><div class="glass g3"><b>PARTNER FOCUS</b><br>Test jig</div><div class="placeholder">CONCEPT PLACEHOLDER · EXPLODED VIEW COMING SOON</div></div>
- </div>
- <div class="columns" style="margin-top:14px"><div class="card"><h2>Shared files</h2><div class="file-row">Yale paper <span>↗</span></div><div class="file-row">Test-jig brief <span>↗</span></div><div class="file-row">Current CAD versions <span>↗</span></div><div class="file-row">Project overview <span>↗</span></div><div class="file-row">Timeline + updates <span>↗</span></div></div><div class="card"><h2>Project path</h2><div class="file-row"><span>Simplified Yale Hand</span><b>NOW</b></div><div class="file-row"><span>SoftFoot integration</span><b>NEXT</b></div><div class="file-row"><span>Pneumatic energy storage</span><b>FUTURE</b></div></div><div class="card"><h2>Need something?</h2><div class="nudge"><b>Give us a gentle nudge 👋</b><p>Waiting on something from Universal Limbs? Send a friendly reminder so it does not get lost.</p><button class="btn">NUDGE US</button></div></div></div>
- </div></section>
-</main></div>
+        <div class="card">
+          <div class="eyebrow">Open work</div>
+          <h2>Needs owner</h2>
+          <div class="simple-list">
+            <div class="list-row"><b>○</b><span>Prosthetic-user survey</span><em>Needs owner</em></div>
+            <div class="list-row"><b>○</b><span>Design Intake SOP</span><em>Needs owner</em></div>
+            <div class="list-row"><b>○</b><span>Testing & Research SOP</span><em>Needs owner</em></div>
+            <div class="list-row"><b>○</b><span>Testing documentation support</span><em>Needs owner</em></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="page" id="roadmap">
+      <div class="eyebrow">Quarterly plan</div>
+      <h1 class="page-title-small">roadmap</h1>
+      <p class="lead">Start with the goal, then break the work into quarters. This makes it clear what the team is building and when each review gate happens.</p>
+      <div class="quarter-board">
+        <div class="quarter-row quarter-head"><div class="quarter-cell">Period</div><div class="quarter-cell">Build focus</div><div class="quarter-cell">Must deliver</div><div class="quarter-cell">Review gate</div></div>
+        <div class="quarter-row"><div class="quarter-cell"><b>Q1</b><p>Aug–Nov 2026</p></div><div class="quarter-cell"><b>Simplified Yale Hand Project</b><p>Whiffletree drive + single cable. Lock child-first mechanical architecture.</p><span class="status">Current</span></div><div class="quarter-cell"><b>Requirements + concept package</b><p>Design requirements, concept direction, test-rig handoff, CAD input package.</p></div><div class="quarter-cell"><b>Design review</b><p>Only move to CAD/prototype when requirements are approved.</p></div></div>
+        <div class="quarter-row"><div class="quarter-cell"><b>Q2</b><p>Dec 2026–Mar 2027</p></div><div class="quarter-cell"><b>Integrated SoftFoot Pro principles</b><p>Adaptive tendon-chain fingers. Use only principles that simplify the hand.</p><span class="status">Waiting approval</span></div><div class="quarter-cell"><b>Prototype + validation plan</b><p>Prototype scope, test stages, failure logs, updated design requirements.</p></div><div class="quarter-cell"><b>Team approval</b><p>Review whether SoftFoot principles help or overcomplicate MVP 1.</p></div></div>
+        <div class="quarter-row"><div class="quarter-cell"><b>Q3</b><p>Apr–Jul 2027</p></div><div class="quarter-cell"><b>Pneumatic design study</b><p>Valve / energy assist concept only if it fits the no-electronics constraint.</p><span class="status">Future</span></div><div class="quarter-cell"><b>Study output</b><p>Decision memo: include, defer, or reject for Phase 1.</p></div><div class="quarter-cell"><b>Phase 1 closeout</b><p>Final review before moving into adult / Phase 2 work.</p></div></div>
+        <div class="quarter-row"><div class="quarter-cell"><b>Year 2</b><p>Aug 2027–Jul 2028</p></div><div class="quarter-cell"><b>Adult architecture + CAD</b><p>Still being decided. Do not over-plan until pediatric design is validated.</p><span class="status">Not decided</span></div><div class="quarter-cell"><b>Adult MVP + validation</b><p>Scale up from pediatric platform only after Phase 1 review.</p></div><div class="quarter-cell"><b>Adult review gate</b><p>Confirm schedule and funding after Year 1 evidence.</p></div></div>
+      </div>
+    </section>
+
+    <section class="page" id="owners">
+      <div class="eyebrow">Execution clarity</div><h1 class="page-title-small">owners</h1>
+      <p class="lead">This page answers: who owns the work, what are they doing, and what is blocked.</p>
+      <div class="card"><div class="owner-table">
+        <div class="owner-row"><b>Rasna</b><span>R&D direction, requirements, coordination, partner alignment</span><em>Lead</em></div>
+        <div class="owner-row"><b>Sahitya</b><span>Program management / Anquido updates</span><em>Support</em></div>
+        <div class="owner-row"><b>Yahia</b><span>Project management / MVP 1 support</span><em>Support</em></div>
+        <div class="owner-row"><b>Matthew</b><span>Concept + industrial design</span><em>In progress</em></div>
+        <div class="owner-row"><b>Ganesh</b><span>Simulation, validation, and test-rig support</span><em>In progress</em></div>
+        <div class="owner-row"><b>Mahmoud</b><span>CAD design after requirements are locked</span><em>Waiting</em></div>
+        <div class="owner-row"><b>Abhay</b><span>R&D research / Bowden cable research</span><em>Research</em></div>
+      </div></div>
+    </section>
+
+    <section class="page" id="quicklinks">
+      <div class="eyebrow">Source of truth</div><h1 class="page-title-small">quick<br>links</h1>
+      <p class="lead">This pulls from the Google Sheet tracker when the sheet is accessible as CSV.</p>
+      <a class="btn light" href="https://docs.google.com/spreadsheets/d/1Cf-Qrm9P4SmOiynSsROKjqrrjdEQIn6SukNvNQSpMGU/edit?usp=sharing" target="_blank" rel="noopener">Open tracker ↗</a>
+      <div class="link-table" id="quickLinksList">
+        <div class="link-row link-header"><div>Document / Asset</div><div>Category</div><div>What is it?</div><div>Status</div><div>Version</div><div>Link</div></div>
+        <div class="link-row"><div class="link-doc">Gantt chart</div><div class="muted">Gantt / Timeline</div><div class="muted">Tracks Project 1 timeline, phases, and deadlines.</div><div>In Progress</div><div class="muted">v1</div><div><a class="open" href="https://docs.google.com/spreadsheets/d/1Cf-Qrm9P4SmOiynSsROKjqrrjdEQIn6SukNvNQSpMGU/edit?usp=sharing" target="_blank" rel="noopener">Open →</a></div></div>
+      </div>
+      <div class="warning" id="quickLinksMessage">If the live table does not load in Google Sites, publish the tracker as CSV and replace QUICK_LINKS_CSV_URL in the code.</div>
+    </section>
+
+    <section class="page" id="process">
+      <div class="eyebrow">Engineering rule</div><h1 class="page-title-small">process</h1>
+      <p class="lead">Keep this simple: build, test, improve. Do not move to the next stage until the current stage meets the requirement.</p>
+      <div class="quarter-board">
+        <div class="quarter-row quarter-head"><div class="quarter-cell">Step</div><div class="quarter-cell">What happens</div><div class="quarter-cell">Output</div><div class="quarter-cell">Gate</div></div>
+        <div class="quarter-row"><div class="quarter-cell"><b>01</b><p>Research</p></div><div class="quarter-cell"><b>Understand need</b><p>Gather user need, clinical constraints, object/task requirements.</p></div><div class="quarter-cell"><b>Design inputs</b><p>Requirements and measurable targets.</p></div><div class="quarter-cell"><b>Review</b><p>Can the team design against this?</p></div></div>
+        <div class="quarter-row"><div class="quarter-cell"><b>02</b><p>Concept</p></div><div class="quarter-cell"><b>Choose architecture</b><p>Sketch and compare simple mechanical options.</p></div><div class="quarter-cell"><b>Concept package</b><p>Selected concept + rejected options.</p></div><div class="quarter-cell"><b>Approve</b><p>Move to CAD only after approval.</p></div></div>
+        <div class="quarter-row"><div class="quarter-cell"><b>03</b><p>CAD + Prototype</p></div><div class="quarter-cell"><b>Build testable version</b><p>CAD, print, assemble, and document changes.</p></div><div class="quarter-cell"><b>Prototype</b><p>Prototype + test setup.</p></div><div class="quarter-cell"><b>Test</b><p>Pass/fail evidence.</p></div></div>
+        <div class="quarter-row"><div class="quarter-cell"><b>04</b><p>Improve</p></div><div class="quarter-cell"><b>Repeat</b><p>Fix failures and retest until requirements are met.</p></div><div class="quarter-cell"><b>Revision log</b><p>What changed and why.</p></div><div class="quarter-cell"><b>Release</b><p>Only after review.</p></div></div>
+      </div>
+    </section>
+  </main>
+</div>
+
 <script>
-function showPage(id,btn){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));const p=document.getElementById(id);if(p)p.classList.add('active');document.querySelectorAll('.nav button').forEach(b=>b.classList.remove('active'));if(btn)btn.classList.add('active');window.scrollTo({top:0,behavior:'smooth'})}
-function toggleMode(){const partner=!document.body.classList.contains('partner');document.body.classList.toggle('partner',partner);document.getElementById('modeBtn').textContent=partner?'Partner ▾':'Internal ▾';showPage(partner?'partner':'home')}
-
+function showPage(id, btn) {
+  document.querySelectorAll('.page').forEach(function(page) { page.classList.remove('active'); });
+  const selected = document.getElementById(id);
+  if (selected) selected.classList.add('active');
+  document.querySelectorAll('.nav button').forEach(function(button) { button.classList.remove('active'); });
+  if (btn) btn.classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
 const QUICK_LINKS_TRACKER_URL = "https://docs.google.com/spreadsheets/d/1Cf-Qrm9P4SmOiynSsROKjqrrjdEQIn6SukNvNQSpMGU/edit?usp=sharing";
 const QUICK_LINKS_CSV_URL = "https://docs.google.com/spreadsheets/d/1Cf-Qrm9P4SmOiynSsROKjqrrjdEQIn6SukNvNQSpMGU/gviz/tq?tqx=out:csv&gid=0";
+function escapeHtml(value) {
+  return String(value || "").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;");
+}
+function parseCSV(text) {
+  const rows=[]; let row=[]; let current=""; let insideQuotes=false;
+  for (let i=0;i<text.length;i++) {
+    const char=text[i], nextChar=text[i+1];
+    if (char === '"' && insideQuotes && nextChar === '"') { current += '"'; i++; }
+    else if (char === '"') insideQuotes = !insideQuotes;
+    else if (char === "," && !insideQuotes) { row.push(current.trim()); current=""; }
+    else if ((char === "\n" || char === "\r") && !insideQuotes) {
+      if (current.length || row.length) { row.push(current.trim()); rows.push(row); row=[]; current=""; }
+      if (char === "\r" && nextChar === "\n") i++;
+    } else current += char;
+  }
+  if (current.length || row.length) { row.push(current.trim()); rows.push(row); }
+  return rows;
+}
+function getColumnIndex(headers, possibleNames) {
+  const normalized=headers.map(function(h){ return String(h||"").toLowerCase().trim(); });
+  for (const name of possibleNames) { const index=normalized.indexOf(name.toLowerCase()); if(index!==-1) return index; }
+  return -1;
+}
+function renderQuickLinks(csvText) {
+  const rows=parseCSV(csvText).filter(function(row){ return row.some(function(cell){ return String(cell||"").trim()!==""; }); });
+  if (!rows || rows.length < 2) return;
+  const headers=rows[0];
+  const docIndex=getColumnIndex(headers,["Document / Asset","Document","Asset"]);
+  const categoryIndex=getColumnIndex(headers,["Category"]);
+  const descIndex=getColumnIndex(headers,["What is it?","What is it","Description"]);
+  const linkIndex=getColumnIndex(headers,["Link to find it","Link","URL"]);
+  const statusIndex=getColumnIndex(headers,["Status"]);
+  const versionIndex=getColumnIndex(headers,["Version"]);
+  if(docIndex===-1) return;
+  const list=document.getElementById("quickLinksList"); if(!list) return;
+  const header='<div class="link-row link-header"><div>Document / Asset</div><div>Category</div><div>What is it?</div><div>Status</div><div>Version</div><div>Link</div></div>';
+  const bodyRows=rows.slice(1).filter(function(row){ return row[docIndex] && String(row[docIndex]).trim()!==""; }).map(function(row){
+    const doc=escapeHtml(row[docIndex]);
+    const category=categoryIndex!==-1 ? escapeHtml(row[categoryIndex]) : "";
+    const desc=descIndex!==-1 ? escapeHtml(row[descIndex]) : "";
+    const status=statusIndex!==-1 ? escapeHtml(row[statusIndex]) : "";
+    const version=versionIndex!==-1 ? escapeHtml(row[versionIndex]) : "";
+    const rawLink=linkIndex!==-1 ? String(row[linkIndex]||"").trim() : "";
+    const linkHtml=rawLink && rawLink.toLowerCase().startsWith("http")
+      ? '<a class="open" href="'+escapeHtml(rawLink)+'" target="_blank" rel="noopener">Open →</a>'
+      : '<a class="open" href="'+QUICK_LINKS_TRACKER_URL+'" target="_blank" rel="noopener">Tracker →</a>';
+    return '<div class="link-row"><div class="link-doc">'+doc+'</div><div class="muted">'+category+'</div><div class="muted">'+desc+'</div><div>'+(status||"Update")+'</div><div class="muted">'+version+'</div><div>'+linkHtml+'</div></div>';
+  }).join("");
+  if(bodyRows.trim()) list.innerHTML=header+bodyRows;
+}
+function loadQuickLinks() {
+  fetch(QUICK_LINKS_CSV_URL).then(function(response){ return response.text(); }).then(function(csvText){ renderQuickLinks(csvText); }).catch(function(){
+    const msg=document.getElementById("quickLinksMessage");
+    if(msg) msg.textContent="The live Google Sheet could not be loaded here. Use the Open Tracker button.";
+  });
+}
+document.addEventListener("DOMContentLoaded", loadQuickLinks);
 </script>
-</body></html>
+</body>
+</html>
