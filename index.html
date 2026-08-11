@@ -640,6 +640,42 @@ button,a{font:inherit;color:inherit}
   text-transform:uppercase;
 }
 
+
+/* Year toggle */
+.year-toggle{
+  justify-self:center;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  padding:4px;
+  border:1px solid transparent;
+}
+
+.year-btn{
+  appearance:none;
+  border:1px solid transparent;
+  background:transparent;
+  color:var(--muted);
+  font-size:14px;
+  font-weight:700;
+  letter-spacing:.16em;
+  text-transform:lowercase;
+  padding:8px 12px;
+  border-radius:999px;
+  cursor:pointer;
+}
+
+.year-btn.active{
+  background:var(--ink);
+  color:var(--bg);
+  border-color:var(--ink);
+}
+
+.year-btn:hover{
+  border-color:var(--line-strong);
+  color:var(--ink);
+}
+
 @media(max-width:1050px){
   .goal-panel{
     border:1px solid var(--line);
@@ -714,6 +750,42 @@ button,a{font:inherit;color:inherit}
   text-transform:uppercase;
 }
 
+
+/* Year toggle */
+.year-toggle{
+  justify-self:center;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  padding:4px;
+  border:1px solid transparent;
+}
+
+.year-btn{
+  appearance:none;
+  border:1px solid transparent;
+  background:transparent;
+  color:var(--muted);
+  font-size:14px;
+  font-weight:700;
+  letter-spacing:.16em;
+  text-transform:lowercase;
+  padding:8px 12px;
+  border-radius:999px;
+  cursor:pointer;
+}
+
+.year-btn.active{
+  background:var(--ink);
+  color:var(--bg);
+  border-color:var(--ink);
+}
+
+.year-btn:hover{
+  border-color:var(--line-strong);
+  color:var(--ink);
+}
+
 @media(max-width:1050px){
   .dashboard{
     min-height:auto;
@@ -779,7 +851,10 @@ button,a{font:inherit;color:inherit}
       <span class="sub">r&d dashboard</span>
     </div>
 
-    <div class="top-center">year 1</div>
+    <div class="top-center year-toggle" aria-label="Select dashboard year">
+      <button class="year-btn active" type="button" data-year="1">year 1</button>
+      <button class="year-btn" type="button" data-year="2">year 2</button>
+    </div>
     <div class="top-year">2026</div>
   </header>
 
@@ -1000,6 +1075,24 @@ document.querySelectorAll('.side-nav .nav-item').forEach(function(item) {
 
   A flat PNG image cannot rotate interactively by itself.
 */
+
+
+document.querySelectorAll('.year-btn').forEach(function(button) {
+  button.addEventListener('click', function() {
+    document.querySelectorAll('.year-btn').forEach(function(other) {
+      other.classList.remove('active');
+    });
+
+    button.classList.add('active');
+
+    const selectedYear = button.getAttribute('data-year');
+    const yearLabel = document.querySelector('.top-year');
+
+    if (yearLabel) {
+      yearLabel.textContent = selectedYear === '1' ? '2026' : '2027';
+    }
+  });
+});
 
 </script>
 </body>
