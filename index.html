@@ -7,19 +7,21 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
 <style>
 :root{
   --bg:#181a1c;
   --ink:#f6f3fa;
-  --muted:rgba(246,243,250,.62);
-  --quiet:rgba(246,243,250,.38);
+  --muted:rgba(246,243,250,.66);
+  --quiet:rgba(246,243,250,.42);
   --line:rgba(246,243,250,.16);
-  --line-strong:rgba(246,243,250,.28);
-  --panel:rgba(246,243,250,.035);
+  --line-strong:rgba(246,243,250,.30);
+  --panel:rgba(246,243,250,.045);
   --panel-strong:rgba(246,243,250,.075);
-  --shadow:rgba(0,0,0,.45);
+  --hold:#ffd792;
+  --hold-bg:rgba(255,190,92,.12);
+  --hold-border:rgba(255,190,92,.48);
 }
 
 *{box-sizing:border-box}
@@ -35,7 +37,7 @@ html,body{
 
 body{
   background:
-    radial-gradient(circle at 50% 45%, rgba(246,243,250,.08) 0%, rgba(246,243,250,.025) 22%, transparent 52%),
+    radial-gradient(circle at 52% 46%, rgba(246,243,250,.08) 0%, rgba(246,243,250,.025) 22%, transparent 52%),
     linear-gradient(180deg, #181a1c 0%, #101214 100%);
 }
 
@@ -46,7 +48,7 @@ button,a{font:inherit;color:inherit}
   min-height:900px;
   margin:0 auto;
   position:relative;
-  padding:38px 38px 34px;
+  padding:34px 38px 34px;
   overflow:hidden;
 }
 
@@ -61,7 +63,7 @@ button,a{font:inherit;color:inherit}
   background-size:48px 48px;
   transform:perspective(680px) rotateX(62deg) translateY(60px);
   transform-origin:bottom center;
-  opacity:.42;
+  opacity:.38;
   pointer-events:none;
 }
 
@@ -78,7 +80,7 @@ button,a{font:inherit;color:inherit}
 .brand{
   display:flex;
   align-items:center;
-  gap:34px;
+  gap:28px;
   font-size:18px;
   letter-spacing:.08em;
   text-transform:uppercase;
@@ -91,67 +93,95 @@ button,a{font:inherit;color:inherit}
 }
 
 .brand .sub{
-  font-size:15px;
+  font-size:14px;
   color:var(--muted);
   text-transform:lowercase;
   letter-spacing:.08em;
 }
 
-.top-center,
+.year-toggle{
+  justify-self:center;
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+
+.year-btn{
+  appearance:none;
+  border:1px solid transparent;
+  background:transparent;
+  color:var(--muted);
+  font-size:14px;
+  font-weight:700;
+  letter-spacing:.16em;
+  text-transform:lowercase;
+  padding:8px 12px;
+  border-radius:999px;
+  cursor:pointer;
+}
+
+.year-btn.active{
+  background:var(--ink);
+  color:var(--bg);
+  border-color:var(--ink);
+}
+
+.year-btn:hover{
+  border-color:var(--line-strong);
+  color:var(--ink);
+}
+
 .top-year{
+  justify-self:end;
   font-size:18px;
   font-weight:700;
   letter-spacing:.16em;
   text-transform:lowercase;
 }
 
-.top-year{
-  justify-self:end;
-}
-
 .layout{
   position:relative;
   z-index:3;
   display:grid;
-  grid-template-columns:310px minmax(430px,1fr) 325px;
-  gap:42px;
+  grid-template-columns:300px minmax(420px,1fr) 340px;
+  gap:38px;
   min-height:720px;
-  margin-top:140px;
+  margin-top:132px;
 }
 
 .left-panel{
   border-right:1px solid var(--line);
-  padding:42px 0 42px 24px;
+  padding:42px 0 42px 22px;
 }
 
 .panel-title{
-  font-size:16px;
+  font-size:15px;
   letter-spacing:.08em;
   text-transform:lowercase;
-  margin:0 0 28px;
+  margin:0 0 26px;
+  color:var(--ink);
 }
 
 .side-nav{
   display:flex;
   flex-direction:column;
-  gap:18px;
+  gap:12px;
 }
 
 .nav-item{
   appearance:none;
   border:0;
   background:transparent;
-  min-height:74px;
+  min-height:62px;
   display:grid;
-  grid-template-columns:48px 1fr;
+  grid-template-columns:44px 1fr;
   align-items:center;
-  gap:22px;
+  gap:18px;
   text-align:left;
   color:var(--ink);
   cursor:pointer;
-  padding:0 20px;
+  padding:0 18px;
   border-left:2px solid transparent;
-  border-radius:0;
   opacity:.92;
 }
 
@@ -161,104 +191,208 @@ button,a{font:inherit;color:inherit}
 }
 
 .nav-icon{
-  width:34px;
-  height:34px;
+  width:30px;
+  height:30px;
   color:var(--ink);
   display:grid;
   place-items:center;
 }
 
 .nav-icon svg{
-  width:34px;
-  height:34px;
+  width:30px;
+  height:30px;
   stroke:currentColor;
   stroke-width:1.5;
   fill:none;
 }
 
 .nav-label{
-  font-size:17px;
+  font-size:15px;
   letter-spacing:.08em;
   text-transform:lowercase;
 }
 
 .center-stage{
   position:relative;
+  min-height:650px;
   display:flex;
   flex-direction:column;
   justify-content:center;
-  align-items:center;
-  min-height:650px;
 }
 
-.render-frame{
-  position:relative;
-  width:min(580px,100%);
-  aspect-ratio:3/4;
+.view{
+  display:none;
+  animation:fadeIn .22s ease-out;
+}
+
+.view.active{
+  display:block;
+}
+
+@keyframes fadeIn{
+  from{opacity:0;transform:translateY(5px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+.page-kicker{
+  color:var(--quiet);
+  font-size:12px;
+  letter-spacing:.14em;
+  text-transform:lowercase;
+  margin-bottom:14px;
+}
+
+.page-title{
+  font-family:"Inter", Arial, sans-serif;
+  font-size:clamp(40px,5vw,76px);
+  line-height:.92;
+  letter-spacing:-.06em;
+  margin:0 0 22px;
+  font-weight:900;
+}
+
+.page-lead{
+  max-width:720px;
+  font-family:"Inter", Arial, sans-serif;
+  font-size:17px;
+  line-height:1.45;
+  color:var(--muted);
+  margin:0 0 34px;
+}
+
+.list-board{
+  border-top:1px solid var(--line);
+  margin-top:22px;
+}
+
+.list-row{
   display:grid;
-  place-items:center;
-  filter:drop-shadow(0 30px 34px rgba(0,0,0,.45));
+  grid-template-columns:145px 1fr 110px;
+  gap:18px;
+  border-bottom:1px solid var(--line);
+  padding:18px 0;
+  align-items:start;
 }
 
-.render-frame:before{
-  content:"";
-  position:absolute;
-  left:50%;
-  bottom:18px;
-  width:86%;
-  height:25%;
-  transform:translateX(-50%);
-  border:1px solid rgba(246,243,250,.22);
-  border-radius:50%;
-  opacity:.8;
-  z-index:1;
+.list-row strong{
+  font-family:"Inter", Arial, sans-serif;
+  font-size:15px;
+  line-height:1.25;
 }
 
-.render-frame:after{
-  content:"";
-  position:absolute;
-  inset:7% 8% 11%;
-  background:
-    radial-gradient(circle at 50% 46%, rgba(246,243,250,.16), transparent 42%),
-    linear-gradient(180deg, rgba(246,243,250,.04), rgba(0,0,0,.08));
-  border-radius:34px;
-  filter:blur(18px);
-  opacity:.62;
-  z-index:0;
+.list-row span{
+  font-family:"Inter", Arial, sans-serif;
+  font-size:14px;
+  line-height:1.45;
+  color:var(--muted);
 }
 
-.render-video{
-  position:relative;
-  z-index:2;
-  width:100%;
-  max-height:620px;
-  object-fit:contain;
-  mix-blend-mode:screen;
-  opacity:.92;
-  filter:grayscale(1) contrast(1.08) brightness(.92);
-  border:0;
+.badge{
+  justify-self:end;
+  border:1px solid var(--line-strong);
+  border-radius:999px;
+  padding:6px 8px;
+  color:var(--muted);
+  font-size:9px;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  white-space:nowrap;
+  text-decoration:none;
+}
+
+.visual-tabs{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  margin:0 0 24px;
+}
+
+.visual-tab{
+  appearance:none;
+  border:1px solid var(--line-strong);
   background:transparent;
+  color:var(--muted);
+  border-radius:999px;
+  padding:8px 11px;
+  font-size:11px;
+  letter-spacing:.08em;
+  text-transform:lowercase;
+  cursor:pointer;
 }
 
-.poster-fallback{
-  position:relative;
-  z-index:2;
-  width:100%;
-  max-height:620px;
-  object-fit:contain;
-  filter:grayscale(1) contrast(1.08) brightness(.92);
-  opacity:.92;
+.visual-tab.active{
+  background:var(--ink);
+  color:var(--bg);
+  border-color:var(--ink);
+}
+
+.visual-panel{
   display:none;
 }
 
+.visual-panel.active{
+  display:block;
+}
 
-/* Static lightweight render replacement for GitHub Pages */
+.image-board{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:16px;
+  margin-top:18px;
+}
+
+.image-card{
+  border:1px solid var(--line);
+  background:rgba(246,243,250,.035);
+  border-radius:16px;
+  overflow:hidden;
+}
+
+.image-card.wide{
+  grid-column:1 / -1;
+}
+
+.image-card img{
+  width:100%;
+  height:210px;
+  object-fit:contain;
+  display:block;
+  background:rgba(246,243,250,.035);
+  padding:10px;
+}
+
+.image-card.wide img{
+  height:260px;
+}
+
+.image-card-body{
+  padding:14px;
+  border-top:1px solid var(--line);
+}
+
+.image-card-title{
+  margin:0 0 6px;
+  font-family:"Inter", Arial, sans-serif;
+  font-size:15px;
+  font-weight:800;
+  letter-spacing:-.02em;
+}
+
+.image-card-text{
+  margin:0;
+  font-family:"Inter", Arial, sans-serif;
+  font-size:13px;
+  line-height:1.45;
+  color:var(--muted);
+}
+
 .render-frame{
   position:relative;
-  width:min(680px,100%);
+  width:min(620px,100%);
   aspect-ratio:16/10;
   display:grid;
   place-items:center;
+  margin:0 auto;
   filter:drop-shadow(0 30px 34px rgba(0,0,0,.45));
 }
 
@@ -292,8 +426,8 @@ button,a{font:inherit;color:inherit}
 .prosthetic-render{
   position:relative;
   z-index:2;
-  width:112%;
-  max-width:760px;
+  width:72%;
+  max-width:500px;
   object-fit:contain;
   filter:grayscale(1) contrast(1.08) brightness(.94);
   transform-origin:center center;
@@ -305,147 +439,48 @@ button,a{font:inherit;color:inherit}
   50%{ transform:translateY(-10px) rotate(1.2deg) scale(1.018); }
 }
 
-.render-video,
-.poster-fallback{
-  display:none!important;
-}
-
-.video-caption{
-  position:relative;
-  z-index:5;
+.render-caption{
   margin-top:18px;
   color:var(--muted);
-  font-size:13px;
+  font-size:12px;
   letter-spacing:.08em;
   text-transform:lowercase;
   text-align:center;
 }
 
-.cube-icon{
-  display:block;
-  margin:0 auto 9px;
-  width:24px;
-  height:24px;
-  opacity:.82;
-}
-
-.casimir-note{
-  margin-top:12px;
+.render-note{
+  margin:10px auto 0;
   color:var(--quiet);
   font-size:11px;
-  letter-spacing:.06em;
-  text-transform:lowercase;
+  line-height:1.45;
+  max-width:520px;
+}
+
+.hold-note{
+  margin:18px auto 0;
+  max-width:590px;
+  padding:14px 16px;
+  border-radius:12px;
+  border:1px solid var(--hold-border);
+  background:var(--hold-bg);
+  color:var(--hold);
+  font-family:"Inter", Arial, sans-serif;
+  font-size:13px;
+  line-height:1.45;
+}
+
+.hold-note strong{
+  display:block;
+  margin-bottom:5px;
+  color:#fff2d5;
+  font-size:12px;
+  letter-spacing:.04em;
+  text-transform:uppercase;
 }
 
 .right-panel{
   border-left:1px solid var(--line);
-  padding:42px 24px 42px 42px;
-}
-
-.status-title{
-  font-size:16px;
-  letter-spacing:.08em;
-  text-transform:lowercase;
-  margin-bottom:24px;
-}
-
-.tile-grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:8px;
-  margin-bottom:44px;
-}
-
-.status-tile{
-  min-height:142px;
-  border:1px solid var(--line-strong);
-  background:rgba(246,243,250,.025);
-  padding:18px;
-  display:flex;
-  flex-direction:column;
-  justify-content:space-between;
-}
-
-.tile-top{
-  display:flex;
-  justify-content:space-between;
-  align-items:flex-start;
-  color:var(--muted);
-  font-size:13px;
-  text-transform:lowercase;
-}
-
-.tile-value{
-  font-family:"Inter", Arial, sans-serif;
-  font-size:21px;
-  line-height:1.12;
-  letter-spacing:.01em;
-  color:var(--ink);
-}
-
-.dot-icon{
-  width:22px;
-  height:22px;
-  opacity:.7;
-}
-
-.status-block{
-  border-top:1px solid var(--line);
-  padding:32px 0 28px;
-}
-
-.status-line{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  color:var(--ink);
-  font-size:16px;
-  letter-spacing:.06em;
-  text-transform:lowercase;
-}
-
-.circle{
-  width:18px;
-  height:18px;
-  border-radius:50%;
-  border:1px solid var(--line-strong);
-}
-
-.status-desc{
-  margin:24px 0 0;
-  font-family:"Inter", Arial, sans-serif;
-  font-size:18px;
-  line-height:1.35;
-  color:var(--ink);
-}
-
-.progress{
-  margin-top:24px;
-  width:100%;
-  height:1px;
-  background:var(--line);
-  position:relative;
-}
-
-.progress:before{
-  content:"";
-  position:absolute;
-  left:0;
-  top:0;
-  height:2px;
-  width:26%;
-  background:var(--ink);
-}
-
-.progress.short:before{
-  width:23%;
-}
-
-
-/* Right panel: goal, progress, pending owners */
-.goal-panel{
-  border-left:1px solid var(--line);
-  padding:42px 24px 42px 42px;
+  padding:42px 24px 42px 38px;
 }
 
 .goal-section{
@@ -459,28 +494,11 @@ button,a{font:inherit;color:inherit}
 }
 
 .goal-kicker{
-  font-size:13px;
+  font-size:12px;
   letter-spacing:.08em;
   text-transform:lowercase;
   color:var(--muted);
   margin-bottom:12px;
-}
-
-.goal-main{
-  font-family:"Inter", Arial, sans-serif;
-  font-size:22px;
-  line-height:1.18;
-  letter-spacing:-.02em;
-  color:var(--ink);
-  margin:0;
-}
-
-.goal-note{
-  margin:10px 0 0;
-  color:var(--muted);
-  font-family:"Inter", Arial, sans-serif;
-  font-size:13px;
-  line-height:1.45;
 }
 
 .progress-stack{
@@ -574,227 +592,64 @@ button,a{font:inherit;color:inherit}
   white-space:nowrap;
 }
 
-
-/* Updated render treatment */
-.prosthetic-render{
-  position:relative;
-  z-index:2;
-  width:78%;
-  max-width:540px;
-  object-fit:contain;
-  filter:grayscale(1) contrast(1.08) brightness(.94);
-  transform-origin:center center;
-  animation:slowFloat 8s ease-in-out infinite;
-}
-
-.render-placeholder{
-  position:relative;
-  z-index:5;
+.action-btn{
+  display:inline-flex;
+  width:fit-content;
   margin-top:18px;
-  color:var(--muted);
-  font-size:13px;
-  letter-spacing:.08em;
-  text-transform:lowercase;
-  text-align:center;
-}
-
-.render-placeholder .cube-icon{
-  display:block;
-  margin:0 auto 9px;
-  width:24px;
-  height:24px;
-  opacity:.82;
-}
-
-.render-note{
-  margin-top:10px;
-  color:var(--quiet);
-  font-size:11px;
-  letter-spacing:.06em;
-  text-transform:none;
-  line-height:1.45;
-  max-width:520px;
-}
-
-.hold-note{
-  margin-top:16px;
-  max-width:560px;
-  padding:14px 16px;
-  border-radius:12px;
-  border:1px solid rgba(255, 190, 92, .48);
-  background:rgba(255, 190, 92, .12);
-  color:#ffd792;
-  font-family:"Inter", Arial, sans-serif;
-  font-size:13px;
-  line-height:1.45;
-  text-align:left;
-  box-shadow:0 8px 20px rgba(0,0,0,.18);
-}
-
-.hold-note strong{
-  display:block;
-  margin-bottom:5px;
-  color:#fff2d5;
-  font-size:12px;
-  letter-spacing:.04em;
-  text-transform:uppercase;
-}
-
-
-/* Year toggle */
-.year-toggle{
-  justify-self:center;
-  display:flex;
-  align-items:center;
-  gap:8px;
-  padding:4px;
-  border:1px solid transparent;
-}
-
-.year-btn{
-  appearance:none;
-  border:1px solid transparent;
-  background:transparent;
-  color:var(--muted);
-  font-size:14px;
-  font-weight:700;
-  letter-spacing:.16em;
-  text-transform:lowercase;
-  padding:8px 12px;
-  border-radius:999px;
-  cursor:pointer;
-}
-
-.year-btn.active{
+  border:1px solid var(--ink);
   background:var(--ink);
   color:var(--bg);
-  border-color:var(--ink);
-}
-
-.year-btn:hover{
-  border-color:var(--line-strong);
-  color:var(--ink);
-}
-
-@media(max-width:1050px){
-  .goal-panel{
-    border:1px solid var(--line);
-    border-radius:18px;
-    padding:24px;
-  }
-}
-
-
-/* Updated render treatment */
-.prosthetic-render{
-  position:relative;
-  z-index:2;
-  width:78%;
-  max-width:540px;
-  object-fit:contain;
-  filter:grayscale(1) contrast(1.08) brightness(.94);
-  transform-origin:center center;
-  animation:slowFloat 8s ease-in-out infinite;
-}
-
-.render-placeholder{
-  position:relative;
-  z-index:5;
-  margin-top:18px;
-  color:var(--muted);
-  font-size:13px;
+  text-decoration:none;
+  border-radius:999px;
+  padding:10px 14px;
+  font-size:12px;
   letter-spacing:.08em;
   text-transform:lowercase;
-  text-align:center;
+  font-weight:700;
 }
 
-.render-placeholder .cube-icon{
+.portal-preview{
+  margin-top:22px;
+  border:1px solid var(--line);
+  border-radius:16px;
+  overflow:hidden;
+  background:rgba(246,243,250,.035);
+}
+
+.portal-preview img{
   display:block;
-  margin:0 auto 9px;
-  width:24px;
-  height:24px;
-  opacity:.82;
+  width:100%;
+  max-height:330px;
+  object-fit:contain;
+  background:rgba(246,243,250,.04);
 }
 
-.render-note{
-  margin-top:10px;
-  color:var(--quiet);
-  font-size:11px;
-  letter-spacing:.06em;
-  text-transform:none;
-  line-height:1.45;
-  max-width:520px;
-}
-
-.hold-note{
-  margin-top:16px;
-  max-width:560px;
-  padding:14px 16px;
-  border-radius:12px;
-  border:1px solid rgba(255, 190, 92, .48);
-  background:rgba(255, 190, 92, .12);
-  color:#ffd792;
+.portal-preview-caption{
+  padding:12px 14px;
+  border-top:1px solid var(--line);
   font-family:"Inter", Arial, sans-serif;
   font-size:13px;
-  line-height:1.45;
-  text-align:left;
-  box-shadow:0 8px 20px rgba(0,0,0,.18);
-}
-
-.hold-note strong{
-  display:block;
-  margin-bottom:5px;
-  color:#fff2d5;
-  font-size:12px;
-  letter-spacing:.04em;
-  text-transform:uppercase;
-}
-
-
-/* Year toggle */
-.year-toggle{
-  justify-self:center;
-  display:flex;
-  align-items:center;
-  gap:8px;
-  padding:4px;
-  border:1px solid transparent;
-}
-
-.year-btn{
-  appearance:none;
-  border:1px solid transparent;
-  background:transparent;
   color:var(--muted);
-  font-size:14px;
-  font-weight:700;
-  letter-spacing:.16em;
-  text-transform:lowercase;
-  padding:8px 12px;
-  border-radius:999px;
-  cursor:pointer;
-}
-
-.year-btn.active{
-  background:var(--ink);
-  color:var(--bg);
-  border-color:var(--ink);
-}
-
-.year-btn:hover{
-  border-color:var(--line-strong);
-  color:var(--ink);
 }
 
 @media(max-width:1050px){
   .dashboard{
-    min-height:auto;
-    padding:28px 20px;
+    padding:26px 20px;
+  }
+
+  .topbar{
+    grid-template-columns:1fr;
+    gap:12px;
+  }
+
+  .year-toggle,
+  .top-year{
+    justify-self:start;
   }
 
   .layout{
     grid-template-columns:1fr;
-    margin-top:60px;
+    margin-top:56px;
     gap:24px;
   }
 
@@ -802,7 +657,7 @@ button,a{font:inherit;color:inherit}
   .right-panel{
     border:1px solid var(--line);
     border-radius:18px;
-    padding:24px;
+    padding:22px;
   }
 
   .side-nav{
@@ -814,22 +669,12 @@ button,a{font:inherit;color:inherit}
     min-height:auto;
   }
 
-  .topbar{
+  .image-board{
     grid-template-columns:1fr;
-  }
-
-  .top-center,
-  .top-year{
-    justify-self:start;
   }
 }
 
 @media(max-width:620px){
-  .side-nav,
-  .tile-grid{
-    grid-template-columns:1fr;
-  }
-
   .brand{
     gap:14px;
     font-size:15px;
@@ -837,6 +682,18 @@ button,a{font:inherit;color:inherit}
 
   .brand .sub{
     font-size:12px;
+  }
+
+  .side-nav{
+    grid-template-columns:1fr;
+  }
+
+  .list-row{
+    grid-template-columns:1fr;
+  }
+
+  .badge{
+    justify-self:start;
   }
 }
 </style>
@@ -851,10 +708,11 @@ button,a{font:inherit;color:inherit}
       <span class="sub">r&d dashboard</span>
     </div>
 
-    <div class="top-center year-toggle" aria-label="Select dashboard year">
+    <div class="year-toggle" aria-label="Select dashboard year">
       <button class="year-btn active" type="button" data-year="1">year 1</button>
       <button class="year-btn" type="button" data-year="2">year 2</button>
     </div>
+
     <div class="top-year">2026</div>
   </header>
 
@@ -863,7 +721,7 @@ button,a{font:inherit;color:inherit}
       <div class="panel-title">sections</div>
 
       <nav class="side-nav" aria-label="R&D dashboard sections">
-        <button class="nav-item active" type="button">
+        <button class="nav-item active" type="button" data-view="summary">
           <span class="nav-icon">
             <svg viewBox="0 0 40 40" aria-hidden="true">
               <path d="M8 10h24M8 20h18M8 30h12"></path>
@@ -874,7 +732,7 @@ button,a{font:inherit;color:inherit}
           <span class="nav-label">summary</span>
         </button>
 
-        <button class="nav-item" type="button">
+        <button class="nav-item" type="button" data-view="goal">
           <span class="nav-icon">
             <svg viewBox="0 0 40 40" aria-hidden="true">
               <circle cx="20" cy="20" r="14"></circle>
@@ -885,19 +743,17 @@ button,a{font:inherit;color:inherit}
           <span class="nav-label">goal</span>
         </button>
 
-        <button class="nav-item" type="button">
+        <button class="nav-item" type="button" data-view="visualization">
           <span class="nav-icon">
             <svg viewBox="0 0 40 40" aria-hidden="true">
-              <circle cx="14" cy="14" r="5"></circle>
-              <circle cx="27" cy="15" r="5"></circle>
-              <path d="M5 33c1-8 6-12 12-12s11 4 12 12"></path>
-              <path d="M19 33c1-6 5-9 10-9 4 0 7 2 9 7"></path>
+              <path d="M20 4l13 7.5v17L20 36 7 28.5v-17L20 4z"></path>
+              <path d="M7 11.5L20 19l13-7.5M20 19v17"></path>
             </svg>
           </span>
-          <span class="nav-label">team</span>
+          <span class="nav-label">visualization</span>
         </button>
 
-        <button class="nav-item" type="button">
+        <button class="nav-item" type="button" data-view="timeline">
           <span class="nav-icon">
             <svg viewBox="0 0 40 40" aria-hidden="true">
               <circle cx="20" cy="20" r="15"></circle>
@@ -907,7 +763,7 @@ button,a{font:inherit;color:inherit}
           <span class="nav-label">timeline</span>
         </button>
 
-        <button class="nav-item" type="button">
+        <button class="nav-item" type="button" data-view="docs">
           <span class="nav-icon">
             <svg viewBox="0 0 40 40" aria-hidden="true">
               <path d="M9 7h18l4 4v22H9z"></path>
@@ -917,51 +773,242 @@ button,a{font:inherit;color:inherit}
           <span class="nav-label">docs</span>
         </button>
 
-        <button class="nav-item" type="button">
+        <button class="nav-item" type="button" data-view="portal">
           <span class="nav-icon">
             <svg viewBox="0 0 40 40" aria-hidden="true">
               <path d="M8 12h10l3 4h11v17H8z"></path>
-              <path d="M8 16h24"></path>
+              <path d="M8 16h24M20 21v8M16 25h8"></path>
             </svg>
           </span>
-          <span class="nav-label">files</span>
+          <span class="nav-label">external portal</span>
         </button>
       </nav>
     </aside>
 
-    <section class="center-stage" aria-label="Simulation render preview">
-      <div class="render-frame">
-        <picture>
-          <source srcset="ulf-prosthetic-render.webp" type="image/webp">
-          <img class="prosthetic-render" src="ulf-prosthetic-render.png" alt="3D render of the Universal Limbs prosthetic hand simulation">
-        </picture>
+    <section class="center-stage" aria-live="polite">
+      <div id="summary" class="view active">
+        <div class="page-kicker">summary</div>
+        <h1 class="page-title">simple project map</h1>
+        <p class="page-lead">
+          This dashboard has one job: help a student or collaborator understand the current direction without seeing every internal thought. Use visuals only where they clarify the design path.
+        </p>
+
+        <div class="list-board">
+          <div class="list-row">
+            <strong>Starting basis</strong>
+            <span>WAACS / e-NABLE-style printable arm is the starting design basis because it supports the low-cost, open-source, standard-3D-printer direction.</span>
+            <em class="badge">basis</em>
+          </div>
+          <div class="list-row">
+            <strong>Current R&D question</strong>
+            <span>Can we simplify a body-powered hand architecture enough for pediatric use, field repair, and low-resource manufacturing?</span>
+            <em class="badge">active</em>
+          </div>
+          <div class="list-row">
+            <strong>Design inspiration</strong>
+            <span>Yale Hand and SoftFoot Pro are study references. They are not direct copies. We only keep principles that simplify the MVP.</span>
+            <em class="badge">study</em>
+          </div>
+          <div class="list-row">
+            <strong>External work</strong>
+            <span>University collaborators should focus on the test bench package, assigned files, and upload workflow.</span>
+            <em class="badge">portal</em>
+          </div>
+        </div>
       </div>
 
-      
-      <div class="render-placeholder">
-        <svg class="cube-icon" viewBox="0 0 36 36" aria-hidden="true">
-          <path d="M18 3l13 7.5v15L18 33 5 25.5v-15L18 3z" fill="none" stroke="currentColor" stroke-width="1.4"/>
-          <path d="M5 10.5L18 18l13-7.5M18 18v15" fill="none" stroke="currentColor" stroke-width="1.4"/>
-        </svg>
-        placeholder concept render
-        <div class="render-note">
-          This is a temporary placeholder visual and not the final product. A true interactive 3D rotation view can be added once a web-ready 3D model file (.glb / .gltf) is available.
+      <div id="goal" class="view">
+        <div class="page-kicker">goal</div>
+        <h1 class="page-title">design direction</h1>
+        <p class="page-lead">
+          Build a low-cost, repairable, body-powered pediatric hand that is driven by real child activities, survey evidence, and practical engineering calculations.
+        </p>
+
+        <div class="list-board">
+          <div class="list-row">
+            <strong>Base reference</strong>
+            <span>Start from the WAACS / e-NABLE printable arm direction because it is aligned with open-source, standard tools, and low-resource manufacturing.</span>
+            <em class="badge">base</em>
+          </div>
+          <div class="list-row">
+            <strong>Mechanism reference</strong>
+            <span>Rebuild and simplify Yale Hand principles only where they improve grasp reliability without adding too much complexity.</span>
+            <em class="badge">study</em>
+          </div>
+          <div class="list-row">
+            <strong>Adaptive reference</strong>
+            <span>Study SoftFoot Pro for passive adaptive principles. Integrate only if it stays affordable, repairable, and maintainable.</span>
+            <em class="badge">conditional</em>
+          </div>
+          <div class="list-row">
+            <strong>Design driver</strong>
+            <span>Children’s activities, survey responses, object sizes, tendon travel, force estimates, and safety limits must dominate the final design.</span>
+            <em class="badge">required</em>
+          </div>
+        </div>
+      </div>
+
+      <div id="visualization" class="view">
+        <div class="page-kicker">visualization</div>
+        <h1 class="page-title">visual library</h1>
+        <p class="page-lead">
+          Keep visuals separated by purpose. Basis = what we start from. Inspiration = what we study. Archive = what is paused.
+        </p>
+
+        <div class="visual-tabs" aria-label="Visualization tabs">
+          <button class="visual-tab active" type="button" data-visual="basis">current basis</button>
+          <button class="visual-tab" type="button" data-visual="inspiration">current inspiration</button>
+          <button class="visual-tab" type="button" data-visual="archive">past archive</button>
         </div>
 
-        <div class="hold-note">
-          <strong>Current design status</strong>
-          Based on prosthetist feedback, this concept has been assessed as mechanically complex for the intended application. Development of this architecture is currently on hold while the team reviews simpler, more clinically practical alternatives.
+        <div id="basis" class="visual-panel active">
+          <div class="image-board">
+            <article class="image-card wide">
+              <img src="waacs-basis.png" alt="WAACS e-NABLE-style prosthetic arm basis reference">
+              <div class="image-card-body">
+                <h3 class="image-card-title">Current basis — WAACS / e-NABLE-style printable arm</h3>
+                <p class="image-card-text">This belongs in Summary and Goal because it is the starting basis. It should not be treated as the final design.</p>
+              </div>
+            </article>
+          </div>
         </div>
+
+        <div id="inspiration" class="visual-panel">
+          <div class="image-board">
+            <article class="image-card">
+              <img src="yale-multigrasp.png" alt="Yale Multigrasp Hand visual reference">
+              <div class="image-card-body">
+                <h3 class="image-card-title">Yale Hand reference</h3>
+                <p class="image-card-text">Study for grasp modes and simplified mechanical strategy. Keep only principles that improve the MVP.</p>
+              </div>
+            </article>
+
+            <article class="image-card">
+              <img src="softfoot-pro.jpg" alt="SoftFoot Pro visual reference">
+              <div class="image-card-body">
+                <h3 class="image-card-title">SoftFoot Pro reference</h3>
+                <p class="image-card-text">Study for passive adaptive behavior. Do not add complexity unless it clearly helps child use and repairability.</p>
+              </div>
+            </article>
+          </div>
+        </div>
+
+        <div id="archive" class="visual-panel">
+          <div class="render-frame">
+            <picture>
+              <source srcset="ulf-prosthetic-render.webp" type="image/webp">
+              <img class="prosthetic-render" src="ulf-prosthetic-render.png" alt="Placeholder render of paused complex prosthetic hand concept">
+            </picture>
+          </div>
+
+          <div class="render-caption">
+            past concept render
+            <div class="render-note">
+              This visual is for archive and discussion only. It is not the final product and it is not the current build direction.
+            </div>
+
+            <div class="hold-note">
+              <strong>Current design status</strong>
+              Based on prosthetist feedback, this concept has been assessed as mechanically complex for the intended pediatric and low-resource application. Development of this architecture is currently on hold while the team reviews simpler, more clinically practical alternatives.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="timeline" class="view">
+        <div class="page-kicker">timeline</div>
+        <h1 class="page-title">quarter plan</h1>
+        <p class="page-lead">
+          Keep the roadmap simple. Each phase must end with a review gate before moving forward.
+        </p>
+
+        <div class="list-board">
+          <div class="list-row">
+            <strong>Q1</strong>
+            <span>Requirements, activity research, survey logic, simplified Yale Hand concept, and CAD input package.</span>
+            <em class="badge">now</em>
+          </div>
+          <div class="list-row">
+            <strong>Q2</strong>
+            <span>Prototype planning and controlled exploration of SoftFoot Pro principles.</span>
+            <em class="badge">next</em>
+          </div>
+          <div class="list-row">
+            <strong>Q3</strong>
+            <span>Testing, revision, and decision memo on what stays in MVP 1.</span>
+            <em class="badge">later</em>
+          </div>
+        </div>
+      </div>
+
+      <div id="docs" class="view">
+        <div class="page-kicker">docs</div>
+        <h1 class="page-title">source of truth</h1>
+        <p class="page-lead">
+          This section should hold only the documents people need to do the work. No scattered links.
+        </p>
+
+        <div class="list-board">
+          <div class="list-row">
+            <strong>Quick links tracker</strong>
+            <span>Main registry for files, owners, status, and version.</span>
+            <a class="badge" href="https://docs.google.com/spreadsheets/d/1Cf-Qrm9P4SmOiynSsROKjqrrjdEQIn6SukNvNQSpMGU/edit?usp=sharing" target="_blank" rel="noopener">open</a>
+          </div>
+          <div class="list-row">
+            <strong>Design requirements</strong>
+            <span>Child activities, survey inputs, key assumptions, object sizes, and calculations.</span>
+            <em class="badge">add link</em>
+          </div>
+          <div class="list-row">
+            <strong>Testing folder</strong>
+            <span>Test protocol, test logs, photos, failures, and design revision evidence.</span>
+            <em class="badge">add link</em>
+          </div>
+          <div class="list-row">
+            <strong>Test bench package</strong>
+            <span>University-facing build file, architecture diagram, parts list, and upload instructions.</span>
+            <a class="badge" href="PASTE_TEST_BENCH_BUILDING_FILE_LINK_HERE" target="_blank" rel="noopener">add file</a>
+          </div>
+        </div>
+      </div>
+
+      <div id="portal" class="view">
+        <div class="page-kicker">external portal</div>
+        <h1 class="page-title">collaborator entry</h1>
+        <p class="page-lead">
+          This is the clean entry point for university students and external collaborators. They should see the assignment, the files, and where to upload work.
+        </p>
+
+        <div class="portal-preview">
+          <img src="testbench-architecture.webp" alt="Automated test rig architecture preview">
+          <div class="portal-preview-caption">
+            Primary external deliverable: automated test bench building package.
+          </div>
+        </div>
+
+        <div class="list-board">
+          <div class="list-row">
+            <strong>Step 1</strong>
+            <span>Read the goal and current assignment before starting work.</span>
+            <em class="badge">required</em>
+          </div>
+          <div class="list-row">
+            <strong>Step 2</strong>
+            <span>Open the test bench building file and confirm which part of the bench you are responsible for.</span>
+            <a class="badge" href="PASTE_TEST_BENCH_BUILDING_FILE_LINK_HERE" target="_blank" rel="noopener">open file</a>
+          </div>
+          <div class="list-row">
+            <strong>Step 3</strong>
+            <span>Upload CAD files, test notes, screenshots, or review comments through the upload form.</span>
+            <a class="badge" href="PASTE_GOOGLE_FORM_UPLOAD_LINK_HERE" target="_blank" rel="noopener">upload</a>
+          </div>
+        </div>
+
+        <a class="action-btn" href="PASTE_GOOGLE_FORM_UPLOAD_LINK_HERE" target="_blank" rel="noopener">open upload form ↗</a>
       </div>
     </section>
 
-    <aside class="goal-panel">
-      <section class="goal-section">
-        <div class="goal-kicker">goal</div>
-        <h2 class="goal-main">Build a low-cost adaptive body-powered prosthetic hand.</h2>
-        <p class="goal-note">Current focus: Simplified Yale Hand — MVP 1. Lock requirements before CAD and physical testing.</p>
-      </section>
-
+    <aside class="right-panel">
       <section class="goal-section">
         <div class="goal-kicker">progress to goal</div>
 
@@ -1005,7 +1052,7 @@ button,a{font:inherit;color:inherit}
           <div class="pending-item">
             <div>
               <p class="pending-title">Prosthetic-user survey</p>
-              <span class="pending-meta">Need someone to own questions, edits, and distribution.</span>
+              <span class="pending-meta">Need owner for questions, edits, and distribution.</span>
             </div>
             <span class="owner-chip">open</span>
           </div>
@@ -1013,25 +1060,17 @@ button,a{font:inherit;color:inherit}
           <div class="pending-item">
             <div>
               <p class="pending-title">Design Intake SOP</p>
-              <span class="pending-meta">Standard request format for concept artist and industrial designer.</span>
+              <span class="pending-meta">Standard request format for concept and industrial design work.</span>
             </div>
             <span class="owner-chip">open</span>
           </div>
 
           <div class="pending-item">
             <div>
-              <p class="pending-title">Testing & Research SOP</p>
-              <span class="pending-meta">Define how tests are logged, reviewed, and approved.</span>
+              <p class="pending-title">Test bench file</p>
+              <span class="pending-meta">Need final build package link and upload form link.</span>
             </div>
-            <span class="owner-chip">open</span>
-          </div>
-
-          <div class="pending-item">
-            <div>
-              <p class="pending-title">Simulation support</p>
-              <span class="pending-meta">Need support translating simulation outputs into design decisions.</span>
-            </div>
-            <span class="owner-chip">assist</span>
+            <span class="owner-chip">needed</span>
           </div>
         </div>
       </section>
@@ -1040,46 +1079,51 @@ button,a{font:inherit;color:inherit}
 </main>
 
 <script>
-/*
-  IMAGE SETUP FOR GITHUB / GOOGLE SITES
+document.querySelectorAll('.nav-item').forEach(function(item){
+  item.addEventListener('click', function(){
+    const viewId = item.getAttribute('data-view');
 
-  Upload these files beside this HTML file:
-  - ulf-prosthetic-render.webp
-  - ulf-prosthetic-render.png
-
-  The WebP is very small and loads first. PNG is the fallback.
-  This avoids GitHub's 25MB upload limit for the MP4 video.
-*/
-
-document.querySelectorAll('.side-nav .nav-item').forEach(function(item) {
-  item.addEventListener('click', function() {
-    document.querySelectorAll('.side-nav .nav-item').forEach(function(other) {
+    document.querySelectorAll('.nav-item').forEach(function(other){
       other.classList.remove('active');
     });
+
+    document.querySelectorAll('.view').forEach(function(view){
+      view.classList.remove('active');
+    });
+
     item.classList.add('active');
+
+    const selectedView = document.getElementById(viewId);
+    if(selectedView){
+      selectedView.classList.add('active');
+    }
   });
 });
 
+document.querySelectorAll('.visual-tab').forEach(function(tab){
+  tab.addEventListener('click', function(){
+    const panelId = tab.getAttribute('data-visual');
 
-/*
-  OPTIONAL INTERACTIVE 3D MODEL SETUP
-  -----------------------------------
-  If you later get a web-ready 3D file (recommended: .glb or .gltf),
-  you can replace the static image block with a <model-viewer> element
-  to let users rotate the hand interactively.
+    document.querySelectorAll('.visual-tab').forEach(function(other){
+      other.classList.remove('active');
+    });
 
-  Example files:
-  - prosthetic-hand.glb
-  - ulf-prosthetic-render.webp
-  - ulf-prosthetic-render.png
+    document.querySelectorAll('.visual-panel').forEach(function(panel){
+      panel.classList.remove('active');
+    });
 
-  A flat PNG image cannot rotate interactively by itself.
-*/
+    tab.classList.add('active');
 
+    const selectedPanel = document.getElementById(panelId);
+    if(selectedPanel){
+      selectedPanel.classList.add('active');
+    }
+  });
+});
 
-document.querySelectorAll('.year-btn').forEach(function(button) {
-  button.addEventListener('click', function() {
-    document.querySelectorAll('.year-btn').forEach(function(other) {
+document.querySelectorAll('.year-btn').forEach(function(button){
+  button.addEventListener('click', function(){
+    document.querySelectorAll('.year-btn').forEach(function(other){
       other.classList.remove('active');
     });
 
@@ -1088,12 +1132,11 @@ document.querySelectorAll('.year-btn').forEach(function(button) {
     const selectedYear = button.getAttribute('data-year');
     const yearLabel = document.querySelector('.top-year');
 
-    if (yearLabel) {
+    if(yearLabel){
       yearLabel.textContent = selectedYear === '1' ? '2026' : '2027';
     }
   });
 });
-
 </script>
 </body>
 </html>
