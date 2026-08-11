@@ -34,13 +34,54 @@ html,body{
 body{background:radial-gradient(circle at 50% 46%,rgba(246,243,250,.055),transparent 50%),linear-gradient(180deg,#181a1c,#101214)}
 button,a{font:inherit;color:inherit}
 .logo{width:24px;height:24px;object-fit:contain;display:block}
-.logo.large{width:42px;height:42px;margin-bottom:28px}
+.logo.large{
+  width:42px;
+  height:42px;
+  margin:0 auto 28px;
+}
 
 /* Landing */
-.landing{min-height:100vh;display:grid;place-items:center;padding:28px;background:#000}
-.landing-card{text-align:center}
-.landing-title{font-size:12px;font-weight:700;letter-spacing:.26em;margin-bottom:16px}
-.landing-enter{appearance:none;border:0;background:transparent;color:var(--yellow);cursor:pointer;padding:0 0 7px;border-bottom:1px solid var(--yellow);letter-spacing:.22em}
+.landing{
+  min-height:100vh;
+  width:100%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:0;
+  background:#000;
+  text-align:center;
+}
+
+.landing-card{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  width:100%;
+  max-width:360px;
+  margin:0 auto;
+  transform:translateY(-2vh);
+}
+
+.landing-title{
+  font-size:12px;
+  font-weight:600;
+  letter-spacing:.04em;
+  margin:0 0 16px;
+  text-align:center;
+}
+
+.landing-enter{
+  appearance:none;
+  border:0;
+  background:transparent;
+  color:var(--yellow);
+  cursor:pointer;
+  padding:0 0 7px;
+  border-bottom:1px solid var(--yellow);
+  letter-spacing:.04em;
+  text-align:center;
+}
 
 /* App shell */
 .app{display:none;min-height:100vh}
@@ -430,6 +471,39 @@ select {
 .top::before,
 .top::after {
   content:none !important;
+}
+
+
+/* LANDING CENTER FIX */
+#landing {
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  text-align:center !important;
+  min-height:100vh !important;
+  width:100% !important;
+  padding:0 !important;
+}
+
+#landing .landing-card {
+  display:flex !important;
+  flex-direction:column !important;
+  align-items:center !important;
+  justify-content:center !important;
+  margin:0 auto !important;
+  width:100% !important;
+  max-width:360px !important;
+}
+
+#landing .logo.large {
+  margin-left:auto !important;
+  margin-right:auto !important;
+}
+
+#landing .landing-title,
+#landing .landing-enter {
+  text-align:center !important;
+  letter-spacing:.04em !important;
 }
 
 </style>
