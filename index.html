@@ -4,9 +4,6 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Universal Limbs — R&D Home</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
 :root{
   --bg:#181a1c;
@@ -20,7 +17,20 @@
   --panel2:rgba(246,243,250,.07);
 }
 *{box-sizing:border-box;font-size:12px}
-html,body{margin:0;min-height:100%;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",Arial,sans-serif;overflow-x:hidden;letter-spacing:0;text-transform:none}
+html,body{
+  margin:0;
+  min-height:100%;
+  background:var(--bg);
+  color:var(--ink);
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",Arial,sans-serif;
+  overflow-x:hidden;
+  letter-spacing:0;
+  text-transform:none;
+  font-size:12px;
+  font-weight:400;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
 body{background:radial-gradient(circle at 50% 46%,rgba(246,243,250,.055),transparent 50%),linear-gradient(180deg,#181a1c,#101214)}
 button,a{font:inherit;color:inherit}
 .logo{width:24px;height:24px;object-fit:contain;display:block}
@@ -272,6 +282,156 @@ a:focus-visible {
   outline-offset: 4px;
 }
 
+
+/* READABILITY UPDATE — iOS-style clean text, no wide spacing */
+body,
+button,
+a,
+input,
+textarea,
+select {
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",Arial,sans-serif !important;
+  font-size:12px !important;
+  font-weight:400 !important;
+  letter-spacing:0 !important;
+  text-transform:none !important;
+  line-height:1.55 !important;
+}
+
+/* Headings and labels: still small, but readable */
+.title,
+.kicker,
+.carousel-title,
+.update-title,
+.quick-card h2,
+.folder-card h3,
+.simple-folder h3,
+.resource-row strong,
+.milestone-label strong,
+.brand-word,
+.top-year {
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",Arial,sans-serif !important;
+  font-size:12px !important;
+  font-weight:600 !important;
+  letter-spacing:.03em !important;
+  text-transform:none !important;
+  line-height:1.45 !important;
+}
+
+/* Navigation: remove the hard-to-read spaced letters */
+.nav button,
+.nav button span,
+.year,
+.time-tab,
+.resource-tab,
+.pill,
+.landing-title,
+.landing-enter {
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",Arial,sans-serif !important;
+  font-size:12px !important;
+  font-weight:500 !important;
+  letter-spacing:.02em !important;
+  text-transform:none !important;
+}
+
+/* Keep only subtle uppercase for tiny section markers, not main reading text */
+.kicker {
+  color:rgba(246,243,250,.46) !important;
+}
+
+/* Paragraph/details: softer but easier to read */
+.lead,
+.quick-card p,
+.update-line,
+.update-line span,
+.goal-summary,
+.resource-row span,
+.portal-preview div,
+.feedback,
+.milestone-label span,
+.year-note,
+.visual-hint {
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",Arial,sans-serif !important;
+  font-size:12px !important;
+  font-weight:400 !important;
+  letter-spacing:0 !important;
+  text-transform:none !important;
+  line-height:1.65 !important;
+  color:rgba(246,243,250,.72) !important;
+}
+
+/* Improve contrast on cards and text lines */
+.quick-card,
+.carousel,
+.folder-card,
+.simple-folder,
+.resource-list,
+.portal-preview,
+.timeline {
+  background:rgba(246,243,250,.045) !important;
+  border-color:rgba(246,243,250,.22) !important;
+}
+
+.update-line {
+  grid-template-columns:76px 1fr !important;
+}
+
+.update-line strong {
+  font-size:12px !important;
+  font-weight:600 !important;
+  letter-spacing:0 !important;
+  text-transform:none !important;
+  color:var(--ink) !important;
+}
+
+/* Clean selected tab underline */
+.nav button.active,
+.time-tab.active,
+.resource-tab.active,
+.year.active {
+  background:transparent !important;
+  color:var(--ink) !important;
+  border-bottom:1px solid var(--yellow) !important;
+  border-radius:0 !important;
+}
+
+.year {
+  background:transparent !important;
+  border:0 !important;
+  border-bottom:1px solid transparent !important;
+  border-radius:0 !important;
+  padding:0 0 8px !important;
+}
+
+/* Buttons: easier to scan */
+.pill {
+  padding:7px 11px !important;
+  border-color:rgba(246,243,250,.30) !important;
+}
+
+.pill.primary {
+  border-color:var(--yellow) !important;
+  color:var(--yellow) !important;
+}
+
+/* Landing page: cleaner and calmer */
+.landing-title {
+  font-weight:600 !important;
+  letter-spacing:.04em !important;
+}
+
+.landing-enter {
+  color:var(--yellow) !important;
+  border-bottom:1px solid var(--yellow) !important;
+}
+
+/* Remove accidental yellow rectangle from previous font override */
+.brand + .years::before,
+.top::before,
+.top::after {
+  content:none !important;
+}
+
 </style>
 </head>
 <body>
@@ -279,8 +439,8 @@ a:focus-visible {
 <section class="landing" id="landing">
   <div class="landing-card">
     <img class="logo large" src="ul-logo.png" alt="Universal Limbs logo">
-    <div class="landing-title">R&amp;D HOME</div>
-    <button class="landing-enter" type="button" id="enterApp">CLICK HERE</button>
+    <div class="landing-title">R&amp;D home</div>
+    <button class="landing-enter" type="button" id="enterApp">Click here</button>
   </div>
 </section>
 
@@ -288,7 +448,7 @@ a:focus-visible {
   <div class="shell">
     <header class="top">
       <div class="brand"><img class="logo" src="ul-logo.png" alt="Universal Limbs logo"><span class="brand-word">ULF</span><span class="bar"></span><span class="sub">r&amp;d dashboard</span></div>
-      <div class="years"><button class="year active" type="button" data-year="1">YEAR 1</button><button class="year" type="button" data-year="2">YEAR 2</button></div>
+      <div class="years"><button class="year active" type="button" data-year="1">Year 1</button><button class="year" type="button" data-year="2">Year 2</button></div>
       <div class="top-year">2026</div>
     </header>
 
@@ -299,36 +459,36 @@ a:focus-visible {
           <button type="button" data-view="goal"><svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="14"></circle><circle cx="20" cy="20" r="6"></circle><path d="M20 2v8M20 30v8M2 20h8M30 20h8"></path></svg><span>Goal</span></button>
           <button type="button" data-view="documents"><svg viewBox="0 0 40 40"><path d="M9 7h18l4 4v22H9z"></path><path d="M27 7v5h5M14 17h13M14 23h13M14 29h8"></path></svg><span>Documents</span></button>
           <button type="button" data-view="resources"><svg viewBox="0 0 40 40"><path d="M8 12h10l3 4h11v17H8z"></path><path d="M8 16h24"></path></svg><span>Resources</span></button>
-          <button type="button" data-view="portal"><svg viewBox="0 0 40 40"><path d="M8 12h10l3 4h11v17H8z"></path><path d="M20 21v8M16 25h8"></path></svg><span>External Portal</span></button>
+          <button type="button" data-view="portal"><svg viewBox="0 0 40 40"><path d="M8 12h10l3 4h11v17H8z"></path><path d="M20 21v8M16 25h8"></path></svg><span>External portal</span></button>
         </nav>
       </aside>
 
       <section class="stage" aria-live="polite">
         <div id="dashboard" class="view active">
-          <div class="kicker">dashboard</div><h1 class="title">R&amp;D COMMAND CENTER</h1><div class="rule"></div>
+          <div class="kicker">dashboard</div><h1 class="title">R&amp;D command center</h1><div class="rule"></div>
           <div class="dashboard-grid">
             <section class="carousel" aria-label="Latest updates carousel">
-              <div class="carousel-head"><div class="carousel-title">LATEST UPDATES</div><div class="carousel-controls"><button class="carousel-btn" type="button" id="prevUpdate">‹</button><button class="carousel-btn" type="button" id="nextUpdate">›</button></div></div>
+              <div class="carousel-head"><div class="carousel-title">Latest updates</div><div class="carousel-controls"><button class="carousel-btn" type="button" id="prevUpdate">‹</button><button class="carousel-btn" type="button" id="nextUpdate">›</button></div></div>
               <article class="update-slide active">
-                <div class="update-title">SURVEY UPDATES</div>
+                <div class="update-title">Survey updates</div>
                 <div class="update-line"><strong>Current</strong><span>Getting feedback from Alex Low.</span></div>
                 <div class="update-line"><strong>Next</strong><span>Send to 2 prosthetic users for early feedback.</span></div>
                 <div class="update-line"><strong>Link</strong><span><a class="pill primary" href="prosthetic-user-survey.html" target="_blank" rel="noopener">survey placeholder</a></span></div>
               </article>
               <article class="update-slide">
-                <div class="update-title">PRESENTATION FOR UTFPR</div>
+                <div class="update-title">Presentation for UTFPR</div>
                 <div class="update-line"><strong>Current</strong><span>Prepare partner-facing presentation for external review.</span></div>
                 <div class="update-line"><strong>Next</strong><span>Add final scope, test bench ask, and file handoff instructions.</span></div>
                 <div class="update-line"><strong>Link</strong><span><a class="pill primary" href="PASTE_PRESENTATION_LINK_HERE" target="_blank" rel="noopener">presentation placeholder</a></span></div>
               </article>
               <article class="update-slide">
-                <div class="update-title">BASE DESIGN READY TO PRINT</div>
+                <div class="update-title">Base design ready to print</div>
                 <div class="update-line"><strong>Current</strong><span>WAACS / e-NABLE-style base design is the starting printable basis.</span></div>
                 <div class="update-line"><strong>Next</strong><span>Attach print link, material notes, and estimated price.</span></div>
                 <div class="update-line"><strong>Link</strong><span><a class="pill primary" href="https://docs.google.com/spreadsheets/d/1Cf-Qrm9P4SmOiynSsROKjqrrjdEQIn6SukNvNQSpMGU/edit?usp=sharing" target="_blank" rel="noopener">attach links / price</a></span></div>
               </article>
               <article class="update-slide">
-                <div class="update-title">STAY OPEN TO HYBRID METHODS</div>
+                <div class="update-title">Stay open to hybrid methods</div>
                 <div class="update-line"><strong>Current</strong><span>Advice from prosthetist at OPRC: keep design options open and avoid overcommitting too early.</span></div>
                 <div class="update-line"><strong>Next</strong><span>Compare hybrid approaches against simplicity, repairability, and child use.</span></div>
                 <div class="update-line"><strong>Link</strong><span><a class="pill primary" href="https://docs.google.com/spreadsheets/d/1Cf-Qrm9P4SmOiynSsROKjqrrjdEQIn6SukNvNQSpMGU/edit?usp=sharing" target="_blank" rel="noopener">notes placeholder</a></span></div>
@@ -337,16 +497,16 @@ a:focus-visible {
             </section>
 
             <section class="quick-cards">
-              <article class="quick-card"><div><h2>CURRENT GOAL</h2><p>Lock the child-first MVP direction before CAD.</p></div><div class="actions"><button class="pill primary" data-jump="goal" type="button">open goal</button></div></article>
-              <article class="quick-card"><div><h2>UPLOAD</h2><p>CAD drafts, screenshots, test notes, review comments, and external collaborator files.</p></div><div class="actions"><a class="pill primary" href="PASTE_GOOGLE_FORM_UPLOAD_LINK_HERE" target="_blank" rel="noopener">upload file</a></div></article>
-              <article class="quick-card"><div><h2>DOWNLOADS</h2><p>Test bench package, design requirements, survey, budget, and reference documents.</p></div><div class="actions"><button class="pill primary" data-jump="documents" type="button">open docs</button></div></article>
+              <article class="quick-card"><div><h2>Current goal</h2><p>Lock the child-first MVP direction before CAD.</p></div><div class="actions"><button class="pill primary" data-jump="goal" type="button">open goal</button></div></article>
+              <article class="quick-card"><div><h2>Upload</h2><p>CAD drafts, screenshots, test notes, review comments, and external collaborator files.</p></div><div class="actions"><a class="pill primary" href="PASTE_GOOGLE_FORM_Upload_LINK_HERE" target="_blank" rel="noopener">upload file</a></div></article>
+              <article class="quick-card"><div><h2>Downloads</h2><p>Test bench package, design requirements, survey, budget, and reference documents.</p></div><div class="actions"><button class="pill primary" data-jump="documents" type="button">open docs</button></div></article>
             </section>
           </div>
         </div>
 
         <div id="goal" class="view">
           <div class="goal-top">
-            <div><div class="kicker">goal</div><h1 class="title">DESIGN DIRECTION</h1><div class="rule"></div></div>
+            <div><div class="kicker">goal</div><h1 class="title">Design direction</h1><div class="rule"></div></div>
             <div class="time-tabs"><button class="time-tab" data-goal="week">THIS WEEK</button><button class="time-tab" data-goal="month">THIS MONTH</button><button class="time-tab active" data-goal="year">THE YEAR</button></div>
           </div>
 
@@ -379,19 +539,19 @@ a:focus-visible {
         </div>
 
         <div id="documents" class="view">
-          <div class="kicker">documents</div><h1 class="title">FILE FOLDERS</h1><div class="rule"></div>
+          <div class="kicker">documents</div><h1 class="title">File folders</h1><div class="rule"></div>
           <div class="folder-grid">
-            <article class="folder-card"><svg viewBox="0 0 48 48"><path d="M6 14h14l4 5h18v21H6z"></path><path d="M6 19h36"></path></svg><h3>SURVEY</h3><div class="actions"><a class="pill primary" href="prosthetic-user-survey.html" target="_blank" rel="noopener">open</a><a class="pill" href="PASTE_GOOGLE_FORM_UPLOAD_LINK_HERE" target="_blank" rel="noopener">upload</a></div></article>
+            <article class="folder-card"><svg viewBox="0 0 48 48"><path d="M6 14h14l4 5h18v21H6z"></path><path d="M6 19h36"></path></svg><h3>SURVEY</h3><div class="actions"><a class="pill primary" href="prosthetic-user-survey.html" target="_blank" rel="noopener">open</a><a class="pill" href="PASTE_GOOGLE_FORM_Upload_LINK_HERE" target="_blank" rel="noopener">upload</a></div></article>
             <article class="folder-card"><svg viewBox="0 0 48 48"><path d="M6 14h14l4 5h18v21H6z"></path><path d="M6 19h36"></path></svg><h3>BUDGET</h3><div class="actions"><a class="pill primary" href="https://docs.google.com/spreadsheets/d/1GkG42z72UtrJ5_tYGXVXwijDe_5T6Ae6/edit?usp=drivesdk&ouid=101706660835918185079&rtpof=true&sd=true&urp=gmail_link" target="_blank" rel="noopener">open</a></div></article>
-            <article class="folder-card"><svg viewBox="0 0 48 48"><path d="M6 14h14l4 5h18v21H6z"></path><path d="M6 19h36"></path></svg><h3>TEST BENCH PACKAGE</h3><div class="actions"><a class="pill primary" href="PASTE_TEST_BENCH_BUILDING_FILE_LINK_HERE" target="_blank" rel="noopener">download</a><a class="pill" href="PASTE_GOOGLE_FORM_UPLOAD_LINK_HERE" target="_blank" rel="noopener">upload</a></div></article>
+            <article class="folder-card"><svg viewBox="0 0 48 48"><path d="M6 14h14l4 5h18v21H6z"></path><path d="M6 19h36"></path></svg><h3>TEST BENCH PACKAGE</h3><div class="actions"><a class="pill primary" href="PASTE_TEST_BENCH_BUILDING_FILE_LINK_HERE" target="_blank" rel="noopener">download</a><a class="pill" href="PASTE_GOOGLE_FORM_Upload_LINK_HERE" target="_blank" rel="noopener">upload</a></div></article>
             <article class="folder-card"><svg viewBox="0 0 48 48"><path d="M6 14h14l4 5h18v21H6z"></path><path d="M6 19h36"></path></svg><h3>DESIGN REQUIREMENTS</h3><div class="actions"><a class="pill primary" href="https://docs.google.com/spreadsheets/d/1Cf-Qrm9P4SmOiynSsROKjqrrjdEQIn6SukNvNQSpMGU/edit?usp=sharing" target="_blank" rel="noopener">open</a></div></article>
             <article class="folder-card"><svg viewBox="0 0 48 48"><path d="M6 14h14l4 5h18v21H6z"></path><path d="M6 19h36"></path></svg><h3>REFERENCE VISUALS</h3><div class="actions"><button class="pill primary" data-jump="goal" type="button">open goal</button></div></article>
           </div>
         </div>
 
         <div id="resources" class="view">
-          <div class="kicker">resources</div><h1 class="title">RESOURCE CENTER</h1><div class="rule"></div>
-          <div class="resource-tabs"><button class="resource-tab active" type="button" data-resource="playbooks">PLAYBOOKS</button><button class="resource-tab" type="button" data-resource="links">LINKS</button><button class="resource-tab" type="button" data-resource="sops">SOPS</button><button class="resource-tab" type="button" data-resource="presentations">PRESENTATIONS</button></div>
+          <div class="kicker">resources</div><h1 class="title">Resource center</h1><div class="rule"></div>
+          <div class="resource-tabs"><button class="resource-tab active" type="button" data-resource="playbooks">Playbooks</button><button class="resource-tab" type="button" data-resource="links">Links</button><button class="resource-tab" type="button" data-resource="sops">SOPs</button><button class="resource-tab" type="button" data-resource="presentations">Presentations</button></div>
           <div id="res-playbooks" class="resource-panel active"><div class="resource-list"><div class="resource-row"><strong>R&amp;D Playbook</strong><span>Placeholder for team process and decision rules.</span><a class="pill primary" href="#">add link</a></div><div class="resource-row"><strong>Testing Playbook</strong><span>Placeholder for test setup, logging, and review method.</span><a class="pill primary" href="#">add link</a></div></div></div>
           <div id="res-links" class="resource-panel"><div class="resource-list"><div class="resource-row"><strong>Project Software</strong><span>Current project management software placeholder.</span><a class="pill primary" href="PASTE_PROJECT_MANAGEMENT_SOFTWARE_LINK_HERE" target="_blank" rel="noopener">open</a></div><div class="resource-row"><strong>Drive Folder</strong><span>Main Google Drive folder placeholder.</span><a class="pill primary" href="PASTE_GOOGLE_DRIVE_FOLDER_LINK_HERE" target="_blank" rel="noopener">open</a></div></div></div>
           <div id="res-sops" class="resource-panel"><div class="resource-list"><div class="resource-row"><strong>Design Intake SOP</strong><span>Placeholder for requesting concept/CAD/design work.</span><a class="pill primary" href="#">add link</a></div><div class="resource-row"><strong>Document Upload SOP</strong><span>Placeholder for naming, versioning, and handoff.</span><a class="pill primary" href="#">add link</a></div></div></div>
@@ -399,12 +559,12 @@ a:focus-visible {
         </div>
 
         <div id="portal" class="view">
-          <div class="kicker">external portal</div><h1 class="title">STUDENT ENTRY POINT</h1><div class="rule"></div>
+          <div class="kicker">external portal</div><h1 class="title">Student entry point</h1><div class="rule"></div>
           <div class="portal-preview"><img src="testbench-architecture.webp" alt="Automated test rig architecture preview"><div>Primary external deliverable: automated test bench building package.</div></div>
           <section class="quick-cards">
-            <article class="quick-card"><div><h2>CURRENT GOAL</h2><p>Build the test bench package that supports repeatable prosthetic-hand testing.</p></div></article>
-            <article class="quick-card"><div><h2>UPLOAD</h2><p>Submit CAD files, build notes, screenshots, and questions.</p></div><div class="actions"><a class="pill primary" href="PASTE_GOOGLE_FORM_UPLOAD_LINK_HERE" target="_blank" rel="noopener">upload</a></div></article>
-            <article class="quick-card"><div><h2>DOWNLOADS</h2><p>Open the test bench file and required reference documents.</p></div><div class="actions"><a class="pill primary" href="PASTE_TEST_BENCH_BUILDING_FILE_LINK_HERE" target="_blank" rel="noopener">download</a></div></article>
+            <article class="quick-card"><div><h2>Current goal</h2><p>Build the test bench package that supports repeatable prosthetic-hand testing.</p></div></article>
+            <article class="quick-card"><div><h2>Upload</h2><p>Submit CAD files, build notes, screenshots, and questions.</p></div><div class="actions"><a class="pill primary" href="PASTE_GOOGLE_FORM_Upload_LINK_HERE" target="_blank" rel="noopener">upload</a></div></article>
+            <article class="quick-card"><div><h2>Downloads</h2><p>Open the test bench file and required reference documents.</p></div><div class="actions"><a class="pill primary" href="PASTE_TEST_BENCH_BUILDING_FILE_LINK_HERE" target="_blank" rel="noopener">download</a></div></article>
           </section>
         </div>
       </section>
