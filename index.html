@@ -7,979 +7,582 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
 <style>
-:root {
-  --bg:#050505;
-  --panel:#0b0b0b;
-  --card:#111111;
-  --card2:#151515;
-  --ink:#f4f4f2;
-  --muted:#b5b5ae;
-  --quiet:#777771;
-  --line:#303030;
-  --white:#f1f1ef;
+:root{
+  --bg:#181a1c;
+  --ink:#f6f3fa;
+  --muted:rgba(246,243,250,.62);
+  --quiet:rgba(246,243,250,.38);
+  --line:rgba(246,243,250,.16);
+  --line-strong:rgba(246,243,250,.28);
+  --panel:rgba(246,243,250,.035);
+  --panel-strong:rgba(246,243,250,.075);
+  --shadow:rgba(0,0,0,.45);
 }
 
-* { box-sizing:border-box; }
+*{box-sizing:border-box}
 
-html, body {
+html,body{
   margin:0;
-  padding:0;
   min-height:100%;
+  background:var(--bg);
+  color:var(--ink);
+  font-family:"Space Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  overflow-x:hidden;
+}
+
+body{
   background:
-    radial-gradient(circle at 50% 0,#1b1b1b 0,#080808 42%,#050505 80%);
-  color:var(--ink);
-  font-family:"DM Sans", Arial, sans-serif;
+    radial-gradient(circle at 50% 45%, rgba(246,243,250,.08) 0%, rgba(246,243,250,.025) 22%, transparent 52%),
+    linear-gradient(180deg, #181a1c 0%, #101214 100%);
 }
 
-button, a, input {
-  font:inherit;
-  color:inherit;
-}
+button,a{font:inherit;color:inherit}
 
-.app {
-  width:min(1280px,96vw);
+.dashboard{
+  width:min(1500px,100vw);
   min-height:900px;
-  margin:24px auto;
-  background:var(--panel);
-  border:1px solid #1f1f1f;
-  border-radius:28px;
+  margin:0 auto;
+  position:relative;
+  padding:38px 38px 34px;
   overflow:hidden;
-  box-shadow:0 20px 80px #00000088;
 }
 
-.top {
-  height:80px;
-  display:flex;
-  align-items:center;
-  gap:20px;
-  padding:0 34px;
-  border-bottom:1px solid var(--line);
-  background:rgba(9,9,9,.96);
-  backdrop-filter:blur(14px);
-  position:sticky;
-  top:0;
-  z-index:20;
+.dashboard:before{
+  content:"";
+  position:absolute;
+  inset:auto -10% 0 -10%;
+  height:42%;
+  background-image:
+    linear-gradient(rgba(246,243,250,.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(246,243,250,.045) 1px, transparent 1px);
+  background-size:48px 48px;
+  transform:perspective(680px) rotateX(62deg) translateY(60px);
+  transform-origin:bottom center;
+  opacity:.42;
+  pointer-events:none;
 }
 
-.logo {
-  min-width:220px;
-  font-size:22px;
-  font-weight:800;
-  letter-spacing:-.035em;
-}
-
-.nav {
-  display:flex;
-  gap:6px;
-  flex:1;
-  justify-content:center;
-  overflow:auto;
-}
-
-.nav button {
-  border:0;
-  background:transparent;
-  color:var(--muted);
-  padding:12px 16px;
-  border-radius:999px;
-  font-size:13px;
-  font-weight:800;
-  cursor:pointer;
-  white-space:nowrap;
-}
-
-.nav button.active {
-  background:var(--white);
-  color:#0b0b0b;
-}
-
-.tools {
-  display:flex;
-  gap:8px;
-}
-
-.btn {
-  border:1px solid var(--line);
-  background:#151515;
-  color:var(--ink);
-  padding:11px 14px;
-  border-radius:999px;
-  font-size:12px;
-  font-weight:800;
-  text-decoration:none;
-  display:inline-flex;
-  align-items:center;
-  gap:6px;
-  white-space:nowrap;
-}
-
-.btn.light {
-  background:var(--white);
-  color:#111;
-  border-color:var(--white);
-}
-
-.page {
-  display:none;
-  padding:34px;
-}
-
-.page.active {
-  display:block;
-}
-
-.eyebrow {
-  font:700 10px "Space Mono", monospace;
-  letter-spacing:.13em;
-  text-transform:uppercase;
-  color:#85857f;
-}
-
-h1 {
-  font-size:clamp(56px,7.2vw,108px);
-  line-height:.84;
-  margin:0 0 18px;
-  letter-spacing:-.07em;
-  font-weight:900;
-}
-
-h2 {
-  font-size:28px;
-  line-height:1.05;
-  margin:0;
-  letter-spacing:-.04em;
-  font-weight:900;
-}
-
-h3 {
-  font-size:18px;
-  margin:0;
-  font-weight:900;
-  letter-spacing:-.02em;
-}
-
-p {
-  color:var(--muted);
-  font-size:14px;
-  line-height:1.55;
-}
-
-.lead {
-  max-width:820px;
-  font-size:15px;
-}
-
-.card {
-  background:var(--card);
-  border:1px solid var(--line);
-  border-radius:20px;
-  padding:24px;
-  box-shadow:inset 0 1px 0 #ffffff08;
-}
-
-.summary-strip {
+.topbar{
+  position:relative;
+  z-index:5;
   display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:1px;
-  border:1px solid var(--line);
-  border-radius:20px;
-  overflow:hidden;
-  margin-top:22px;
+  grid-template-columns:1fr auto 1fr;
+  align-items:start;
+  gap:24px;
+  min-height:44px;
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:34px;
+  font-size:18px;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+}
+
+.brand .divider{
+  width:1px;
+  height:22px;
   background:var(--line);
 }
 
-.summary-item {
-  background:#101010;
-  padding:22px;
-  min-height:126px;
-}
-
-.summary-item span {
-  display:block;
-  font:700 9px "Space Mono", monospace;
-  letter-spacing:.14em;
-  color:#85857f;
-  text-transform:uppercase;
-  margin-bottom:11px;
-}
-
-.summary-item b {
-  display:block;
-  font-size:21px;
-  line-height:1.12;
-}
-
-.summary-item small {
-  display:block;
-  margin-top:9px;
+.brand .sub{
+  font-size:15px;
   color:var(--muted);
-  font-size:12px;
-  line-height:1.45;
-}
-
-.grid-top {
-  display:grid;
-  grid-template-columns:1.1fr .9fr;
-  gap:18px;
-  margin-top:18px;
-}
-
-.stage-path {
-  display:flex;
-  align-items:center;
-  gap:8px;
-  flex-wrap:wrap;
-  margin:24px 0 18px;
-  font-size:13px;
-  color:#85857f;
-}
-
-.stage-path span {
-  padding:8px 11px;
-  border:1px solid var(--line);
-  border-radius:999px;
-}
-
-.stage-path span.arrow {
-  padding:0;
-  border:0;
-}
-
-.stage-path .current {
-  background:var(--white);
-  color:#111;
-  border-color:var(--white);
-  font-weight:900;
-}
-
-.note {
-  border-top:1px solid var(--line);
-  padding-top:16px;
-  font-size:13px;
-  color:var(--muted);
-}
-
-.output-list,
-.owner-table,
-.simple-list {
-  margin-top:18px;
-  border-top:1px solid var(--line);
-}
-
-.output-row {
-  display:grid;
-  grid-template-columns:34px 1fr auto;
-  gap:16px;
-  align-items:center;
-  padding:15px 0;
-  border-bottom:1px solid var(--line);
-}
-
-.output-row span:first-child {
-  color:#85857f;
-  font:700 10px "Space Mono", monospace;
-}
-
-.output-row b {
-  font-size:14px;
-}
-
-.output-row em {
-  font:700 8px "Space Mono", monospace;
-  font-style:normal;
-  border:1px solid #3a3a3a;
-  border-radius:999px;
-  padding:6px 8px;
-  color:#d0d0ca;
-  text-transform:uppercase;
-  white-space:nowrap;
-}
-
-.roadmap-preview {
-  margin-top:18px;
-  border:1px solid var(--line);
-  border-radius:20px;
-  overflow:hidden;
-}
-
-.roadmap-row {
-  display:grid;
-  grid-template-columns:95px 1fr 155px;
-  gap:18px;
-  align-items:start;
-  border-bottom:1px solid var(--line);
-  padding:18px 20px;
-}
-
-.roadmap-row:last-child {
-  border-bottom:0;
-}
-
-.roadmap-row strong {
-  font-size:14px;
-}
-
-.roadmap-row p {
-  margin:4px 0 0;
-  font-size:13px;
-}
-
-.roadmap-row .period {
-  font:700 10px "Space Mono", monospace;
-  color:#85857f;
+  text-transform:lowercase;
   letter-spacing:.08em;
-  text-transform:uppercase;
 }
 
-.status {
-  display:inline-flex;
+.top-center,
+.top-year{
+  font-size:18px;
+  font-weight:700;
+  letter-spacing:.16em;
+  text-transform:lowercase;
+}
+
+.top-year{
+  justify-self:end;
+}
+
+.layout{
+  position:relative;
+  z-index:3;
+  display:grid;
+  grid-template-columns:310px minmax(430px,1fr) 325px;
+  gap:42px;
+  min-height:720px;
+  margin-top:140px;
+}
+
+.left-panel{
+  border-right:1px solid var(--line);
+  padding:42px 0 42px 24px;
+}
+
+.panel-title{
+  font-size:16px;
+  letter-spacing:.08em;
+  text-transform:lowercase;
+  margin:0 0 28px;
+}
+
+.side-nav{
+  display:flex;
+  flex-direction:column;
+  gap:18px;
+}
+
+.nav-item{
+  appearance:none;
+  border:0;
+  background:transparent;
+  min-height:74px;
+  display:grid;
+  grid-template-columns:48px 1fr;
+  align-items:center;
+  gap:22px;
+  text-align:left;
+  color:var(--ink);
+  cursor:pointer;
+  padding:0 20px;
+  border-left:2px solid transparent;
+  border-radius:0;
+  opacity:.92;
+}
+
+.nav-item.active{
+  border-left-color:var(--ink);
+  background:linear-gradient(90deg, rgba(246,243,250,.09), rgba(246,243,250,.02) 70%, transparent);
+}
+
+.nav-icon{
+  width:34px;
+  height:34px;
+  color:var(--ink);
+  display:grid;
+  place-items:center;
+}
+
+.nav-icon svg{
+  width:34px;
+  height:34px;
+  stroke:currentColor;
+  stroke-width:1.5;
+  fill:none;
+}
+
+.nav-label{
+  font-size:17px;
+  letter-spacing:.08em;
+  text-transform:lowercase;
+}
+
+.center-stage{
+  position:relative;
+  display:flex;
+  flex-direction:column;
   justify-content:center;
   align-items:center;
-  gap:7px;
-  font:700 9px "Space Mono", monospace;
-  letter-spacing:.08em;
-  text-transform:uppercase;
-  padding:7px 9px;
-  border:1px solid #3a3a3a;
-  border-radius:999px;
-  color:#d8d8d4;
-  white-space:nowrap;
+  min-height:650px;
 }
 
-.status:before {
+.video-frame{
+  position:relative;
+  width:min(580px,100%);
+  aspect-ratio:3/4;
+  display:grid;
+  place-items:center;
+  filter:drop-shadow(0 30px 34px rgba(0,0,0,.45));
+}
+
+.video-frame:before{
   content:"";
-  width:6px;
-  height:6px;
+  position:absolute;
+  left:50%;
+  bottom:18px;
+  width:86%;
+  height:25%;
+  transform:translateX(-50%);
+  border:1px solid rgba(246,243,250,.22);
   border-radius:50%;
-  background:var(--white);
+  opacity:.8;
+  z-index:1;
 }
 
-.two-col {
-  display:grid;
-  grid-template-columns:1.1fr .9fr;
-  gap:18px;
+.video-frame:after{
+  content:"";
+  position:absolute;
+  inset:7% 8% 11%;
+  background:
+    radial-gradient(circle at 50% 46%, rgba(246,243,250,.16), transparent 42%),
+    linear-gradient(180deg, rgba(246,243,250,.04), rgba(0,0,0,.08));
+  border-radius:34px;
+  filter:blur(18px);
+  opacity:.62;
+  z-index:0;
+}
+
+.render-video{
+  position:relative;
+  z-index:2;
+  width:100%;
+  max-height:620px;
+  object-fit:contain;
+  mix-blend-mode:screen;
+  opacity:.92;
+  filter:grayscale(1) contrast(1.08) brightness(.92);
+  border:0;
+  background:transparent;
+}
+
+.poster-fallback{
+  position:relative;
+  z-index:2;
+  width:100%;
+  max-height:620px;
+  object-fit:contain;
+  filter:grayscale(1) contrast(1.08) brightness(.92);
+  opacity:.92;
+  display:none;
+}
+
+.video-caption{
+  position:relative;
+  z-index:5;
   margin-top:18px;
-}
-
-.owner-row,
-.list-row {
-  display:grid;
-  grid-template-columns:140px 1fr 125px;
-  gap:16px;
-  align-items:center;
-  padding:15px 0;
-  border-bottom:1px solid var(--line);
-  font-size:14px;
-}
-
-.owner-row span,
-.list-row span {
   color:var(--muted);
+  font-size:13px;
+  letter-spacing:.08em;
+  text-transform:lowercase;
+  text-align:center;
 }
 
-.owner-row em,
-.list-row em {
-  font:700 8px "Space Mono", monospace;
-  font-style:normal;
-  justify-self:end;
-  border:1px solid #3a3a3a;
-  border-radius:999px;
-  padding:6px 8px;
-  color:#d0d0ca;
-  white-space:nowrap;
-  text-transform:uppercase;
-}
-
-.quarter-board {
-  margin-top:22px;
-  border:1px solid var(--line);
-  border-radius:20px;
-  overflow:hidden;
-}
-
-.quarter-row {
-  display:grid;
-  grid-template-columns:150px 1fr 1fr 1fr;
-  border-bottom:1px solid var(--line);
-}
-
-.quarter-row:last-child {
-  border-bottom:0;
-}
-
-.quarter-head {
-  background:#0d0d0d;
-  color:#85857f;
-  font:700 9px "Space Mono", monospace;
-  letter-spacing:.12em;
-  text-transform:uppercase;
-}
-
-.quarter-cell {
-  padding:18px;
-  border-right:1px solid var(--line);
-  min-height:112px;
-}
-
-.quarter-cell:last-child {
-  border-right:0;
-}
-
-.quarter-cell b {
+.cube-icon{
   display:block;
-  font-size:15px;
-  margin-bottom:7px;
+  margin:0 auto 9px;
+  width:24px;
+  height:24px;
+  opacity:.82;
 }
 
-.quarter-cell p {
-  margin:0;
-  font-size:13px;
+.casimir-note{
+  margin-top:12px;
+  color:var(--quiet);
+  font-size:11px;
+  letter-spacing:.06em;
+  text-transform:lowercase;
 }
 
-.link-table {
-  border-top:1px solid var(--line);
-  margin-top:38px;
+.right-panel{
+  border-left:1px solid var(--line);
+  padding:42px 24px 42px 42px;
 }
 
-.link-row {
+.status-title{
+  font-size:16px;
+  letter-spacing:.08em;
+  text-transform:lowercase;
+  margin-bottom:24px;
+}
+
+.tile-grid{
   display:grid;
-  grid-template-columns:1.2fr .8fr 2fr .8fr .6fr .6fr;
-  gap:18px;
-  align-items:start;
-  border-bottom:1px solid var(--line);
-  padding:16px 0;
-  font-size:13px;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+  margin-bottom:44px;
 }
 
-.link-header {
-  color:#85857f;
-  font:700 9px "Space Mono", monospace;
-  letter-spacing:.13em;
-  text-transform:uppercase;
+.status-tile{
+  min-height:142px;
+  border:1px solid var(--line-strong);
+  background:rgba(246,243,250,.025);
+  padding:18px;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
 }
 
-.link-doc {
-  color:#fff;
-  font-weight:900;
-}
-
-.muted {
-  color:var(--muted);
-}
-
-.open {
-  color:#fff;
-  text-decoration:none;
-  font:700 11px "Space Mono", monospace;
-  text-transform:uppercase;
-}
-
-.open:hover {
-  text-decoration:underline;
-}
-
-.warning {
-  border:1px dashed #555;
-  border-radius:16px;
-  padding:16px 18px;
-  margin-top:18px;
+.tile-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
   color:var(--muted);
   font-size:13px;
-  line-height:1.55;
+  text-transform:lowercase;
 }
 
-.page-title-small {
-  font-size:clamp(44px,5.5vw,72px);
+.tile-value{
+  font-family:"Inter", Arial, sans-serif;
+  font-size:21px;
+  line-height:1.12;
+  letter-spacing:.01em;
+  color:var(--ink);
 }
 
-@media(max-width:980px) {
-  .grid-top,
-  .two-col,
-  .summary-strip {
+.dot-icon{
+  width:22px;
+  height:22px;
+  opacity:.7;
+}
+
+.status-block{
+  border-top:1px solid var(--line);
+  padding:32px 0 28px;
+}
+
+.status-line{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  color:var(--ink);
+  font-size:16px;
+  letter-spacing:.06em;
+  text-transform:lowercase;
+}
+
+.circle{
+  width:18px;
+  height:18px;
+  border-radius:50%;
+  border:1px solid var(--line-strong);
+}
+
+.status-desc{
+  margin:24px 0 0;
+  font-family:"Inter", Arial, sans-serif;
+  font-size:18px;
+  line-height:1.35;
+  color:var(--ink);
+}
+
+.progress{
+  margin-top:24px;
+  width:100%;
+  height:1px;
+  background:var(--line);
+  position:relative;
+}
+
+.progress:before{
+  content:"";
+  position:absolute;
+  left:0;
+  top:0;
+  height:2px;
+  width:26%;
+  background:var(--ink);
+}
+
+.progress.short:before{
+  width:23%;
+}
+
+@media(max-width:1050px){
+  .dashboard{
+    min-height:auto;
+    padding:28px 20px;
+  }
+
+  .layout{
+    grid-template-columns:1fr;
+    margin-top:60px;
+    gap:24px;
+  }
+
+  .left-panel,
+  .right-panel{
+    border:1px solid var(--line);
+    border-radius:18px;
+    padding:24px;
+  }
+
+  .side-nav{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .center-stage{
+    min-height:auto;
+  }
+
+  .topbar{
     grid-template-columns:1fr;
   }
 
-  .quarter-row,
-  .owner-row,
-  .list-row,
-  .roadmap-row,
-  .link-row {
+  .top-center,
+  .top-year{
+    justify-self:start;
+  }
+}
+
+@media(max-width:620px){
+  .side-nav,
+  .tile-grid{
     grid-template-columns:1fr;
-    gap:8px;
   }
 
-  .quarter-cell {
-    border-right:0;
-    border-bottom:1px solid var(--line);
+  .brand{
+    gap:14px;
+    font-size:15px;
   }
 
-  .quarter-cell:last-child {
-    border-bottom:0;
-  }
-
-  .tools {
-    display:none;
-  }
-
-  .app {
-    width:100%;
-    margin:0;
-    border-radius:0;
-  }
-
-  .page {
-    padding:24px 18px;
-  }
-
-  .top {
-    padding:0 16px;
-  }
-
-  .logo {
-    min-width:160px;
+  .brand .sub{
+    font-size:12px;
   }
 }
 </style>
 </head>
 
 <body>
-<div class="app">
-  <header class="top">
-    <div class="logo">Universal Limbs</div>
-
-    <nav class="nav">
-      <button class="active" onclick="showPage('home', this)">Home</button>
-      <button onclick="showPage('roadmap', this)">Roadmap</button>
-      <button onclick="showPage('owners', this)">Owners</button>
-      <button onclick="showPage('quicklinks', this)">Quick Links</button>
-      <button onclick="showPage('process', this)">Process</button>
-    </nav>
-
-    <div class="tools">
-      <a class="btn light" href="https://docs.google.com/spreadsheets/d/1Cf-Qrm9P4SmOiynSsROKjqrrjdEQIn6SukNvNQSpMGU/edit?usp=sharing" target="_blank" rel="noopener">Tracker ↗</a>
+<main class="dashboard">
+  <header class="topbar">
+    <div class="brand">
+      <span>ULF</span>
+      <span class="divider"></span>
+      <span class="sub">r&d dashboard</span>
     </div>
+
+    <div class="top-center">year 1</div>
+    <div class="top-year">2026</div>
   </header>
 
-  <main>
-    <!-- HOME -->
-    <section class="page active" id="home">
-      <h1>R&D</h1>
+  <section class="layout">
+    <aside class="left-panel">
+      <div class="panel-title">details</div>
 
-      <div class="summary-strip">
-        <div class="summary-item">
-          <span>Goal</span>
-          <b>Low-cost adaptive body-powered prosthetic arm</b>
-          <small>Child-first design, scalable later to adults.</small>
-        </div>
+      <nav class="side-nav" aria-label="R&D dashboard navigation">
+        <button class="nav-item active" type="button">
+          <span class="nav-icon">
+            <svg viewBox="0 0 40 40" aria-hidden="true">
+              <circle cx="20" cy="20" r="14"></circle>
+              <circle cx="20" cy="20" r="6"></circle>
+              <path d="M20 2v8M20 30v8M2 20h8M30 20h8"></path>
+            </svg>
+          </span>
+          <span class="nav-label">goal</span>
+        </button>
 
-        <div class="summary-item">
-          <span>Current focus</span>
-          <b>Simplified Yale Hand — MVP 1</b>
-          <small>Lock requirements before CAD and physical testing.</small>
-        </div>
+        <button class="nav-item" type="button">
+          <span class="nav-icon">
+            <svg viewBox="0 0 40 40" aria-hidden="true">
+              <circle cx="14" cy="14" r="5"></circle>
+              <circle cx="27" cy="15" r="5"></circle>
+              <path d="M5 33c1-8 6-12 12-12s11 4 12 12"></path>
+              <path d="M19 33c1-6 5-9 10-9 4 0 7 2 9 7"></path>
+            </svg>
+          </span>
+          <span class="nav-label">team</span>
+        </button>
 
-        <div class="summary-item">
-          <span>Timeline</span>
-          <b>24 months</b>
-          <small>Quarterly phases with review gates.</small>
-        </div>
+        <button class="nav-item" type="button">
+          <span class="nav-icon">
+            <svg viewBox="0 0 40 40" aria-hidden="true">
+              <circle cx="20" cy="20" r="15"></circle>
+              <path d="M20 9v12l8 4"></path>
+            </svg>
+          </span>
+          <span class="nav-label">timeline</span>
+        </button>
 
-        <div class="summary-item">
-          <span>Funding</span>
-          <b>Pending</b>
-          <small>Budget and grant support still required.</small>
-        </div>
+        <button class="nav-item" type="button">
+          <span class="nav-icon">
+            <svg viewBox="0 0 40 40" aria-hidden="true">
+              <path d="M11 5h13l6 6v24H11z"></path>
+              <path d="M24 5v7h7M15 20h13M15 26h13"></path>
+            </svg>
+          </span>
+          <span class="nav-label">files</span>
+        </button>
+      </nav>
+    </aside>
+
+    <section class="center-stage" aria-label="Simulation render preview">
+      <div class="video-frame">
+        <video class="render-video" autoplay muted loop playsinline preload="metadata" poster="ulf-product-demo-poster.jpg">
+          <source src="ulf-product-demo.mp4" type="video/mp4">
+        </video>
+        <img class="poster-fallback" src="ulf-product-demo-poster.jpg" alt="Simulation preview fallback">
       </div>
 
-      <div class="card" style="margin-top:18px;">
-        <div class="eyebrow">Quarter roadmap preview</div>
-        <h2>What we are building by phase</h2>
-
-        <div class="roadmap-preview">
-          <div class="roadmap-row">
-            <div class="period">Q1 · Aug–Nov</div>
-            <div>
-              <strong>Simplified Yale Hand Project</strong>
-              <p>Whiffletree drive + single cable. Lock child-first mechanical architecture.</p>
-            </div>
-            <div><span class="status">Current</span></div>
-          </div>
-
-          <div class="roadmap-row">
-            <div class="period">Q2 · Dec–Mar</div>
-            <div>
-              <strong>Integrated SoftFoot Pro principles</strong>
-              <p>Adaptive tendon-chain fingers. Only continue if it simplifies the design.</p>
-            </div>
-            <div><span class="status">Waiting approval</span></div>
-          </div>
-
-          <div class="roadmap-row">
-            <div class="period">Q3 · Apr–Jul</div>
-            <div>
-              <strong>Pneumatic design study</strong>
-              <p>Energy-assist concept study only if it fits the no-electronics constraint.</p>
-            </div>
-            <div><span class="status">Future</span></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="grid-top">
-        <div class="card">
-          <div class="eyebrow">Current stage</div>
-          <h2>Simplified Yale Hand — MVP 1</h2>
-          <p>Current engineering stage</p>
-
-          <div class="stage-path">
-            <span class="current">Design requirements</span>
-            <span class="arrow">→</span>
-            <span>Concept</span>
-            <span class="arrow">→</span>
-            <span>CAD</span>
-            <span class="arrow">→</span>
-            <span>Prototype</span>
-            <span class="arrow">→</span>
-            <span>Testing</span>
-          </div>
-
-          <div class="note"><b>Rule:</b> do not move to CAD until the requirements are clear enough for the team to design against.</div>
-        </div>
-
-        <div class="card">
-          <div class="eyebrow">This quarter must deliver</div>
-          <h2>4 outputs</h2>
-
-          <div class="output-list">
-            <div class="output-row"><span>01</span><b>Design requirements package</b><em>Required</em></div>
-            <div class="output-row"><span>02</span><b>Concept direction + simplified architecture</b><em>Required</em></div>
-            <div class="output-row"><span>03</span><b>University R&D / test-rig package</b><em>Required</em></div>
-            <div class="output-row"><span>04</span><b>Testing and documentation system</b><em>Required</em></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="two-col">
-        <div class="card">
-          <div class="eyebrow">Who is working on what?</div>
-          <h2>Owner map</h2>
-          <div class="owner-table">
-            <div class="owner-row"><b>Rasna</b><span>Requirements, direction, coordination</span><em>Lead</em></div>
-            <div class="owner-row"><b>Matthew</b><span>Concept + industrial design</span><em>In progress</em></div>
-            <div class="owner-row"><b>Ganesh</b><span>Simulation / validation + test-rig support</span><em>In progress</em></div>
-            <div class="owner-row"><b>Mahmoud</b><span>CAD design</span><em>Waiting</em></div>
-            <div class="owner-row"><b>Abhay</b><span>R&D / Bowden cable research</span><em>Research</em></div>
-          </div>
-        </div>
-
-        <div class="card">
-          <div class="eyebrow">Open work</div>
-          <h2>Needs owner</h2>
-          <div class="simple-list">
-            <div class="list-row"><b>○</b><span>Prosthetic-user survey</span><em>Needs owner</em></div>
-            <div class="list-row"><b>○</b><span>Design Intake SOP</span><em>Needs owner</em></div>
-            <div class="list-row"><b>○</b><span>Testing & Research SOP</span><em>Needs owner</em></div>
-            <div class="list-row"><b>○</b><span>Testing documentation support</span><em>Needs owner</em></div>
-          </div>
-        </div>
+      <div class="video-caption">
+        <svg class="cube-icon" viewBox="0 0 36 36" aria-hidden="true">
+          <path d="M18 3l13 7.5v15L18 33 5 25.5v-15L18 3z" fill="none" stroke="currentColor" stroke-width="1.4"/>
+          <path d="M5 10.5L18 18l13-7.5M18 18v15" fill="none" stroke="currentColor" stroke-width="1.4"/>
+        </svg>
+        simulation preview
+        <div class="casimir-note">simulation by former engineer Casimir</div>
       </div>
     </section>
 
-    <!-- ROADMAP -->
-    <section class="page" id="roadmap">
-      <div class="eyebrow">Quarterly plan</div>
-      <h1 class="page-title-small">roadmap</h1>
-      <p class="lead">The roadmap breaks the main goal into clear quarters. Each phase needs a review gate before moving forward.</p>
+    <aside class="right-panel">
+      <div class="status-title">in progress</div>
 
-      <div class="quarter-board">
-        <div class="quarter-row quarter-head">
-          <div class="quarter-cell">Period</div>
-          <div class="quarter-cell">Build focus</div>
-          <div class="quarter-cell">Must deliver</div>
-          <div class="quarter-cell">Review gate</div>
+      <div class="tile-grid">
+        <div class="status-tile">
+          <div class="tile-top">
+            <span>task</span>
+            <svg class="dot-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <g fill="currentColor">
+                <circle cx="5" cy="5" r="1"/><circle cx="12" cy="5" r="1"/><circle cx="19" cy="5" r="1"/>
+                <circle cx="5" cy="12" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/>
+                <circle cx="5" cy="19" r="1"/><circle cx="12" cy="19" r="1"/><circle cx="19" cy="19" r="1"/>
+              </g>
+            </svg>
+          </div>
+          <div class="tile-value">design<br>review</div>
         </div>
 
-        <div class="quarter-row">
-          <div class="quarter-cell"><b>Q1</b><p>Aug–Nov 2026</p></div>
-          <div class="quarter-cell"><b>Simplified Yale Hand Project</b><p>Whiffletree drive + single cable. Lock child-first mechanical architecture.</p><span class="status">Current</span></div>
-          <div class="quarter-cell"><b>Requirements + concept package</b><p>Design requirements, concept direction, test-rig handoff, CAD input package.</p></div>
-          <div class="quarter-cell"><b>Design review</b><p>Only move to CAD/prototype when requirements are approved.</p></div>
-        </div>
-
-        <div class="quarter-row">
-          <div class="quarter-cell"><b>Q2</b><p>Dec 2026–Mar 2027</p></div>
-          <div class="quarter-cell"><b>Integrated SoftFoot Pro principles</b><p>Adaptive tendon-chain fingers. Use only principles that simplify the hand.</p><span class="status">Waiting approval</span></div>
-          <div class="quarter-cell"><b>Prototype + validation plan</b><p>Prototype scope, test stages, failure logs, updated design requirements.</p></div>
-          <div class="quarter-cell"><b>Team approval</b><p>Review whether SoftFoot principles help or overcomplicate MVP 1.</p></div>
-        </div>
-
-        <div class="quarter-row">
-          <div class="quarter-cell"><b>Q3</b><p>Apr–Jul 2027</p></div>
-          <div class="quarter-cell"><b>Pneumatic design study</b><p>Valve / energy assist concept only if it fits the no-electronics constraint.</p><span class="status">Future</span></div>
-          <div class="quarter-cell"><b>Study output</b><p>Decision memo: include, defer, or reject for Phase 1.</p></div>
-          <div class="quarter-cell"><b>Phase 1 closeout</b><p>Final review before moving into adult / Phase 2 work.</p></div>
-        </div>
-
-        <div class="quarter-row">
-          <div class="quarter-cell"><b>Year 2</b><p>Aug 2027–Jul 2028</p></div>
-          <div class="quarter-cell"><b>Adult architecture + CAD</b><p>Still being decided. Do not over-plan until pediatric design is validated.</p><span class="status">Not decided</span></div>
-          <div class="quarter-cell"><b>Adult MVP + validation</b><p>Scale up from pediatric platform only after Phase 1 review.</p></div>
-          <div class="quarter-cell"><b>Adult review gate</b><p>Confirm schedule and funding after Year 1 evidence.</p></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- OWNERS -->
-    <section class="page" id="owners">
-      <div class="eyebrow">Execution clarity</div>
-      <h1 class="page-title-small">owners</h1>
-      <p class="lead">This page answers: who owns the work, what are they doing, and what is blocked.</p>
-
-      <div class="card">
-        <div class="owner-table">
-          <div class="owner-row"><b>Rasna</b><span>R&D direction, requirements, coordination, partner alignment</span><em>Lead</em></div>
-          <div class="owner-row"><b>Sahitya</b><span>Program management / Anquido updates</span><em>Support</em></div>
-          <div class="owner-row"><b>Yahia</b><span>Project management / MVP 1 support</span><em>Support</em></div>
-          <div class="owner-row"><b>Matthew</b><span>Concept + industrial design</span><em>In progress</em></div>
-          <div class="owner-row"><b>Ganesh</b><span>Simulation, validation, and test-rig support</span><em>In progress</em></div>
-          <div class="owner-row"><b>Mahmoud</b><span>CAD design after requirements are locked</span><em>Waiting</em></div>
-          <div class="owner-row"><b>Abhay</b><span>R&D research / Bowden cable research</span><em>Research</em></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- QUICK LINKS -->
-    <section class="page" id="quicklinks">
-      <div class="eyebrow">Source of truth</div>
-      <h1 class="page-title-small">quick<br>links</h1>
-      <p class="lead">This pulls from the Google Sheet tracker when the sheet is accessible as CSV.</p>
-      <a class="btn light" href="https://docs.google.com/spreadsheets/d/1Cf-Qrm9P4SmOiynSsROKjqrrjdEQIn6SukNvNQSpMGU/edit?usp=sharing" target="_blank" rel="noopener">Open tracker ↗</a>
-
-      <div class="link-table" id="quickLinksList">
-        <div class="link-row link-header">
-          <div>Document / Asset</div>
-          <div>Category</div>
-          <div>What is it?</div>
-          <div>Status</div>
-          <div>Version</div>
-          <div>Link</div>
-        </div>
-
-        <div class="link-row">
-          <div class="link-doc">Gantt chart</div>
-          <div class="muted">Gantt / Timeline</div>
-          <div class="muted">Tracks Project 1 timeline, phases, and deadlines.</div>
-          <div>In Progress</div>
-          <div class="muted">v1</div>
-          <div><a class="open" href="https://docs.google.com/spreadsheets/d/1Cf-Qrm9P4SmOiynSsROKjqrrjdEQIn6SukNvNQSpMGU/edit?usp=sharing" target="_blank" rel="noopener">Open →</a></div>
+        <div class="status-tile">
+          <div class="tile-top">
+            <span>team</span>
+            <svg class="dot-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M8 11a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm8 9v-2a6 6 0 0 0-12 0v2" fill="none" stroke="currentColor" stroke-width="1.4"/>
+              <path d="M17 10a3 3 0 1 0-1-5.8M20 20v-1.5a5 5 0 0 0-4-4.9" fill="none" stroke="currentColor" stroke-width="1.4"/>
+            </svg>
+          </div>
+          <div class="tile-value">mechanical<br>systems</div>
         </div>
       </div>
 
-      <div class="warning" id="quickLinksMessage">
-        If the live table does not load in Google Sites, publish the tracker as CSV and replace QUICK_LINKS_CSV_URL in the code.
+      <div class="status-block">
+        <div class="status-line">
+          <span>pending</span>
+          <span class="circle"></span>
+        </div>
+        <div class="status-desc">material approval</div>
+        <div class="progress"></div>
       </div>
-    </section>
 
-    <!-- PROCESS -->
-    <section class="page" id="process">
-      <div class="eyebrow">Engineering rule</div>
-      <h1 class="page-title-small">process</h1>
-      <p class="lead">Keep this simple: build, test, improve. Do not move to the next stage until the current stage meets the requirement.</p>
-
-      <div class="quarter-board">
-        <div class="quarter-row quarter-head">
-          <div class="quarter-cell">Step</div>
-          <div class="quarter-cell">What happens</div>
-          <div class="quarter-cell">Output</div>
-          <div class="quarter-cell">Gate</div>
+      <div class="status-block">
+        <div class="status-line">
+          <span>assist</span>
+          <span class="circle"></span>
         </div>
-
-        <div class="quarter-row">
-          <div class="quarter-cell"><b>01</b><p>Research</p></div>
-          <div class="quarter-cell"><b>Understand need</b><p>Gather user need, clinical constraints, object/task requirements.</p></div>
-          <div class="quarter-cell"><b>Design inputs</b><p>Requirements and measurable targets.</p></div>
-          <div class="quarter-cell"><b>Review</b><p>Can the team design against this?</p></div>
-        </div>
-
-        <div class="quarter-row">
-          <div class="quarter-cell"><b>02</b><p>Concept</p></div>
-          <div class="quarter-cell"><b>Choose architecture</b><p>Sketch and compare simple mechanical options.</p></div>
-          <div class="quarter-cell"><b>Concept package</b><p>Selected concept + rejected options.</p></div>
-          <div class="quarter-cell"><b>Approve</b><p>Move to CAD only after approval.</p></div>
-        </div>
-
-        <div class="quarter-row">
-          <div class="quarter-cell"><b>03</b><p>CAD + Prototype</p></div>
-          <div class="quarter-cell"><b>Build testable version</b><p>CAD, print, assemble, and document changes.</p></div>
-          <div class="quarter-cell"><b>Prototype</b><p>Prototype + test setup.</p></div>
-          <div class="quarter-cell"><b>Test</b><p>Pass/fail evidence.</p></div>
-        </div>
-
-        <div class="quarter-row">
-          <div class="quarter-cell"><b>04</b><p>Improve</p></div>
-          <div class="quarter-cell"><b>Repeat</b><p>Fix failures and retest until requirements are met.</p></div>
-          <div class="quarter-cell"><b>Revision log</b><p>What changed and why.</p></div>
-          <div class="quarter-cell"><b>Release</b><p>Only after review.</p></div>
-        </div>
+        <div class="status-desc">simulation support</div>
+        <div class="progress short"></div>
       </div>
-    </section>
-  </main>
-</div>
+    </aside>
+  </section>
+</main>
 
 <script>
-function showPage(id, btn) {
-  document.querySelectorAll('.page').forEach(function(page) {
-    page.classList.remove('active');
-  });
+/*
+  VIDEO SETUP FOR GITHUB / GOOGLE SITES
 
-  const selected = document.getElementById(id);
-  if (selected) selected.classList.add('active');
+  This page expects the video file to sit beside this HTML file:
+  - ulf-product-demo.mp4
 
-  document.querySelectorAll('.nav button').forEach(function(button) {
-    button.classList.remove('active');
-  });
+  Optional fallback poster:
+  - ulf-product-demo-poster.jpg
 
-  if (btn) btn.classList.add('active');
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
-const QUICK_LINKS_TRACKER_URL = "https://docs.google.com/spreadsheets/d/1Cf-Qrm9P4SmOiynSsROKjqrrjdEQIn6SukNvNQSpMGU/edit?usp=sharing";
-const QUICK_LINKS_CSV_URL = "https://docs.google.com/spreadsheets/d/1Cf-Qrm9P4SmOiynSsROKjqrrjdEQIn6SukNvNQSpMGU/gviz/tq?tqx=out:csv&gid=0";
-
-function escapeHtml(value) {
-  return String(value || "")
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#039;");
-}
-
-function parseCSV(text) {
-  const rows = [];
-  let row = [];
-  let current = "";
-  let insideQuotes = false;
-
-  for (let i = 0; i < text.length; i++) {
-    const char = text[i];
-    const nextChar = text[i + 1];
-
-    if (char === '"' && insideQuotes && nextChar === '"') {
-      current += '"';
-      i++;
-    } else if (char === '"') {
-      insideQuotes = !insideQuotes;
-    } else if (char === "," && !insideQuotes) {
-      row.push(current.trim());
-      current = "";
-    } else if ((char === "\n" || char === "\r") && !insideQuotes) {
-      if (current.length || row.length) {
-        row.push(current.trim());
-        rows.push(row);
-        row = [];
-        current = "";
-      }
-      if (char === "\r" && nextChar === "\n") i++;
-    } else {
-      current += char;
-    }
-  }
-
-  if (current.length || row.length) {
-    row.push(current.trim());
-    rows.push(row);
-  }
-
-  return rows;
-}
-
-function getColumnIndex(headers, possibleNames) {
-  const normalized = headers.map(function(h) {
-    return String(h || "").toLowerCase().trim();
-  });
-
-  for (const name of possibleNames) {
-    const index = normalized.indexOf(name.toLowerCase());
-    if (index !== -1) return index;
-  }
-  return -1;
-}
-
-function renderQuickLinks(csvText) {
-  const rows = parseCSV(csvText).filter(function(row) {
-    return row.some(function(cell) { return String(cell || "").trim() !== ""; });
-  });
-
-  if (!rows || rows.length < 2) return;
-
-  const headers = rows[0];
-  const docIndex = getColumnIndex(headers, ["Document / Asset", "Document", "Asset"]);
-  const categoryIndex = getColumnIndex(headers, ["Category"]);
-  const descIndex = getColumnIndex(headers, ["What is it?", "What is it", "Description"]);
-  const linkIndex = getColumnIndex(headers, ["Link to find it", "Link", "URL"]);
-  const statusIndex = getColumnIndex(headers, ["Status"]);
-  const versionIndex = getColumnIndex(headers, ["Version"]);
-
-  if (docIndex === -1) return;
-
-  const list = document.getElementById("quickLinksList");
-  if (!list) return;
-
-  const header = `
-    <div class="link-row link-header">
-      <div>Document / Asset</div>
-      <div>Category</div>
-      <div>What is it?</div>
-      <div>Status</div>
-      <div>Version</div>
-      <div>Link</div>
-    </div>
-  `;
-
-  const bodyRows = rows.slice(1)
-    .filter(function(row) { return row[docIndex] && String(row[docIndex]).trim() !== ""; })
-    .map(function(row) {
-      const doc = escapeHtml(row[docIndex]);
-      const category = categoryIndex !== -1 ? escapeHtml(row[categoryIndex]) : "";
-      const desc = descIndex !== -1 ? escapeHtml(row[descIndex]) : "";
-      const status = statusIndex !== -1 ? escapeHtml(row[statusIndex]) : "";
-      const version = versionIndex !== -1 ? escapeHtml(row[versionIndex]) : "";
-      const rawLink = linkIndex !== -1 ? String(row[linkIndex] || "").trim() : "";
-
-      const linkHtml = rawLink && rawLink.toLowerCase().startsWith("http")
-        ? '<a class="open" href="' + escapeHtml(rawLink) + '" target="_blank" rel="noopener">Open →</a>'
-        : '<a class="open" href="' + QUICK_LINKS_TRACKER_URL + '" target="_blank" rel="noopener">Tracker →</a>';
-
-      return `
-        <div class="link-row">
-          <div class="link-doc">${doc}</div>
-          <div class="muted">${category}</div>
-          <div class="muted">${desc}</div>
-          <div>${status || "Update"}</div>
-          <div class="muted">${version}</div>
-          <div>${linkHtml}</div>
-        </div>
-      `;
-    }).join("");
-
-  if (bodyRows.trim()) list.innerHTML = header + bodyRows;
-}
-
-function loadQuickLinks() {
-  fetch(QUICK_LINKS_CSV_URL)
-    .then(function(response) { return response.text(); })
-    .then(function(csvText) { renderQuickLinks(csvText); })
-    .catch(function() {
-      const msg = document.getElementById("quickLinksMessage");
-      if (msg) msg.textContent = "The live Google Sheet could not be loaded here. Use the Open Tracker button.";
-    });
-}
-
-document.addEventListener("DOMContentLoaded", loadQuickLinks);
+  If you host the video somewhere else, replace this line in the HTML:
+  <source src="ulf-product-demo.mp4" type="video/mp4">
+*/
 </script>
 </body>
 </html>
