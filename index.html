@@ -91,7 +91,7 @@ button,a{font:inherit;color:inherit}
         <div class="visual-tabs"><button class="active" type="button" data-visual="basis">basis</button><button type="button" data-visual="inspiration">inspiration</button><button type="button" data-visual="archive">archive</button></div>
         <div id="basis" class="vpanel active"><div class="image-grid"><article class="image-card wide"><img src="waacs-basis.png" alt="WAACS e-NABLE-style prosthetic arm basis reference"><div class="image-body"><h3>WAACS / e-NABLE-style basis</h3><p>Starting basis. Not the final product.</p></div></article></div></div>
         <div id="inspiration" class="vpanel"><div class="image-grid"><article class="image-card"><img src="yale-multigrasp.png" alt="Yale Multigrasp Hand visual reference"><div class="image-body"><h3>Yale Hand reference</h3><p>Study for grasp modes and simplified mechanical strategy.</p></div></article><article class="image-card"><img src="softfoot-pro.jpg" alt="SoftFoot Pro visual reference"><div class="image-body"><h3>SoftFoot Pro reference</h3><p>Study for passive adaptive behavior only if it remains simple.</p></div></article></div></div>
-        <div id="archive" class="vpanel"><div class="render"><picture><source srcset="ulf-prosthetic-render.webp" type="image/webp"><img src="ulf-prosthetic-render.png" alt="Placeholder render of paused complex prosthetic hand concept"></picture></div><div class="caption">past concept render<div class="note">For archive and discussion only. Not the current build direction.</div><div class="hold"><strong>Current design status</strong>Based on prosthetist feedback, this concept has been assessed as mechanically complex for the intended pediatric and low-resource application. Development is currently on hold while the team reviews simpler alternatives.</div></div></div>
+        <div id="archive" class="vpanel"><div class="render"><picture><source srcset="ulf-prosthetic-render-clean.webp" type="image/webp"><img src="ulf-prosthetic-render.png" alt="Placeholder render of paused complex prosthetic hand concept"></picture></div><div class="caption">past concept render · placeholder only<div class="note">For archive and discussion only. This is a placeholder image and not the current build direction.</div><div class="hold"><strong>Current design status</strong>Based on prosthetist feedback, this concept has been assessed as mechanically complex for the intended pediatric and low-resource application. Development is currently on hold while the team reviews simpler alternatives.</div></div></div>
       </div>
 
       <div id="timeline" class="view">
@@ -129,6 +129,25 @@ document.querySelectorAll('.nav button').forEach(b=>b.addEventListener('click',(
 document.querySelectorAll('[data-jump]').forEach(b=>b.addEventListener('click',()=>activateView(b.dataset.jump)));
 document.querySelectorAll('.visual-tabs button').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.visual-tabs button').forEach(x=>x.classList.remove('active'));document.querySelectorAll('.vpanel').forEach(x=>x.classList.remove('active'));b.classList.add('active');document.getElementById(b.dataset.visual).classList.add('active');}));
 document.querySelectorAll('.year').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.year').forEach(x=>x.classList.remove('active'));b.classList.add('active');document.querySelector('.top-year').textContent=b.dataset.year==='1'?'2026':'2027';}));
+
+document.querySelectorAll('.render-frame').forEach(function(frame){
+  const img = frame.querySelector('.prosthetic-render');
+  if(!img) return;
+
+  frame.addEventListener('mousemove', function(e){
+    const rect = frame.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width;
+    const y = (e.clientY - rect.top) / rect.height;
+    const rotateY = (x - 0.5) * 18;
+    const rotateX = (0.5 - y) * 14;
+    img.style.transform = 'rotateX(' + rotateX.toFixed(2) + 'deg) rotateY(' + rotateY.toFixed(2) + 'deg) scale(1.03)';
+  });
+
+  frame.addEventListener('mouseleave', function(){
+    img.style.transform = 'rotateX(0deg) rotateY(0deg) scale(1)';
+  });
+});
+
 </script>
 </body>
 </html>
