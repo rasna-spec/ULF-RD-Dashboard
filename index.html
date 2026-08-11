@@ -1261,6 +1261,127 @@ a:focus-visible {
   }
 }
 
+
+/* V24 — team role/experience + animated notification bell */
+.team-grid {
+  grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+}
+
+.team-member {
+  min-height:168px !important;
+  padding:16px !important;
+}
+
+.team-card-top {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  margin-bottom:12px;
+}
+
+.team-member .info-dot {
+  top:54px !important;
+}
+
+.team-role {
+  color:var(--ink) !important;
+  font-weight:600;
+  margin-bottom:8px;
+}
+
+.team-experience {
+  color:var(--muted);
+  line-height:1.55;
+  max-width:92%;
+}
+
+.team-experience strong {
+  color:var(--ink);
+  font-weight:700;
+}
+
+.bell-btn {
+  width:32px;
+  height:32px;
+  border:1px solid var(--line2);
+  border-radius:999px;
+  display:grid;
+  place-items:center;
+  text-decoration:none;
+  color:var(--muted);
+  background:transparent;
+  transition:transform .18s ease, color .18s ease, border-color .18s ease, background .18s ease;
+}
+
+.bell-icon {
+  width:17px;
+  height:17px;
+  fill:none;
+  stroke:currentColor;
+  stroke-width:1.8;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+
+.bell-btn:hover,
+.bell-btn:focus-visible {
+  color:var(--yellow);
+  border-color:var(--yellow);
+}
+
+.bell-btn.is-rung {
+  color:#181a1c;
+  background:var(--yellow);
+  border-color:var(--yellow);
+  animation:bellRing .55s ease;
+}
+
+.bell-btn.is-rung .bell-icon {
+  animation:bellWobble .55s ease;
+}
+
+@keyframes bellRing {
+  0% { transform:scale(1) rotate(0deg); }
+  20% { transform:scale(1.08) rotate(-8deg); }
+  40% { transform:scale(1.08) rotate(8deg); }
+  60% { transform:scale(1.04) rotate(-5deg); }
+  80% { transform:scale(1.02) rotate(4deg); }
+  100% { transform:scale(1) rotate(0deg); }
+}
+
+@keyframes bellWobble {
+  0% { transform:rotate(0deg); }
+  25% { transform:rotate(-12deg); }
+  50% { transform:rotate(12deg); }
+  75% { transform:rotate(-7deg); }
+  100% { transform:rotate(0deg); }
+}
+
+.side-bell {
+  display:grid;
+  place-items:center;
+  width:24px;
+  height:24px;
+  padding:0 !important;
+  border-radius:999px;
+  text-decoration:none;
+  transition:.18s ease;
+}
+
+.side-bell.is-rung {
+  background:var(--yellow);
+  color:#181a1c;
+  border-color:var(--yellow);
+  animation:bellRing .55s ease;
+}
+
+@media(max-width:900px) {
+  .team-grid {
+    grid-template-columns:1fr !important;
+  }
+}
+
 </style>
 </head>
 
@@ -1293,27 +1414,27 @@ a:focus-visible {
           <div class="side-team-row">
             <span class="side-initial">R</span>
             <span>Rasna</span>
-            <a class="side-bell" href="mailto:rasna@universallimbs.com?subject=Friendly%20R%26D%20reminder&body=Hi%2C%0A%0AYou%20received%20a%20friendly%20reminder%20from%20a%20team%20member.%0A%0AThis%20is%20not%20meant%20to%20be%20rude%20%E2%80%94%20it%20is%20a%20kind%20nudge%20because%20your%20team%20has%20your%20back.%20The%20deadline%20is%20coming%20up%20soon%2C%20and%20the%20team%20would%20love%20to%20see%20an%20update.%0A%0AIf%20you%20need%20help%2C%20please%20update%20your%20status%20or%20ask%20for%20support.%0A%0AThank%20you.&cc=sahitya%40universallimbs.com" title="Send reminder">Bell</a>
+            <a class="side-bell" href="mailto:rasna@universallimbs.com?subject=Friendly%20R%26D%20reminder&body=Hi%2C%0A%0AYou%20received%20a%20friendly%20reminder%20from%20a%20team%20member.%0A%0AThis%20is%20not%20meant%20to%20be%20rude%20%E2%80%94%20it%20is%20a%20kind%20nudge%20because%20your%20team%20has%20your%20back.%20The%20deadline%20is%20coming%20up%20soon%2C%20and%20the%20team%20would%20love%20to%20see%20an%20update.%0A%0AIf%20you%20need%20help%2C%20please%20update%20your%20status%20or%20ask%20for%20support.%0A%0AThank%20you.&cc=sahitya%40universallimbs.com" title="Send reminder" aria-label="Send friendly reminder">🔔</a>
           </div>
           <div class="side-team-row">
             <span class="side-initial">S</span>
             <span>Sahitya</span>
-            <a class="side-bell" href="mailto:sahitya@universallimbs.com?subject=Friendly%20R%26D%20reminder&body=Hi%2C%0A%0AYou%20received%20a%20friendly%20reminder%20from%20a%20team%20member.%0A%0AThis%20is%20not%20meant%20to%20be%20rude%20%E2%80%94%20it%20is%20a%20kind%20nudge%20because%20your%20team%20has%20your%20back.%20The%20deadline%20is%20coming%20up%20soon%2C%20and%20the%20team%20would%20love%20to%20see%20an%20update.%0A%0AIf%20you%20need%20help%2C%20please%20update%20your%20status%20or%20ask%20for%20support.%0A%0AThank%20you.&cc=sahitya%40universallimbs.com" title="Send reminder">Bell</a>
+            <a class="side-bell" href="mailto:sahitya@universallimbs.com?subject=Friendly%20R%26D%20reminder&body=Hi%2C%0A%0AYou%20received%20a%20friendly%20reminder%20from%20a%20team%20member.%0A%0AThis%20is%20not%20meant%20to%20be%20rude%20%E2%80%94%20it%20is%20a%20kind%20nudge%20because%20your%20team%20has%20your%20back.%20The%20deadline%20is%20coming%20up%20soon%2C%20and%20the%20team%20would%20love%20to%20see%20an%20update.%0A%0AIf%20you%20need%20help%2C%20please%20update%20your%20status%20or%20ask%20for%20support.%0A%0AThank%20you.&cc=sahitya%40universallimbs.com" title="Send reminder" aria-label="Send friendly reminder">🔔</a>
           </div>
           <div class="side-team-row">
             <span class="side-initial">S</span>
             <span>Saja</span>
-            <a class="side-bell" href="mailto:saja@universallimbs.com?subject=Friendly%20R%26D%20reminder&body=Hi%2C%0A%0AYou%20received%20a%20friendly%20reminder%20from%20a%20team%20member.%0A%0AThis%20is%20not%20meant%20to%20be%20rude%20%E2%80%94%20it%20is%20a%20kind%20nudge%20because%20your%20team%20has%20your%20back.%20The%20deadline%20is%20coming%20up%20soon%2C%20and%20the%20team%20would%20love%20to%20see%20an%20update.%0A%0AIf%20you%20need%20help%2C%20please%20update%20your%20status%20or%20ask%20for%20support.%0A%0AThank%20you.&cc=sahitya%40universallimbs.com" title="Send reminder">Bell</a>
+            <a class="side-bell" href="mailto:saja@universallimbs.com?subject=Friendly%20R%26D%20reminder&body=Hi%2C%0A%0AYou%20received%20a%20friendly%20reminder%20from%20a%20team%20member.%0A%0AThis%20is%20not%20meant%20to%20be%20rude%20%E2%80%94%20it%20is%20a%20kind%20nudge%20because%20your%20team%20has%20your%20back.%20The%20deadline%20is%20coming%20up%20soon%2C%20and%20the%20team%20would%20love%20to%20see%20an%20update.%0A%0AIf%20you%20need%20help%2C%20please%20update%20your%20status%20or%20ask%20for%20support.%0A%0AThank%20you.&cc=sahitya%40universallimbs.com" title="Send reminder" aria-label="Send friendly reminder">🔔</a>
           </div>
           <div class="side-team-row">
             <span class="side-initial">A</span>
             <span>Ana</span>
-            <a class="side-bell" href="mailto:ana@universallimbs.com?subject=Friendly%20R%26D%20reminder&body=Hi%2C%0A%0AYou%20received%20a%20friendly%20reminder%20from%20a%20team%20member.%0A%0AThis%20is%20not%20meant%20to%20be%20rude%20%E2%80%94%20it%20is%20a%20kind%20nudge%20because%20your%20team%20has%20your%20back.%20The%20deadline%20is%20coming%20up%20soon%2C%20and%20the%20team%20would%20love%20to%20see%20an%20update.%0A%0AIf%20you%20need%20help%2C%20please%20update%20your%20status%20or%20ask%20for%20support.%0A%0AThank%20you.&cc=sahitya%40universallimbs.com" title="Send reminder">Bell</a>
+            <a class="side-bell" href="mailto:ana@universallimbs.com?subject=Friendly%20R%26D%20reminder&body=Hi%2C%0A%0AYou%20received%20a%20friendly%20reminder%20from%20a%20team%20member.%0A%0AThis%20is%20not%20meant%20to%20be%20rude%20%E2%80%94%20it%20is%20a%20kind%20nudge%20because%20your%20team%20has%20your%20back.%20The%20deadline%20is%20coming%20up%20soon%2C%20and%20the%20team%20would%20love%20to%20see%20an%20update.%0A%0AIf%20you%20need%20help%2C%20please%20update%20your%20status%20or%20ask%20for%20support.%0A%0AThank%20you.&cc=sahitya%40universallimbs.com" title="Send reminder" aria-label="Send friendly reminder">🔔</a>
           </div>
           <div class="side-team-row">
             <span class="side-initial">M</span>
             <span>Maria</span>
-            <a class="side-bell" href="mailto:maria@universallimbs.com?subject=Friendly%20R%26D%20reminder&body=Hi%2C%0A%0AYou%20received%20a%20friendly%20reminder%20from%20a%20team%20member.%0A%0AThis%20is%20not%20meant%20to%20be%20rude%20%E2%80%94%20it%20is%20a%20kind%20nudge%20because%20your%20team%20has%20your%20back.%20The%20deadline%20is%20coming%20up%20soon%2C%20and%20the%20team%20would%20love%20to%20see%20an%20update.%0A%0AIf%20you%20need%20help%2C%20please%20update%20your%20status%20or%20ask%20for%20support.%0A%0AThank%20you.&cc=sahitya%40universallimbs.com" title="Send reminder">Bell</a>
+            <a class="side-bell" href="mailto:maria@universallimbs.com?subject=Friendly%20R%26D%20reminder&body=Hi%2C%0A%0AYou%20received%20a%20friendly%20reminder%20from%20a%20team%20member.%0A%0AThis%20is%20not%20meant%20to%20be%20rude%20%E2%80%94%20it%20is%20a%20kind%20nudge%20because%20your%20team%20has%20your%20back.%20The%20deadline%20is%20coming%20up%20soon%2C%20and%20the%20team%20would%20love%20to%20see%20an%20update.%0A%0AIf%20you%20need%20help%2C%20please%20update%20your%20status%20or%20ask%20for%20support.%0A%0AThank%20you.&cc=sahitya%40universallimbs.com" title="Send reminder" aria-label="Send friendly reminder">🔔</a>
           </div>
         </div>
       </aside>
@@ -1349,53 +1470,88 @@ a:focus-visible {
           <section class="team-strip">
             <div class="team-grid">
               <article class="team-member">
-                <div class="team-photo">R</div>
+                <div class="team-card-top">
+                  <div class="team-photo">R</div>
+                  <a class="bell-btn" href="mailto:rasna@universallimbs.com?subject=Friendly%20R%26D%20reminder&body=Hi%2C%0A%0AYou%20received%20a%20friendly%20reminder%20from%20a%20team%20member.%0A%0AThis%20is%20not%20meant%20to%20be%20rude%20%E2%80%94%20it%20is%20a%20kind%20nudge%20because%20your%20team%20has%20your%20back.%20The%20deadline%20is%20coming%20up%20soon%2C%20and%20the%20team%20would%20love%20to%20see%20an%20update.%0A%0AIf%20you%20need%20help%2C%20please%20update%20your%20status%20or%20ask%20for%20support.%0A%0AThank%20you.&cc=sahitya%40universallimbs.com" title="Send friendly reminder to Rasna" aria-label="Send friendly reminder to Rasna">
+                    <svg class="bell-icon" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M15 17H9m9-2V10a6 6 0 0 0-12 0v5l-2 2h16l-2-2Zm-5 5a2 2 0 0 1-2 0"/>
+                  </svg>
+                  </a>
+                </div>
                 <div class="team-name">Rasna</div>
-                <div class="team-role">Founder / R&D direction</div>
+                <div class="team-role">Founder / R&D Direction</div>
+                <div class="team-experience"><strong>Experience:</strong> Electrical engineering, program strategy, partner direction, and MVP decision flow.</div>
                 <span class="info-dot">i<span class="info-tip">Owns project direction, priorities, partner alignment, and final decision flow.</span></span>
                 <div class="team-actions">
-                  <a class="mini-pill bell" href="mailto:rasna@universallimbs.com?subject=Friendly%20R%26D%20reminder&body=Hi%2C%0A%0AYou%20received%20a%20friendly%20reminder%20from%20a%20team%20member.%0A%0AThis%20is%20not%20meant%20to%20be%20rude%20%E2%80%94%20it%20is%20a%20kind%20nudge%20because%20your%20team%20has%20your%20back.%20The%20deadline%20is%20coming%20up%20soon%2C%20and%20the%20team%20would%20love%20to%20see%20an%20update.%0A%0AIf%20you%20need%20help%2C%20please%20update%20your%20status%20or%20ask%20for%20support.%0A%0AThank%20you.&cc=sahitya%40universallimbs.com" title="Send reminder">Bell</a>
-                  <a class="mini-pill" href="mailto:rasna@universallimbs.com?subject=R%26D%20task%20assignment&body=Hi%2C%0A%0AA%20task%20has%20been%20assigned%20or%20requested%20for%20your%20review.%0A%0ATask%3A%0ADeadline%3A%0ASupport%20needed%3A%0A%0APlease%20update%20your%20status%20when%20you%20can.%0A%0AThank%20you.&cc=sahitya%40universallimbs.com" title="Assign task">Assign</a>
+                  <a class="mini-pill" href="mailto:rasna@universallimbs.com?subject=R%26D%20task%20assignment&body=Hi%2C%0A%0AA%20task%20has%20been%20assigned%20or%20requested%20for%20your%20review.%0A%0ATask%3A%0ADeadline%3A%0ASupport%20needed%3A%0A%0APlease%20update%20your%20status%20when%20you%20can.%0A%0AThank%20you.&cc=sahitya%40universallimbs.com" title="Assign task to Rasna">Assign task</a>
                 </div>
               </article>
               <article class="team-member">
-                <div class="team-photo">S</div>
+                <div class="team-card-top">
+                  <div class="team-photo">S</div>
+                  <a class="bell-btn" href="mailto:sahitya@universallimbs.com?subject=Friendly%20R%26D%20reminder&body=Hi%2C%0A%0AYou%20received%20a%20friendly%20reminder%20from%20a%20team%20member.%0A%0AThis%20is%20not%20meant%20to%20be%20rude%20%E2%80%94%20it%20is%20a%20kind%20nudge%20because%20your%20team%20has%20your%20back.%20The%20deadline%20is%20coming%20up%20soon%2C%20and%20the%20team%20would%20love%20to%20see%20an%20update.%0A%0AIf%20you%20need%20help%2C%20please%20update%20your%20status%20or%20ask%20for%20support.%0A%0AThank%20you.&cc=sahitya%40universallimbs.com" title="Send friendly reminder to Sahitya" aria-label="Send friendly reminder to Sahitya">
+                    <svg class="bell-icon" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M15 17H9m9-2V10a6 6 0 0 0-12 0v5l-2 2h16l-2-2Zm-5 5a2 2 0 0 1-2 0"/>
+                  </svg>
+                  </a>
+                </div>
                 <div class="team-name">Sahitya</div>
-                <div class="team-role">Project manager</div>
+                <div class="team-role">Project Manager</div>
+                <div class="team-experience"><strong>Experience:</strong> Coordination, timelines, task tracking, files, and external handoff support.</div>
                 <span class="info-dot">i<span class="info-tip">Coordinates assignments, timelines, files, team follow-up, and external handoff.</span></span>
                 <div class="team-actions">
-                  <a class="mini-pill bell" href="mailto:sahitya@universallimbs.com?subject=Friendly%20R%26D%20reminder&body=Hi%2C%0A%0AYou%20received%20a%20friendly%20reminder%20from%20a%20team%20member.%0A%0AThis%20is%20not%20meant%20to%20be%20rude%20%E2%80%94%20it%20is%20a%20kind%20nudge%20because%20your%20team%20has%20your%20back.%20The%20deadline%20is%20coming%20up%20soon%2C%20and%20the%20team%20would%20love%20to%20see%20an%20update.%0A%0AIf%20you%20need%20help%2C%20please%20update%20your%20status%20or%20ask%20for%20support.%0A%0AThank%20you.&cc=sahitya%40universallimbs.com" title="Send reminder">Bell</a>
-                  <a class="mini-pill" href="mailto:sahitya@universallimbs.com?subject=R%26D%20task%20assignment&body=Hi%2C%0A%0AA%20task%20has%20been%20assigned%20or%20requested%20for%20your%20review.%0A%0ATask%3A%0ADeadline%3A%0ASupport%20needed%3A%0A%0APlease%20update%20your%20status%20when%20you%20can.%0A%0AThank%20you.&cc=sahitya%40universallimbs.com" title="Assign task">Assign</a>
+                  <a class="mini-pill" href="mailto:sahitya@universallimbs.com?subject=R%26D%20task%20assignment&body=Hi%2C%0A%0AA%20task%20has%20been%20assigned%20or%20requested%20for%20your%20review.%0A%0ATask%3A%0ADeadline%3A%0ASupport%20needed%3A%0A%0APlease%20update%20your%20status%20when%20you%20can.%0A%0AThank%20you.&cc=sahitya%40universallimbs.com" title="Assign task to Sahitya">Assign task</a>
                 </div>
               </article>
               <article class="team-member">
-                <div class="team-photo">S</div>
+                <div class="team-card-top">
+                  <div class="team-photo">S</div>
+                  <a class="bell-btn" href="mailto:saja@universallimbs.com?subject=Friendly%20R%26D%20reminder&body=Hi%2C%0A%0AYou%20received%20a%20friendly%20reminder%20from%20a%20team%20member.%0A%0AThis%20is%20not%20meant%20to%20be%20rude%20%E2%80%94%20it%20is%20a%20kind%20nudge%20because%20your%20team%20has%20your%20back.%20The%20deadline%20is%20coming%20up%20soon%2C%20and%20the%20team%20would%20love%20to%20see%20an%20update.%0A%0AIf%20you%20need%20help%2C%20please%20update%20your%20status%20or%20ask%20for%20support.%0A%0AThank%20you.&cc=sahitya%40universallimbs.com" title="Send friendly reminder to Saja" aria-label="Send friendly reminder to Saja">
+                    <svg class="bell-icon" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M15 17H9m9-2V10a6 6 0 0 0-12 0v5l-2 2h16l-2-2Zm-5 5a2 2 0 0 1-2 0"/>
+                  </svg>
+                  </a>
+                </div>
                 <div class="team-name">Saja</div>
-                <div class="team-role">Director of prosthetic services</div>
+                <div class="team-role">Director of Prosthetic Services</div>
+                <div class="team-experience"><strong>Experience:</strong> Clinical prosthetic review, rehab practicality, user safety, and device-fit feedback.</div>
                 <span class="info-dot">i<span class="info-tip">Provides prosthetic, rehab, and clinical practicality feedback.</span></span>
                 <div class="team-actions">
-                  <a class="mini-pill bell" href="mailto:saja@universallimbs.com?subject=Friendly%20R%26D%20reminder&body=Hi%2C%0A%0AYou%20received%20a%20friendly%20reminder%20from%20a%20team%20member.%0A%0AThis%20is%20not%20meant%20to%20be%20rude%20%E2%80%94%20it%20is%20a%20kind%20nudge%20because%20your%20team%20has%20your%20back.%20The%20deadline%20is%20coming%20up%20soon%2C%20and%20the%20team%20would%20love%20to%20see%20an%20update.%0A%0AIf%20you%20need%20help%2C%20please%20update%20your%20status%20or%20ask%20for%20support.%0A%0AThank%20you.&cc=sahitya%40universallimbs.com" title="Send reminder">Bell</a>
-                  <a class="mini-pill" href="mailto:saja@universallimbs.com?subject=R%26D%20task%20assignment&body=Hi%2C%0A%0AA%20task%20has%20been%20assigned%20or%20requested%20for%20your%20review.%0A%0ATask%3A%0ADeadline%3A%0ASupport%20needed%3A%0A%0APlease%20update%20your%20status%20when%20you%20can.%0A%0AThank%20you.&cc=sahitya%40universallimbs.com" title="Assign task">Assign</a>
+                  <a class="mini-pill" href="mailto:saja@universallimbs.com?subject=R%26D%20task%20assignment&body=Hi%2C%0A%0AA%20task%20has%20been%20assigned%20or%20requested%20for%20your%20review.%0A%0ATask%3A%0ADeadline%3A%0ASupport%20needed%3A%0A%0APlease%20update%20your%20status%20when%20you%20can.%0A%0AThank%20you.&cc=sahitya%40universallimbs.com" title="Assign task to Saja">Assign task</a>
                 </div>
               </article>
               <article class="team-member">
-                <div class="team-photo">A</div>
+                <div class="team-card-top">
+                  <div class="team-photo">A</div>
+                  <a class="bell-btn" href="mailto:ana@universallimbs.com?subject=Friendly%20R%26D%20reminder&body=Hi%2C%0A%0AYou%20received%20a%20friendly%20reminder%20from%20a%20team%20member.%0A%0AThis%20is%20not%20meant%20to%20be%20rude%20%E2%80%94%20it%20is%20a%20kind%20nudge%20because%20your%20team%20has%20your%20back.%20The%20deadline%20is%20coming%20up%20soon%2C%20and%20the%20team%20would%20love%20to%20see%20an%20update.%0A%0AIf%20you%20need%20help%2C%20please%20update%20your%20status%20or%20ask%20for%20support.%0A%0AThank%20you.&cc=sahitya%40universallimbs.com" title="Send friendly reminder to Ana" aria-label="Send friendly reminder to Ana">
+                    <svg class="bell-icon" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M15 17H9m9-2V10a6 6 0 0 0-12 0v5l-2 2h16l-2-2Zm-5 5a2 2 0 0 1-2 0"/>
+                  </svg>
+                  </a>
+                </div>
                 <div class="team-name">Ana</div>
-                <div class="team-role">Director of finance</div>
+                <div class="team-role">Director of Finance</div>
+                <div class="team-experience"><strong>Experience:</strong> Budget tracking, funding readiness, finance controls, and sponsor documentation.</div>
                 <span class="info-dot">i<span class="info-tip">Supports budget tracking, funding readiness, and financial documentation.</span></span>
                 <div class="team-actions">
-                  <a class="mini-pill bell" href="mailto:ana@universallimbs.com?subject=Friendly%20R%26D%20reminder&body=Hi%2C%0A%0AYou%20received%20a%20friendly%20reminder%20from%20a%20team%20member.%0A%0AThis%20is%20not%20meant%20to%20be%20rude%20%E2%80%94%20it%20is%20a%20kind%20nudge%20because%20your%20team%20has%20your%20back.%20The%20deadline%20is%20coming%20up%20soon%2C%20and%20the%20team%20would%20love%20to%20see%20an%20update.%0A%0AIf%20you%20need%20help%2C%20please%20update%20your%20status%20or%20ask%20for%20support.%0A%0AThank%20you.&cc=sahitya%40universallimbs.com" title="Send reminder">Bell</a>
-                  <a class="mini-pill" href="mailto:ana@universallimbs.com?subject=R%26D%20task%20assignment&body=Hi%2C%0A%0AA%20task%20has%20been%20assigned%20or%20requested%20for%20your%20review.%0A%0ATask%3A%0ADeadline%3A%0ASupport%20needed%3A%0A%0APlease%20update%20your%20status%20when%20you%20can.%0A%0AThank%20you.&cc=sahitya%40universallimbs.com" title="Assign task">Assign</a>
+                  <a class="mini-pill" href="mailto:ana@universallimbs.com?subject=R%26D%20task%20assignment&body=Hi%2C%0A%0AA%20task%20has%20been%20assigned%20or%20requested%20for%20your%20review.%0A%0ATask%3A%0ADeadline%3A%0ASupport%20needed%3A%0A%0APlease%20update%20your%20status%20when%20you%20can.%0A%0AThank%20you.&cc=sahitya%40universallimbs.com" title="Assign task to Ana">Assign task</a>
                 </div>
               </article>
               <article class="team-member">
-                <div class="team-photo">M</div>
+                <div class="team-card-top">
+                  <div class="team-photo">M</div>
+                  <a class="bell-btn" href="mailto:maria@universallimbs.com?subject=Friendly%20R%26D%20reminder&body=Hi%2C%0A%0AYou%20received%20a%20friendly%20reminder%20from%20a%20team%20member.%0A%0AThis%20is%20not%20meant%20to%20be%20rude%20%E2%80%94%20it%20is%20a%20kind%20nudge%20because%20your%20team%20has%20your%20back.%20The%20deadline%20is%20coming%20up%20soon%2C%20and%20the%20team%20would%20love%20to%20see%20an%20update.%0A%0AIf%20you%20need%20help%2C%20please%20update%20your%20status%20or%20ask%20for%20support.%0A%0AThank%20you.&cc=sahitya%40universallimbs.com" title="Send friendly reminder to Maria" aria-label="Send friendly reminder to Maria">
+                    <svg class="bell-icon" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M15 17H9m9-2V10a6 6 0 0 0-12 0v5l-2 2h16l-2-2Zm-5 5a2 2 0 0 1-2 0"/>
+                  </svg>
+                  </a>
+                </div>
                 <div class="team-name">Maria</div>
                 <div class="team-role">University Partnership Lead</div>
+                <div class="team-experience"><strong>Experience:</strong> University collaboration, student coordination, partner communication, and file handoff.</div>
                 <span class="info-dot">i<span class="info-tip">Supports university collaboration, partner communication, and student handoff.</span></span>
                 <div class="team-actions">
-                  <a class="mini-pill bell" href="mailto:maria@universallimbs.com?subject=Friendly%20R%26D%20reminder&body=Hi%2C%0A%0AYou%20received%20a%20friendly%20reminder%20from%20a%20team%20member.%0A%0AThis%20is%20not%20meant%20to%20be%20rude%20%E2%80%94%20it%20is%20a%20kind%20nudge%20because%20your%20team%20has%20your%20back.%20The%20deadline%20is%20coming%20up%20soon%2C%20and%20the%20team%20would%20love%20to%20see%20an%20update.%0A%0AIf%20you%20need%20help%2C%20please%20update%20your%20status%20or%20ask%20for%20support.%0A%0AThank%20you.&cc=sahitya%40universallimbs.com" title="Send reminder">Bell</a>
-                  <a class="mini-pill" href="mailto:maria@universallimbs.com?subject=R%26D%20task%20assignment&body=Hi%2C%0A%0AA%20task%20has%20been%20assigned%20or%20requested%20for%20your%20review.%0A%0ATask%3A%0ADeadline%3A%0ASupport%20needed%3A%0A%0APlease%20update%20your%20status%20when%20you%20can.%0A%0AThank%20you.&cc=sahitya%40universallimbs.com" title="Assign task">Assign</a>
+                  <a class="mini-pill" href="mailto:maria@universallimbs.com?subject=R%26D%20task%20assignment&body=Hi%2C%0A%0AA%20task%20has%20been%20assigned%20or%20requested%20for%20your%20review.%0A%0ATask%3A%0ADeadline%3A%0ASupport%20needed%3A%0A%0APlease%20update%20your%20status%20when%20you%20can.%0A%0AThank%20you.&cc=sahitya%40universallimbs.com" title="Assign task to Maria">Assign task</a>
                 </div>
               </article>
             </div>
@@ -1838,6 +1994,16 @@ document.querySelectorAll('.hotspot').forEach(button => {
   button.addEventListener('click', event => {
     event.preventDefault();
     showHotspot(button, event);
+  });
+});
+
+
+document.querySelectorAll('.bell-btn, .side-bell').forEach(button => {
+  button.addEventListener('click', () => {
+    button.classList.add('is-rung');
+    setTimeout(() => {
+      button.classList.remove('is-rung');
+    }, 1800);
   });
 });
 
