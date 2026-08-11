@@ -1,1030 +1,644 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Universal Limbs — R&D Home</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Universal Limbs — Test Rig Building File</title>
+
 <style>
-:root{
+:root {
   --bg:#181a1c;
   --ink:#f6f3fa;
-  --muted:rgba(246,243,250,.58);
-  --quiet:rgba(246,243,250,.34);
-  --line:rgba(246,243,250,.16);
-  --line2:rgba(246,243,250,.28);
+  --muted:rgba(246,243,250,.72);
+  --quiet:rgba(246,243,250,.46);
+  --line:rgba(246,243,250,.20);
+  --line2:rgba(246,243,250,.32);
   --yellow:#e6d46a;
-  --panel:rgba(246,243,250,.035);
-  --panel2:rgba(246,243,250,.07);
+  --panel:rgba(246,243,250,.045);
 }
-*{box-sizing:border-box;font-size:12px}
-html,body{
+
+body[data-theme="light"] {
+  --bg:#f6f3fa;
+  --ink:#181a1c;
+  --muted:rgba(24,26,28,.68);
+  --quiet:rgba(24,26,28,.44);
+  --line:rgba(24,26,28,.18);
+  --line2:rgba(24,26,28,.30);
+  --panel:rgba(24,26,28,.045);
+}
+
+* { box-sizing:border-box; }
+
+html,body {
   margin:0;
   min-height:100%;
   background:var(--bg);
   color:var(--ink);
   font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",Arial,sans-serif;
-  overflow-x:hidden;
-  letter-spacing:0;
-  text-transform:none;
   font-size:12px;
-  font-weight:400;
+  line-height:1.55;
   -webkit-font-smoothing:antialiased;
   text-rendering:optimizeLegibility;
 }
-body{background:radial-gradient(circle at 50% 46%,rgba(246,243,250,.055),transparent 50%),linear-gradient(180deg,#181a1c,#101214)}
-button,a{font:inherit;color:inherit}
-.logo{width:24px;height:24px;object-fit:contain;display:block}
-.logo.large{
-  width:42px;
-  height:42px;
-  margin:0 auto 28px;
+
+body {
+  background:
+    radial-gradient(circle at 50% 42%, rgba(246,243,250,.055), transparent 48%),
+    linear-gradient(180deg, var(--bg), var(--bg));
+  padding-bottom:56px;
 }
 
-/* Landing */
-.landing{
+button,a { font:inherit; color:inherit; }
+
+.shell {
+  width:min(1180px,100vw);
   min-height:100vh;
-  width:100%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:0;
-  background:#000;
-  text-align:center;
-}
-
-.landing-card{
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  width:100%;
-  max-width:360px;
   margin:0 auto;
-  transform:translateY(-2vh);
+  padding:28px 34px 72px;
 }
 
-.landing-title{
+.top {
+  display:grid;
+  grid-template-columns:1fr auto 1fr;
+  gap:24px;
+  align-items:center;
+  border-bottom:1px solid var(--line);
+  padding-bottom:22px;
+}
+
+.brand {
+  display:flex;
+  gap:14px;
+  align-items:center;
+}
+
+.logo {
+  width:24px;
+  height:24px;
+  object-fit:contain;
+}
+
+.brand strong {
   font-size:12px;
   font-weight:600;
-  letter-spacing:.04em;
-  margin:0 0 16px;
-  text-align:center;
 }
 
-.landing-enter{
-  appearance:none;
-  border:0;
-  background:transparent;
-  color:var(--yellow);
-  cursor:pointer;
-  padding:0 0 7px;
-  border-bottom:1px solid var(--yellow);
-  letter-spacing:.04em;
-  text-align:center;
-}
-
-/* App shell */
-.app{display:none;min-height:100vh}
-.app.active{display:block}
-.shell{width:min(1480px,100vw);min-height:900px;margin:0 auto;padding:28px 34px 64px;position:relative;overflow:hidden}
-.shell:before{content:"";position:absolute;left:-10%;right:-10%;bottom:0;height:32%;background-image:linear-gradient(rgba(246,243,250,.032) 1px,transparent 1px),linear-gradient(90deg,rgba(246,243,250,.032) 1px,transparent 1px);background-size:48px 48px;transform:perspective(680px) rotateX(62deg) translateY(58px);transform-origin:bottom center;opacity:.34;pointer-events:none}
-.top{position:relative;z-index:2;display:grid;grid-template-columns:1fr auto 1fr;gap:24px;align-items:center;border-bottom:1px solid var(--line);padding-bottom:24px}
-.brand{display:flex;gap:20px;align-items:center}
-.brand-word{font-weight:700;letter-spacing:.16em}
-.brand .bar{height:20px;width:1px;background:var(--line)}
-.brand .sub{color:var(--muted);letter-spacing:.12em;text-transform:lowercase}
-.years{display:flex;gap:18px;justify-self:center}
-.year {
-  background: transparent !important;
-  border: 0 !important;
-  border-bottom: 1px solid transparent !important;
-  border-radius: 0 !important;
-  padding: 0 0 8px !important;
-}
-.year.active {
-  background: transparent !important;
-  color: var(--ink) !important;
-  border-bottom: 1px solid var(--yellow) !important;
-  border-radius: 0 !important;
-}
-.top-year{justify-self:end;font-weight:700}
-.layout{position:relative;z-index:2;display:grid;grid-template-columns:220px minmax(0,1fr);gap:40px;margin-top:80px;min-height:710px}
-.side{border-right:1px solid var(--line);padding:42px 0 42px 14px}
-.nav{display:flex;flex-direction:column;gap:26px}
-.nav button{appearance:none;border:0;background:transparent;color:var(--muted);display:flex;align-items:center;gap:14px;text-align:left;padding:0 0 8px;border-bottom:1px solid transparent;cursor:pointer;width:max-content;max-width:180px}
-.nav button.active{color:var(--ink);border-bottom-color:var(--yellow)}
-.nav svg{width:18px;height:18px;stroke:currentColor;stroke-width:1.4;fill:none;flex:none}
-.stage{min-height:650px;display:flex;flex-direction:column;justify-content:center;max-width:1040px}
-.view{display:none;animation:fade .18s ease-out}
-.view.active{display:block}
-@keyframes fade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
-.kicker{color:var(--quiet);margin-bottom:12px}
-.title{font-size:12px;font-weight:700;margin:0 0 12px;letter-spacing:.22em}
-.rule{width:260px;height:1px;background:var(--yellow);margin-bottom:32px}
-.lead{color:var(--muted);line-height:1.8;text-transform:none;letter-spacing:.10em;max-width:720px;margin:0 0 26px}
-
-/* Dashboard */
-.dashboard-grid{display:grid;grid-template-columns:1fr;gap:30px}
-.carousel{border:1px solid var(--line);background:var(--panel);min-height:250px;padding:22px;position:relative;overflow:hidden}
-.carousel-head{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line);padding-bottom:14px;margin-bottom:18px}
-.carousel-title{font-weight:700}
-.carousel-controls{display:flex;gap:10px}
-.carousel-btn{appearance:none;border:1px solid var(--line2);background:transparent;color:var(--muted);border-radius:999px;width:28px;height:28px;cursor:pointer}
-.update-slide{display:none;min-height:150px}
-.update-slide.active{display:block}
-.update-title{font-weight:700;color:var(--ink);margin-bottom:16px}
-.update-line{display:grid;grid-template-columns:90px 1fr;gap:18px;border-top:1px solid var(--line);padding:14px 0;color:var(--muted);line-height:1.65;text-transform:none;letter-spacing:.08em}
-.update-line strong{color:var(--ink);text-transform:uppercase;letter-spacing:.14em}
-.update-dots{display:flex;gap:8px;margin-top:16px}
-.update-dot{width:7px;height:7px;border-radius:50%;background:var(--line2);border:0;padding:0;cursor:pointer}
-.update-dot.active{background:var(--yellow)}
-.quick-cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
-.quick-card{border:1px solid var(--line);background:var(--panel);min-height:170px;padding:18px;display:flex;flex-direction:column;justify-content:space-between}
-.quick-card h2{margin:0 0 10px;font-weight:700}
-.quick-card p{margin:0;color:var(--muted);line-height:1.7;text-transform:none;letter-spacing:.08em}
-.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px}
-.pill{display:inline-flex;border:1px solid var(--line2);border-radius:999px;padding:7px 9px;color:var(--muted);text-decoration:none;background:transparent;cursor:pointer}
-.pill.primary{border-color:var(--yellow);color:var(--yellow)}
-
-/* Goal */
-.goal-top{display:flex;justify-content:space-between;gap:24px;align-items:flex-start;margin-bottom:26px}
-.time-tabs{display:flex;gap:22px;flex-wrap:wrap}
-.time-tab{appearance:none;border:0;background:transparent;color:var(--muted);padding:0 0 8px;border-bottom:1px solid transparent;cursor:pointer}
-.time-tab.active{color:var(--ink);border-bottom-color:var(--yellow)}
-.goal-panel{display:none}
-.goal-panel.active{display:block}
-.goal-summary{border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:18px 0;margin-bottom:24px;color:var(--muted);line-height:1.75;text-transform:none;letter-spacing:.08em}
-.timeline{border:1px solid var(--line);background:var(--panel);overflow:hidden}
-.timeline-head,.timeline-row{display:grid;grid-template-columns:150px repeat(12,1fr);min-width:920px}
-.timeline-head div{padding:10px 8px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);color:var(--muted);text-align:center}
-.timeline-row{min-height:96px;border-bottom:1px solid var(--line)}
-.timeline-row:last-child{border-bottom:0}
-.milestone-label{padding:16px;border-right:1px solid var(--line)}
-.milestone-label strong{display:block;color:var(--ink);margin-bottom:8px}
-.milestone-label span{display:block;color:var(--muted)}
-.month-cell{border-right:1px solid rgba(246,243,250,.08);position:relative;padding:0}
-.month-cell:last-child{border-right:0}
-.bar{position:absolute;left:4px;right:4px;top:32px;height:28px;border:1px solid var(--yellow);background:rgba(230,212,106,.08);display:flex;align-items:center;padding-left:10px;color:var(--ink);letter-spacing:.08em}
-.visual-dot{appearance:none;border:0;background:var(--yellow);width:10px;height:10px;border-radius:50%;padding:0;cursor:pointer;position:absolute;top:41px;right:-5px;box-shadow:0 0 0 5px rgba(230,212,106,.12)}
-.visual-hint{margin-top:14px;color:var(--muted)}
-.year-note{margin-top:18px;color:var(--muted);line-height:1.7;text-transform:none;letter-spacing:.08em}
-.folder-strip{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:34px}
-.simple-folder{border:1px solid var(--line);background:var(--panel);padding:18px;min-height:120px}
-.simple-folder svg{width:30px;height:30px;stroke:var(--ink);stroke-width:1.3;fill:none;margin-bottom:16px}
-.simple-folder h3{margin:0 0 14px;font-weight:700}
-
-/* Documents / resources */
-.folder-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
-.folder-card{border:1px solid var(--line);background:var(--panel);min-height:176px;padding:18px}
-.folder-card svg{width:38px;height:38px;stroke:var(--ink);stroke-width:1.3;fill:none;margin-bottom:20px}
-.folder-card h3{margin:0 0 16px;font-weight:700}
-.resource-tabs{display:flex;gap:18px;flex-wrap:wrap;margin-bottom:28px}
-.resource-tab{appearance:none;border:0;background:transparent;color:var(--muted);padding:0 0 8px;border-bottom:1px solid transparent;cursor:pointer}
-.resource-tab.active{color:var(--ink);border-bottom-color:var(--yellow)}
-.resource-panel{display:none}
-.resource-panel.active{display:block}
-.resource-list{border:1px solid var(--line);background:var(--panel)}
-.resource-row{display:grid;grid-template-columns:180px 1fr 100px;gap:16px;padding:16px;border-bottom:1px solid var(--line);align-items:start}
-.resource-row:last-child{border-bottom:0}
-.resource-row span{color:var(--muted);line-height:1.6;text-transform:none;letter-spacing:.08em}
-
-/* External portal */
-.portal-preview{border:1px solid var(--line);background:var(--panel);margin-bottom:24px}
-.portal-preview img{display:block;width:100%;max-height:280px;object-fit:contain;padding:10px}
-.portal-preview div{border-top:1px solid var(--line);padding:12px;color:var(--muted);text-transform:none;letter-spacing:.08em;line-height:1.6}
-
-/* Visual modal */
-.modal{position:fixed;inset:0;background:rgba(0,0,0,.78);display:none;align-items:center;justify-content:center;z-index:20;padding:28px}
-.modal.active{display:flex}
-.modal-card{width:min(720px,100%);border:1px solid var(--line2);background:#101214;padding:18px}
-.modal-top{display:flex;justify-content:space-between;gap:16px;align-items:center;border-bottom:1px solid var(--line);padding-bottom:12px;margin-bottom:14px}
-.modal-close{appearance:none;border:1px solid var(--line2);background:transparent;color:var(--ink);border-radius:999px;width:28px;height:28px;cursor:pointer}
-.modal img{display:block;width:100%;max-height:420px;object-fit:contain;background:rgba(246,243,250,.035);padding:10px;margin-bottom:14px}
-.modal p{color:var(--muted);line-height:1.6;text-transform:none;letter-spacing:.08em;margin:0}
-
-/* Feedback */
-.feedback{position:fixed;left:0;right:0;bottom:0;z-index:12;border-top:1px solid var(--line);background:rgba(16,18,20,.92);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:space-between;gap:18px;padding:10px 18px;color:var(--muted)}
-.feedback a{color:var(--yellow);text-decoration:none;border-bottom:1px solid var(--yellow);padding-bottom:3px}
-
-@media(max-width:1050px){
-  .shell{padding:24px 18px 76px}
-  .top{grid-template-columns:1fr;gap:16px}
-  .years,.top-year{justify-self:start}
-  .layout{grid-template-columns:1fr;margin-top:42px}
-  .side{border-right:0;border-bottom:1px solid var(--line);padding:24px 0}
-  .nav{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
-  .stage{min-height:auto}
-  .quick-cards,.folder-grid,.folder-strip{grid-template-columns:1fr}
-  .timeline{overflow-x:auto}
-  .resource-row{grid-template-columns:1fr}
-}
-@media(max-width:620px){
-  .brand{gap:12px}
-  .nav{grid-template-columns:1fr}
-  .feedback{align-items:flex-start;flex-direction:column}
-}
-/* FONT STYLE — clean iOS-style sans font */
-body,
-button,
-a,
-input,
-textarea,
-select {
-  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Arial, sans-serif !important;
-  font-size: 12px !important;
-  font-weight: 400 !important;
-  letter-spacing: 0 !important;
-  text-transform: none !important;
-}
-
-/* Small uppercase labels / headings only */
-.landing-title,
-.landing-enter,
-.brand-word,
-.brand .sub,
-.year,
-.top-year,
-.nav button,
-.kicker,
-.title,
-.carousel-title,
-.update-title,
-.update-line strong,
-.quick-card h2,
-.time-tab,
-.milestone-label strong,
-.visual-hint,
-.simple-folder h3,
-.folder-card h3,
-.resource-tab,
-.resource-row strong,
-.portal-preview div,
-.feedback,
-.pill {
-  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Arial, sans-serif !important;
-  font-size: 12px !important;
-  font-weight: 500 !important;
-  letter-spacing: 0.14em !important;
-  text-transform: uppercase !important;
-}
-
-/* Keep main titles calm and consistent */
-.title {
-  font-size: 12px !important;
-  font-weight: 600 !important;
-  line-height: 1.6 !important;
-  letter-spacing: 0.16em !important;
-  text-transform: uppercase !important;
-  margin-bottom: 12px !important;
-}
-
-/* Body/details should stay easy to read */
-.lead,
-.quick-card p,
-.update-line span,
-.goal-summary,
-.year-note,
-.resource-row span,
-.modal p {
-  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Arial, sans-serif !important;
-  font-size: 12px !important;
-  font-weight: 400 !important;
-  letter-spacing: 0.02em !important;
-  line-height: 1.65 !important;
-  text-transform: none !important;
-}
-
-/* Clean yellow underline for selected tabs */
-.year,
-.nav button,
-.time-tab,
-.resource-tab {
-  background: transparent !important;
-  border-radius: 0 !important;
-}
-
-.year.active,
-.nav button.active,
-.time-tab.active,
-.resource-tab.active {
-  background: transparent !important;
-  color: var(--ink) !important;
-  border-bottom-color: var(--yellow) !important;
-}
-
-/* Remove default browser focus rectangle unless keyboard focus is visible */
-button:focus {
-  outline: none;
-}
-
-button:focus-visible,
-a:focus-visible {
-  outline: 1px solid var(--yellow);
-  outline-offset: 4px;
-}
-
-
-/* READABILITY UPDATE — iOS-style clean text, no wide spacing */
-body,
-button,
-a,
-input,
-textarea,
-select {
-  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",Arial,sans-serif !important;
-  font-size:12px !important;
-  font-weight:400 !important;
-  letter-spacing:0 !important;
-  text-transform:none !important;
-  line-height:1.55 !important;
-}
-
-/* Headings and labels: still small, but readable */
-.title,
-.kicker,
-.carousel-title,
-.update-title,
-.quick-card h2,
-.folder-card h3,
-.simple-folder h3,
-.resource-row strong,
-.milestone-label strong,
-.brand-word,
-.top-year {
-  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",Arial,sans-serif !important;
-  font-size:12px !important;
-  font-weight:600 !important;
-  letter-spacing:.03em !important;
-  text-transform:none !important;
-  line-height:1.45 !important;
-}
-
-/* Navigation: remove the hard-to-read spaced letters */
-.nav button,
-.nav button span,
-.year,
-.time-tab,
-.resource-tab,
-.pill,
-.landing-title,
-.landing-enter {
-  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",Arial,sans-serif !important;
-  font-size:12px !important;
-  font-weight:500 !important;
-  letter-spacing:.02em !important;
-  text-transform:none !important;
-}
-
-/* Keep only subtle uppercase for tiny section markers, not main reading text */
-.kicker {
-  color:rgba(246,243,250,.46) !important;
-}
-
-/* Paragraph/details: softer but easier to read */
-.lead,
-.quick-card p,
-.update-line,
-.update-line span,
-.goal-summary,
-.resource-row span,
-.portal-preview div,
-.feedback,
-.milestone-label span,
-.year-note,
-.visual-hint {
-  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",Arial,sans-serif !important;
-  font-size:12px !important;
-  font-weight:400 !important;
-  letter-spacing:0 !important;
-  text-transform:none !important;
-  line-height:1.65 !important;
-  color:rgba(246,243,250,.72) !important;
-}
-
-/* Improve contrast on cards and text lines */
-.quick-card,
-.carousel,
-.folder-card,
-.simple-folder,
-.resource-list,
-.portal-preview,
-.timeline {
-  background:rgba(246,243,250,.045) !important;
-  border-color:rgba(246,243,250,.22) !important;
-}
-
-.update-line {
-  grid-template-columns:76px 1fr !important;
-}
-
-.update-line strong {
-  font-size:12px !important;
-  font-weight:600 !important;
-  letter-spacing:0 !important;
-  text-transform:none !important;
-  color:var(--ink) !important;
-}
-
-/* Clean selected tab underline */
-.nav button.active,
-.time-tab.active,
-.resource-tab.active,
-.year.active {
-  background:transparent !important;
-  color:var(--ink) !important;
-  border-bottom:1px solid var(--yellow) !important;
-  border-radius:0 !important;
-}
-
-.year {
-  background:transparent !important;
-  border:0 !important;
-  border-bottom:1px solid transparent !important;
-  border-radius:0 !important;
-  padding:0 0 8px !important;
-}
-
-/* Buttons: easier to scan */
-.pill {
-  padding:7px 11px !important;
-  border-color:rgba(246,243,250,.30) !important;
-}
-
-.pill.primary {
-  border-color:var(--yellow) !important;
-  color:var(--yellow) !important;
-}
-
-/* Landing page: cleaner and calmer */
-.landing-title {
-  font-weight:600 !important;
-  letter-spacing:.04em !important;
-}
-
-.landing-enter {
-  color:var(--yellow) !important;
-  border-bottom:1px solid var(--yellow) !important;
-}
-
-/* Remove accidental yellow rectangle from previous font override */
-.brand + .years::before,
-.top::before,
-.top::after {
-  content:none !important;
-}
-
-
-/* LANDING CENTER FIX */
-#landing {
-  display:flex !important;
-  align-items:center !important;
-  justify-content:center !important;
-  text-align:center !important;
-  min-height:100vh !important;
-  width:100% !important;
-  padding:0 !important;
-}
-
-#landing .landing-card {
-  display:flex !important;
-  flex-direction:column !important;
-  align-items:center !important;
-  justify-content:center !important;
-  margin:0 auto !important;
-  width:100% !important;
-  max-width:360px !important;
-}
-
-#landing .logo.large {
-  margin-left:auto !important;
-  margin-right:auto !important;
-}
-
-#landing .landing-title,
-#landing .landing-enter {
-  text-align:center !important;
-  letter-spacing:.04em !important;
-}
-
-
-/* V9 — simple dashboard additions */
-body[data-theme="light"] {
-  --bg:#f6f3fa;
-  --ink:#181a1c;
-  --muted:rgba(24,26,28,.62);
-  --quiet:rgba(24,26,28,.38);
-  --line:rgba(24,26,28,.14);
-  --line2:rgba(24,26,28,.25);
-  --panel:rgba(24,26,28,.035);
-  --panel2:rgba(24,26,28,.07);
-}
-
-body[data-theme="light"],
-body[data-theme="light"] .landing {
-  background:#f6f3fa !important;
-  color:#181a1c !important;
-}
-
-body[data-theme="light"] body,
-body[data-theme="light"] .shell {
-  background:#f6f3fa !important;
-}
-
-body[data-theme="light"] .modal-card {
-  background:#f6f3fa !important;
-}
-
-body[data-theme="light"] .feedback {
-  background:rgba(246,243,250,.92) !important;
+.brand span {
+  color:var(--muted);
 }
 
 .mode-toggle,
 .lang-toggle {
   display:flex;
-  gap:12px;
+  gap:14px;
   align-items:center;
+}
+
+.mode-toggle {
   justify-self:end;
 }
 
 .mode-btn,
-.lang-btn {
+.lang-btn,
+.tab-btn {
   appearance:none;
   border:0;
   border-bottom:1px solid transparent;
   background:transparent;
   color:var(--muted);
   cursor:pointer;
-  padding:0 0 6px;
-  font-size:12px !important;
+  padding:0 0 7px;
+  font-size:12px;
 }
 
 .mode-btn.active,
-.lang-btn.active {
+.lang-btn.active,
+.tab-btn.active {
   color:var(--ink);
   border-bottom-color:var(--yellow);
 }
 
-.top-actions {
-  justify-self:end;
-  display:flex;
-  align-items:center;
-  justify-content:flex-end;
-  gap:18px;
-  flex-wrap:wrap;
-}
-
-.project-summary {
-  border:1px solid var(--line);
-  background:var(--panel);
-  padding:18px;
-  margin-bottom:18px;
-}
-
-.project-summary h2 {
-  margin:0 0 8px;
-  font-size:12px !important;
-  font-weight:600 !important;
-}
-
-.project-summary p {
-  margin:0;
-  color:var(--muted);
-  line-height:1.55;
-}
-
-.team-strip {
-  border:1px solid var(--line);
-  background:var(--panel);
-  padding:18px;
-  margin-bottom:18px;
-}
-
-.team-strip h2 {
-  margin:0 0 14px;
-  font-size:12px !important;
-  font-weight:600 !important;
-}
-
-.team-grid {
+.hero {
   display:grid;
-  grid-template-columns:repeat(5,minmax(0,1fr));
-  gap:12px;
+  grid-template-columns:minmax(0,1fr) 320px;
+  gap:28px;
+  margin-top:58px;
+  align-items:start;
 }
 
-.team-member {
-  border:1px solid var(--line);
-  padding:12px;
-  min-height:116px;
-  position:relative;
-}
-
-.team-photo {
-  width:34px;
-  height:34px;
-  border-radius:999px;
-  background:var(--yellow);
-  color:var(--bg);
-  display:grid;
-  place-items:center;
-  font-weight:600;
+.kicker {
+  color:var(--quiet);
   margin-bottom:10px;
-  overflow:hidden;
 }
 
-.team-photo img {
-  width:100%;
-  height:100%;
-  object-fit:cover;
+.title {
+  font-size:12px;
+  font-weight:600;
+  margin:0 0 12px;
+}
+
+.rule {
+  width:220px;
+  height:1px;
+  background:var(--yellow);
+  margin-bottom:24px;
+}
+
+.lead {
+  color:var(--muted);
+  max-width:660px;
+  margin:0;
+}
+
+.status-card {
+  border:1px solid var(--line);
+  background:var(--panel);
+  padding:18px;
+}
+
+.status-card h2 {
+  font-size:12px;
+  margin:0 0 12px;
+}
+
+.status-list {
+  display:grid;
+  gap:12px;
+  margin-top:16px;
+}
+
+.status-row {
+  display:grid;
+  grid-template-columns:86px 1fr;
+  gap:12px;
+  border-top:1px solid var(--line);
+  padding-top:12px;
+}
+
+.status-row strong {
+  font-weight:600;
+}
+
+.status-row span {
+  color:var(--muted);
+}
+
+.tabs {
+  display:flex;
+  gap:20px;
+  flex-wrap:wrap;
+  margin:46px 0 24px;
+}
+
+.panel {
+  display:none;
+}
+
+.panel.active {
   display:block;
 }
 
-.team-name {
+.card-grid {
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:16px;
+}
+
+.card {
+  border:1px solid var(--line);
+  background:var(--panel);
+  padding:18px;
+  min-height:150px;
+}
+
+.card h3 {
+  font-size:12px;
+  font-weight:600;
+  margin:0 0 10px;
+}
+
+.card p {
+  margin:0;
+  color:var(--muted);
+}
+
+.flow {
+  border:1px solid var(--line);
+  background:var(--panel);
+  padding:18px;
+}
+
+.flow-line {
+  display:grid;
+  grid-template-columns:repeat(7, minmax(0,1fr));
+  gap:10px;
+  align-items:center;
+}
+
+.node {
+  border:1px solid var(--line2);
+  padding:12px;
+  text-align:center;
+  min-height:74px;
+  display:grid;
+  place-items:center;
+}
+
+.arrow {
+  color:var(--yellow);
+  text-align:center;
+}
+
+.parts {
+  display:grid;
+  gap:10px;
+}
+
+.part-row {
+  display:grid;
+  grid-template-columns:170px 1fr;
+  gap:16px;
+  border-bottom:1px solid var(--line);
+  padding:12px 0;
+}
+
+.part-row:last-child {
+  border-bottom:0;
+}
+
+.part-row strong {
+  font-weight:600;
+}
+
+.part-row span {
+  color:var(--muted);
+}
+
+.test-list {
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:14px;
+}
+
+.test-item {
+  border:1px solid var(--line);
+  background:var(--panel);
+  padding:16px;
+}
+
+.test-item h3 {
+  margin:0 0 8px;
+  font-size:12px;
+}
+
+.test-item p {
+  margin:0;
+  color:var(--muted);
+}
+
+.deliverables {
+  border:1px solid var(--line);
+  background:var(--panel);
+}
+
+.deliverable {
+  display:grid;
+  grid-template-columns:42px 1fr 120px;
+  gap:14px;
+  padding:16px;
+  border-bottom:1px solid var(--line);
+  align-items:start;
+}
+
+.deliverable:last-child {
+  border-bottom:0;
+}
+
+.num {
+  width:28px;
+  height:28px;
+  border:1px solid var(--yellow);
+  color:var(--yellow);
+  border-radius:999px;
+  display:grid;
+  place-items:center;
+}
+
+.deliverable strong {
+  display:block;
   font-weight:600;
   margin-bottom:4px;
 }
 
-.team-role {
+.deliverable span {
   color:var(--muted);
-  line-height:1.4;
 }
 
-.info-dot {
-  position:absolute;
-  top:10px;
-  right:10px;
-  width:18px;
-  height:18px;
+.pill {
+  display:inline-flex;
+  width:max-content;
   border:1px solid var(--line2);
-  border-radius:50%;
-  display:grid;
-  place-items:center;
+  border-radius:999px;
+  padding:7px 11px;
+  text-decoration:none;
   color:var(--muted);
-  font-size:11px !important;
-  cursor:help;
 }
 
-.info-dot:hover .info-tip {
-  opacity:1;
-  transform:translateY(0);
-  pointer-events:auto;
-}
-
-.info-tip {
-  position:absolute;
-  right:0;
-  top:24px;
-  z-index:5;
-  width:230px;
-  border:1px solid var(--line2);
-  background:var(--bg);
-  color:var(--ink);
-  padding:10px;
-  line-height:1.45;
-  opacity:0;
-  transform:translateY(4px);
-  pointer-events:none;
-  transition:.15s;
-  box-shadow:0 14px 28px rgba(0,0,0,.22);
-}
-
-/* Replace visual symbols with simple dots */
-.nav svg {
-  display:none !important;
-}
-
-.nav button {
-  gap:12px !important;
-}
-
-.nav button::before {
-  content:"";
-  width:7px;
-  height:7px;
-  border-radius:50%;
-  border:1px solid var(--line2);
-  background:transparent;
-  flex:none;
-}
-
-.nav button.active::before {
-  background:var(--yellow);
+.pill.primary {
   border-color:var(--yellow);
+  color:var(--yellow);
 }
 
-/* External portal language blocks */
-.lang-block {
-  display:none;
+.preview {
+  border:1px solid var(--line);
+  background:var(--panel);
+  padding:12px;
+  margin-top:18px;
 }
 
-.lang-block.active {
+.preview img {
   display:block;
+  width:100%;
+  max-height:360px;
+  object-fit:contain;
 }
 
-.portal-language {
+.feedback {
+  position:fixed;
+  left:0;
+  right:0;
+  bottom:0;
+  z-index:10;
+  border-top:1px solid var(--line);
+  background:rgba(16,18,20,.92);
+  backdrop-filter:blur(8px);
   display:flex;
-  justify-content:flex-end;
-  margin-bottom:18px;
+  align-items:center;
+  justify-content:space-between;
+  gap:18px;
+  padding:10px 18px;
+  color:var(--muted);
 }
 
-@media(max-width:1050px){
-  .top-actions {
+body[data-theme="light"] .feedback {
+  background:rgba(246,243,250,.92);
+}
+
+.feedback a {
+  color:var(--yellow);
+  text-decoration:none;
+  border-bottom:1px solid var(--yellow);
+  padding-bottom:3px;
+}
+
+.lang-block { display:none; }
+.lang-block.active { display:block; }
+
+@media(max-width:900px) {
+  .top,
+  .hero {
+    grid-template-columns:1fr;
+  }
+  .mode-toggle {
     justify-self:start;
   }
-  .team-grid {
-    grid-template-columns:repeat(2,minmax(0,1fr));
+  .card-grid,
+  .test-list {
+    grid-template-columns:1fr;
   }
-}
-
-@media(max-width:620px){
-  .team-grid {
+  .flow-line {
+    grid-template-columns:1fr;
+  }
+  .arrow {
+    transform:rotate(90deg);
+  }
+  .deliverable,
+  .part-row,
+  .status-row {
     grid-template-columns:1fr;
   }
 }
 
 </style>
 </head>
+
 <body data-theme="dark">
+<div class="shell">
+  <header class="top">
+    <div class="brand">
+      <img class="logo" src="ul-logo.png" alt="Universal Limbs logo">
+      <strong>ULF</strong>
+      <span>test rig</span>
+    </div>
 
-<section class="landing" id="landing">
-  <div class="landing-card">
-    <img class="logo large" src="ul-logo.png" alt="Universal Limbs logo">
-    <div class="landing-title">R&amp;D home</div>
-    <button class="landing-enter" type="button" id="enterApp">Click here</button>
-  </div>
-</section>
+    <div class="lang-toggle" aria-label="Language toggle">
+      <button class="lang-btn active" type="button" data-lang="en">English</button>
+      <button class="lang-btn" type="button" data-lang="pt">Português</button>
+    </div>
 
-<main class="app" id="app">
-  <div class="shell">
-    <header class="top">
-      <div class="brand"><img class="logo" src="ul-logo.png" alt="Universal Limbs logo"><span class="brand-word">ULF</span><span class="bar"></span><span class="sub">r&amp;d dashboard</span></div>
-      <div class="years"><button class="year active" type="button" data-year="1">Year 1</button><button class="year" type="button" data-year="2">Year 2</button></div>
-      <div class="top-actions">
-        <div class="mode-toggle" aria-label="Theme toggle">
-          <button class="mode-btn active" type="button" data-theme-choice="dark">Dark</button>
-          <button class="mode-btn" type="button" data-theme-choice="light">Light</button>
+    <div class="mode-toggle" aria-label="Theme toggle">
+      <button class="mode-btn active" type="button" data-theme-choice="dark">Dark</button>
+      <button class="mode-btn" type="button" data-theme-choice="light">Light</button>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div>
+        <div class="kicker">scope of work</div>
+        <h1 class="title">Automated prosthetic test rig</h1>
+        <div class="rule"></div>
+
+        <div class="lang-block active" data-lang-block="en">
+          <p class="lead">
+            Build a benchtop rig that pulls the prosthetic tendon cable, measures input force, measures grip force, logs data, and helps decide if a printed hand is ready for field testing.
+          </p>
         </div>
-        <div class="top-year">2026</div>
+
+        <div class="lang-block" data-lang-block="pt">
+          <p class="lead">
+            Construir uma bancada de teste que puxa o cabo/tendão da prótese, mede a força de entrada, mede a força de preensão, registra dados e ajuda a decidir se a mão impressa está pronta para testes.
+          </p>
+        </div>
       </div>
-    </header>
 
-    <section class="layout">
-      <aside class="side">
-        <nav class="nav" aria-label="R&D sections">
-          <button class="active" type="button" data-view="dashboard"><svg viewBox="0 0 40 40"><path d="M8 10h24M8 20h18M8 30h12"></path><circle cx="31" cy="20" r="2"></circle><circle cx="24" cy="30" r="2"></circle></svg><span>Dashboard</span></button>
-          <button type="button" data-view="goal"><svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="14"></circle><circle cx="20" cy="20" r="6"></circle><path d="M20 2v8M20 30v8M2 20h8M30 20h8"></path></svg><span>Goal</span></button>
-          <button type="button" data-view="documents"><svg viewBox="0 0 40 40"><path d="M9 7h18l4 4v22H9z"></path><path d="M27 7v5h5M14 17h13M14 23h13M14 29h8"></path></svg><span>Documents</span></button>
-          <button type="button" data-view="resources"><svg viewBox="0 0 40 40"><path d="M8 12h10l3 4h11v17H8z"></path><path d="M8 16h24"></path></svg><span>Resources</span></button>
-          <button type="button" data-view="portal"><svg viewBox="0 0 40 40"><path d="M8 12h10l3 4h11v17H8z"></path><path d="M20 21v8M16 25h8"></path></svg><span>External portal</span></button>
-        </nav>
+      <aside class="status-card">
+        <h2>Essential scope</h2>
+        <div class="status-list">
+          <div class="status-row"><strong>Audience</strong><span>University engineering team</span></div>
+          <div class="status-row"><strong>Output</strong><span>Build file + test bench package</span></div>
+          <div class="status-row"><strong>Status</strong><span>Draft for external handoff</span></div>
+        </div>
       </aside>
-
-      <section class="stage" aria-live="polite">
-        <div id="dashboard" class="view active">
-          <div class="kicker">dashboard</div><h1 class="title">R&amp;D command center</h1><div class="rule"></div>
-          <section class="project-summary">
-              <h2>Project summary</h2>
-              <p>Child-first body-powered prosthetic hand. Current focus: lock MVP direction, survey feedback, and test-rig handoff.</p>
-            </section>
-
-            <section class="team-strip">
-              <h2>R&amp;D team</h2>
-              <div class="team-grid">
-                <article class="team-member">
-                  <div class="team-photo">R</div>
-                  <div class="team-name">Rasna</div>
-                  <div class="team-role">Founder / R&amp;D direction</div>
-                  <span class="info-dot">i<span class="info-tip">Owns project direction, priorities, partner alignment, and final decision flow.</span></span>
-                </article>
-                <article class="team-member">
-                  <div class="team-photo">S</div>
-                  <div class="team-name">Sahitya</div>
-                  <div class="team-role">Project manager</div>
-                  <span class="info-dot">i<span class="info-tip">Coordinates assignments, timelines, files, team follow-up, and external handoff.</span></span>
-                </article>
-                <article class="team-member">
-                  <div class="team-photo">S</div>
-                  <div class="team-name">Saja</div>
-                  <div class="team-role">Prosthetic / rehab lead</div>
-                  <span class="info-dot">i<span class="info-tip">Provides prosthetic, rehab, and clinical practicality feedback.</span></span>
-                </article>
-                <article class="team-member">
-                  <div class="team-photo">A</div>
-                  <div class="team-name">Ana</div>
-                  <div class="team-role">Finance</div>
-                  <span class="info-dot">i<span class="info-tip">Supports budget tracking, funding readiness, and financial documentation.</span></span>
-                </article>
-                <article class="team-member">
-                  <div class="team-photo">M</div>
-                  <div class="team-name">Maria</div>
-                  <div class="team-role">University liaison</div>
-                  <span class="info-dot">i<span class="info-tip">Supports university collaboration, partner communication, and student handoff.</span></span>
-                </article>
-              </div>
-            </section>
-
-            <div class="dashboard-grid">
-            <section class="carousel" aria-label="Latest updates carousel">
-              <div class="carousel-head"><div class="carousel-title">Latest updates</div><div class="carousel-controls"><button class="carousel-btn" type="button" id="prevUpdate">‹</button><button class="carousel-btn" type="button" id="nextUpdate">›</button></div></div>
-              <article class="update-slide active">
-                <div class="update-title">Survey updates</div>
-                <div class="update-line"><strong>Current</strong><span>Getting feedback from Alex Low.</span></div>
-                <div class="update-line"><strong>Next</strong><span>Send to 2 prosthetic users for early feedback.</span></div>
-                <div class="update-line"><strong>Link</strong><span><a class="pill primary" href="prosthetic-user-survey.html" target="_blank" rel="noopener">survey placeholder</a></span></div>
-              </article>
-              <article class="update-slide">
-                <div class="update-title">Presentation for UTFPR</div>
-                <div class="update-line"><strong>Current</strong><span>Prepare partner-facing presentation for external review.</span></div>
-                <div class="update-line"><strong>Next</strong><span>Add final scope, test bench ask, and file handoff instructions.</span></div>
-                <div class="update-line"><strong>Link</strong><span><a class="pill primary" href="PASTE_PRESENTATION_LINK_HERE" target="_blank" rel="noopener">presentation placeholder</a></span></div>
-              </article>
-              <article class="update-slide">
-                <div class="update-title">Base design ready to print</div>
-                <div class="update-line"><strong>Current</strong><span>WAACS / e-NABLE-style base design is the starting printable basis.</span></div>
-                <div class="update-line"><strong>Next</strong><span>Attach print link, material notes, and estimated price.</span></div>
-                <div class="update-line"><strong>Link</strong><span><a class="pill primary" href="https://docs.google.com/spreadsheets/d/1Cf-Qrm9P4SmOiynSsROKjqrrjdEQIn6SukNvNQSpMGU/edit?usp=sharing" target="_blank" rel="noopener">attach links / price</a></span></div>
-              </article>
-              <article class="update-slide">
-                <div class="update-title">Stay open to hybrid methods</div>
-                <div class="update-line"><strong>Current</strong><span>Advice from prosthetist at OPRC: keep design options open and avoid overcommitting too early.</span></div>
-                <div class="update-line"><strong>Next</strong><span>Compare hybrid approaches against simplicity, repairability, and child use.</span></div>
-                <div class="update-line"><strong>Link</strong><span><a class="pill primary" href="https://docs.google.com/spreadsheets/d/1Cf-Qrm9P4SmOiynSsROKjqrrjdEQIn6SukNvNQSpMGU/edit?usp=sharing" target="_blank" rel="noopener">notes placeholder</a></span></div>
-              </article>
-              <div class="update-dots" id="updateDots"></div>
-            </section>
-
-            <section class="quick-cards">
-              <article class="quick-card"><div><h2>Current goal</h2><p>Lock the child-first MVP direction before CAD.</p></div><div class="actions"><button class="pill primary" data-jump="goal" type="button">open goal</button></div></article>
-              <article class="quick-card"><div><h2>Upload</h2><p>CAD drafts, screenshots, test notes, review comments, and external collaborator files.</p></div><div class="actions"><a class="pill primary" href="PASTE_GOOGLE_FORM_Upload_LINK_HERE" target="_blank" rel="noopener">upload file</a></div></article>
-              <article class="quick-card"><div><h2>Downloads</h2><p>Test bench package, design requirements, survey, budget, and reference documents.</p></div><div class="actions"><button class="pill primary" data-jump="documents" type="button">open docs</button></div></article>
-            </section>
-          </div>
-        </div>
-
-        <div id="goal" class="view">
-          <div class="goal-top">
-            <div><div class="kicker">goal</div><h1 class="title">Design direction</h1><div class="rule"></div></div>
-            <div class="time-tabs"><button class="time-tab" data-goal="week">THIS WEEK</button><button class="time-tab" data-goal="month">THIS MONTH</button><button class="time-tab active" data-goal="year">THE YEAR</button></div>
-          </div>
-
-          <div id="goal-week" class="goal-panel"><div class="goal-summary">This week: confirm survey feedback path, keep CAD direction paused until MVP requirements are clearer, and prepare the test bench handoff.</div></div>
-          <div id="goal-month" class="goal-panel"><div class="goal-summary">This month: lock the design requirement package, confirm survey review, and define what the university students should build first.</div></div>
-          <div id="goal-year" class="goal-panel active">
-            <div class="goal-summary">Click the yellow milestone dots to view the inspiration visual. Visuals are references only; the final hand must stay simple, safe, repairable, and child-first.</div>
-            <div class="timeline" aria-label="Year 1 milestone timeline">
-              <div class="timeline-head"><div>MILESTONE</div><div>AUG</div><div>SEP</div><div>OCT</div><div>NOV</div><div>DEC</div><div>JAN</div><div>FEB</div><div>MAR</div><div>APR</div><div>MAY</div><div>JUN</div><div>JUL</div></div>
-              <div class="timeline-row">
-                <div class="milestone-label"><strong>MILESTONE 1</strong><span>AUG—NOV 2026</span></div>
-                <div class="month-cell"><div class="bar" style="left:4px;right:-311px">SIMPLIFIED YALEHAND MULTIGRASP<button class="visual-dot" type="button" data-modal-title="Milestone 1 · Yale Hand" data-modal-img="yale-multigrasp.png" data-modal-text="Inspiration only. Study grasp modes and simplify the mechanical strategy for the MVP."></button></div></div><div class="month-cell"></div><div class="month-cell"></div><div class="month-cell"></div><div class="month-cell"></div><div class="month-cell"></div><div class="month-cell"></div><div class="month-cell"></div><div class="month-cell"></div><div class="month-cell"></div><div class="month-cell"></div><div class="month-cell"></div>
-              </div>
-              <div class="timeline-row">
-                <div class="milestone-label"><strong>MILESTONE 2</strong><span>DEC 2026—MAR 2027</span></div>
-                <div class="month-cell"></div><div class="month-cell"></div><div class="month-cell"></div><div class="month-cell"></div><div class="month-cell"><div class="bar" style="left:4px;right:-311px">INTEGRATE SOFTFOOT PRO GEOMETRY<button class="visual-dot" type="button" data-modal-title="Milestone 2 · SoftFoot Pro" data-modal-img="softfoot-pro.jpg" data-modal-text="Inspiration only. Translate passive adaptive geometry only if it makes the hand simpler and more useful."></button></div></div><div class="month-cell"></div><div class="month-cell"></div><div class="month-cell"></div><div class="month-cell"></div><div class="month-cell"></div><div class="month-cell"></div><div class="month-cell"></div>
-              </div>
-              <div class="timeline-row">
-                <div class="milestone-label"><strong>MILESTONE 3</strong><span>APR—JUL 2027</span></div>
-                <div class="month-cell"></div><div class="month-cell"></div><div class="month-cell"></div><div class="month-cell"></div><div class="month-cell"></div><div class="month-cell"></div><div class="month-cell"></div><div class="month-cell"></div><div class="month-cell"><div class="bar" style="left:4px;right:-311px">EXTERNAL MECHANICAL ENERGY RESOURCE<button class="visual-dot" type="button" data-modal-title="Milestone 3 · Mechanical Energy" data-modal-img="waacs-basis.png" data-modal-text="Placeholder visual. Explore purely mechanical energy assistance only. No electronics unless scope changes."></button></div></div><div class="month-cell"></div><div class="month-cell"></div><div class="month-cell"></div>
-              </div>
-            </div>
-            <div class="visual-hint">● yellow dot = click to see visual</div>
-          </div>
-
-          <div class="folder-strip">
-            <article class="simple-folder"><svg viewBox="0 0 48 48"><path d="M6 14h14l4 5h18v21H6z"></path><path d="M6 19h36"></path></svg><h3>SURVEY</h3><div class="actions"><a class="pill primary" href="prosthetic-user-survey.html" target="_blank" rel="noopener">open</a></div></article>
-            <article class="simple-folder"><svg viewBox="0 0 48 48"><path d="M6 14h14l4 5h18v21H6z"></path><path d="M6 19h36"></path></svg><h3>BUDGET</h3><div class="actions"><a class="pill primary" href="https://docs.google.com/spreadsheets/d/1GkG42z72UtrJ5_tYGXVXwijDe_5T6Ae6/edit?usp=drivesdk&ouid=101706660835918185079&rtpof=true&sd=true&urp=gmail_link" target="_blank" rel="noopener">open</a></div></article>
-          </div>
-        </div>
-
-        <div id="documents" class="view">
-          <div class="kicker">documents</div><h1 class="title">File folders</h1><div class="rule"></div>
-          <div class="folder-grid">
-            <article class="folder-card"><svg viewBox="0 0 48 48"><path d="M6 14h14l4 5h18v21H6z"></path><path d="M6 19h36"></path></svg><h3>SURVEY</h3><div class="actions"><a class="pill primary" href="prosthetic-user-survey.html" target="_blank" rel="noopener">open</a><a class="pill" href="PASTE_GOOGLE_FORM_Upload_LINK_HERE" target="_blank" rel="noopener">upload</a></div></article>
-            <article class="folder-card"><svg viewBox="0 0 48 48"><path d="M6 14h14l4 5h18v21H6z"></path><path d="M6 19h36"></path></svg><h3>BUDGET</h3><div class="actions"><a class="pill primary" href="https://docs.google.com/spreadsheets/d/1GkG42z72UtrJ5_tYGXVXwijDe_5T6Ae6/edit?usp=drivesdk&ouid=101706660835918185079&rtpof=true&sd=true&urp=gmail_link" target="_blank" rel="noopener">open</a></div></article>
-            <article class="folder-card"><svg viewBox="0 0 48 48"><path d="M6 14h14l4 5h18v21H6z"></path><path d="M6 19h36"></path></svg><h3>TEST BENCH PACKAGE</h3><div class="actions"><a class="pill primary" href="PASTE_TEST_BENCH_BUILDING_FILE_LINK_HERE" target="_blank" rel="noopener">download</a><a class="pill" href="PASTE_GOOGLE_FORM_Upload_LINK_HERE" target="_blank" rel="noopener">upload</a></div></article>
-            <article class="folder-card"><svg viewBox="0 0 48 48"><path d="M6 14h14l4 5h18v21H6z"></path><path d="M6 19h36"></path></svg><h3>DESIGN REQUIREMENTS</h3><div class="actions"><a class="pill primary" href="https://docs.google.com/spreadsheets/d/1Cf-Qrm9P4SmOiynSsROKjqrrjdEQIn6SukNvNQSpMGU/edit?usp=sharing" target="_blank" rel="noopener">open</a></div></article>
-            <article class="folder-card"><svg viewBox="0 0 48 48"><path d="M6 14h14l4 5h18v21H6z"></path><path d="M6 19h36"></path></svg><h3>REFERENCE VISUALS</h3><div class="actions"><button class="pill primary" data-jump="goal" type="button">open goal</button></div></article>
-          </div>
-        </div>
-
-        <div id="resources" class="view">
-          <div class="kicker">resources</div><h1 class="title">Resource center</h1><div class="rule"></div>
-          <div class="resource-tabs"><button class="resource-tab active" type="button" data-resource="playbooks">Playbooks</button><button class="resource-tab" type="button" data-resource="links">Links</button><button class="resource-tab" type="button" data-resource="sops">SOPs</button><button class="resource-tab" type="button" data-resource="presentations">Presentations</button></div>
-          <div id="res-playbooks" class="resource-panel active"><div class="resource-list"><div class="resource-row"><strong>R&amp;D Playbook</strong><span>Placeholder for team process and decision rules.</span><a class="pill primary" href="#">add link</a></div><div class="resource-row"><strong>Testing Playbook</strong><span>Placeholder for test setup, logging, and review method.</span><a class="pill primary" href="#">add link</a></div></div></div>
-          <div id="res-links" class="resource-panel"><div class="resource-list"><div class="resource-row"><strong>Project Software</strong><span>Current project management software placeholder.</span><a class="pill primary" href="PASTE_PROJECT_MANAGEMENT_SOFTWARE_LINK_HERE" target="_blank" rel="noopener">open</a></div><div class="resource-row"><strong>Drive Folder</strong><span>Main Google Drive folder placeholder.</span><a class="pill primary" href="PASTE_GOOGLE_DRIVE_FOLDER_LINK_HERE" target="_blank" rel="noopener">open</a></div></div></div>
-          <div id="res-sops" class="resource-panel"><div class="resource-list"><div class="resource-row"><strong>Design Intake SOP</strong><span>Placeholder for requesting concept/CAD/design work.</span><a class="pill primary" href="#">add link</a></div><div class="resource-row"><strong>Document Upload SOP</strong><span>Placeholder for naming, versioning, and handoff.</span><a class="pill primary" href="#">add link</a></div></div></div>
-          <div id="res-presentations" class="resource-panel"><div class="resource-list"><div class="resource-row"><strong>UTFPR Presentation</strong><span>Placeholder for partner-facing presentation.</span><a class="pill primary" href="PASTE_PRESENTATION_LINK_HERE" target="_blank" rel="noopener">open</a></div><div class="resource-row"><strong>Project Overview Deck</strong><span>Placeholder for general R&amp;D overview presentation.</span><a class="pill primary" href="#">add link</a></div></div></div>
-        </div>
-
-        <div id="portal" class="view">
-          <div class="portal-language">
-            <div class="lang-toggle" aria-label="Language toggle">
-              <button class="lang-btn active" type="button" data-lang="en">English</button>
-              <button class="lang-btn" type="button" data-lang="pt">Português</button>
-            </div>
-          </div>
-
-          <div class="lang-block active" data-lang-block="en">
-            <div class="kicker">external portal</div><h1 class="title">Student entry point</h1><div class="rule"></div>
-            <div class="portal-preview"><img src="testbench-architecture.webp" alt="Automated test rig architecture preview"><div>Primary external deliverable: automated test bench building package.</div></div>
-            <section class="quick-cards">
-              <article class="quick-card"><div><h2>Current goal</h2><p>Build the test bench package for repeatable prosthetic-hand testing.</p></div></article>
-              <article class="quick-card"><div><h2>Upload</h2><p>Submit CAD files, build notes, screenshots, and questions.</p></div><div class="actions"><a class="pill primary" href="PASTE_GOOGLE_FORM_UPLOAD_LINK_HERE" target="_blank" rel="noopener">upload</a></div></article>
-              <article class="quick-card"><div><h2>Downloads</h2><p>Open the test bench file and required reference documents.</p></div><div class="actions"><a class="pill primary" href="PASTE_TEST_BENCH_BUILDING_FILE_LINK_HERE" target="_blank" rel="noopener">download</a></div></article>
-            </section>
-          </div>
-
-          <div class="lang-block" data-lang-block="pt">
-            <div class="kicker">portal externo</div><h1 class="title">Entrada do estudante</h1><div class="rule"></div>
-            <div class="portal-preview"><img src="testbench-architecture.webp" alt="Prévia da arquitetura da bancada de teste"><div>Entrega principal: pacote de construção da bancada de teste automatizada.</div></div>
-            <section class="quick-cards">
-              <article class="quick-card"><div><h2>Objetivo atual</h2><p>Construir o pacote da bancada de teste para ensaios repetíveis da mão protética.</p></div></article>
-              <article class="quick-card"><div><h2>Enviar</h2><p>Envie arquivos CAD, notas de construção, imagens e perguntas.</p></div><div class="actions"><a class="pill primary" href="PASTE_GOOGLE_FORM_UPLOAD_LINK_HERE" target="_blank" rel="noopener">enviar</a></div></article>
-              <article class="quick-card"><div><h2>Downloads</h2><p>Abra o arquivo da bancada de teste e os documentos de referência.</p></div><div class="actions"><a class="pill primary" href="PASTE_TEST_BENCH_BUILDING_FILE_LINK_HERE" target="_blank" rel="noopener">baixar</a></div></article>
-            </section>
-          </div>
-        </div>
-      </section>
     </section>
-  </div>
-</main>
 
-<div class="feedback"><span>feedback stays visible on every page</span><a href="mailto:elizabeth@universallimbs.com?cc=ana@universallimbs.com,saja@universallimbs.com,maria@universallimbs.com,nicole@universallimbs.com,sahitya@universallimbs.com&subject=R&D%20Dashboard%20Feedback&body=Hi team,%0D%0A%0D%0AFeedback for the R%26D dashboard:%0D%0A%0D%0APage/section:%0D%0AIssue or suggestion:%0D%0APriority:%0D%0A%0D%0AThank you.">send feedback</a></div>
+    <nav class="tabs" aria-label="Test rig sections">
+      <button class="tab-btn active" type="button" data-panel="overview">Overview</button>
+      <button class="tab-btn" type="button" data-panel="architecture">Architecture</button>
+      <button class="tab-btn" type="button" data-panel="build">Build parts</button>
+      <button class="tab-btn" type="button" data-panel="tests">Tests</button>
+      <button class="tab-btn" type="button" data-panel="deliverables">Deliverables</button>
+    </nav>
 
-<div class="modal" id="visualModal" aria-hidden="true">
-  <div class="modal-card">
-    <div class="modal-top"><strong id="modalTitle">VISUAL</strong><button class="modal-close" type="button" id="modalClose">×</button></div>
-    <img id="modalImg" src="" alt="Milestone visual">
-    <p id="modalText"></p>
-  </div>
+    <section id="overview" class="panel active">
+      <div class="card-grid">
+        <article class="card">
+          <h3>Purpose</h3>
+          <p>Test a 3D-printed body-powered hand before clinical or field use.</p>
+        </article>
+        <article class="card">
+          <h3>Why it matters</h3>
+          <p>Static grip checks are not enough. The rig must show force, fatigue, slip, creep, and failure points.</p>
+        </article>
+        <article class="card">
+          <h3>Keep simple</h3>
+          <p>Build only what gives useful test data. Avoid overcomplicated sensors or fixtures.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="architecture" class="panel">
+      <div class="flow">
+        <div class="flow-line">
+          <div class="node">Linear actuator</div>
+          <div class="arrow">→</div>
+          <div class="node">Cable load cell</div>
+          <div class="arrow">→</div>
+          <div class="node">Bowden / tendon cable</div>
+          <div class="arrow">→</div>
+          <div class="node">3D printed hand</div>
+        </div>
+        <div class="flow-line" style="margin-top:10px;">
+          <div class="node">Fixed bed</div>
+          <div class="arrow">→</div>
+          <div class="node">Wrist mount</div>
+          <div class="arrow">→</div>
+          <div class="node">Grip target load cell</div>
+          <div class="arrow">→</div>
+          <div class="node">DAQ + Python log</div>
+        </div>
+      </div>
+
+      <div class="preview">
+        <picture>
+          <source srcset="testbench-architecture.webp" type="image/webp">
+          <img src="test-bench-requirement.png" alt="Automated test rig architecture preview">
+        </picture>
+      </div>
+    </section>
+
+    <section id="build" class="panel">
+      <div class="parts">
+        <div class="part-row"><strong>Frame / bed</strong><span>Rigid flat base that keeps the wrist mount and actuator aligned.</span></div>
+        <div class="part-row"><strong>Linear actuator</strong><span>Pulls the tendon cable in a controlled repeatable motion.</span></div>
+        <div class="part-row"><strong>Cable load cell</strong><span>Measures input pull force going into the Bowden / tendon cable.</span></div>
+        <div class="part-row"><strong>Wrist mount</strong><span>Holds the printed hand securely during testing.</span></div>
+        <div class="part-row"><strong>Grip target sensor</strong><span>Measures force applied by the hand to the object or fixture.</span></div>
+        <div class="part-row"><strong>DAQ + Python</strong><span>Collects force and motion data and exports a test log.</span></div>
+        <div class="part-row"><strong>Safety</strong><span>Limit switch, emergency stop, and overload stop.</span></div>
+      </div>
+    </section>
+
+    <section id="tests" class="panel">
+      <div class="test-list">
+        <article class="test-item">
+          <h3>Force transfer</h3>
+          <p>Compare cable pull force to grip force.</p>
+        </article>
+        <article class="test-item">
+          <h3>Fatigue</h3>
+          <p>Repeat open / close cycles and track force loss or cracks.</p>
+        </article>
+        <article class="test-item">
+          <h3>Slip</h3>
+          <p>Pull objects out of the grasp and record slip force.</p>
+        </article>
+        <article class="test-item">
+          <h3>Creep</h3>
+          <p>Hold the grasp and measure force decay over time.</p>
+        </article>
+        <article class="test-item">
+          <h3>Off-axis load</h3>
+          <p>Check side loads, twist, and weak print-layer failure.</p>
+        </article>
+        <article class="test-item">
+          <h3>Environment</h3>
+          <p>Check heat, friction, and material wear where possible.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="deliverables" class="panel">
+      <div class="deliverables">
+        <div class="deliverable">
+          <div class="num">1</div>
+          <div><strong>CAD + assembly</strong><span>Frame, actuator, wrist mount, fixtures, and layout.</span></div>
+          <span class="pill">required</span>
+        </div>
+        <div class="deliverable">
+          <div class="num">2</div>
+          <div><strong>BOM + wiring</strong><span>Parts list, sensor wiring, controller, and safety stops.</span></div>
+          <span class="pill">required</span>
+        </div>
+        <div class="deliverable">
+          <div class="num">3</div>
+          <div><strong>Firmware + Python log</strong><span>Basic control, force capture, cycle count, and CSV export.</span></div>
+          <span class="pill">required</span>
+        </div>
+        <div class="deliverable">
+          <div class="num">4</div>
+          <div><strong>Calibration steps</strong><span>How to zero sensors and confirm readings before testing.</span></div>
+          <span class="pill">required</span>
+        </div>
+        <div class="deliverable">
+          <div class="num">5</div>
+          <div><strong>Final test report</strong><span>Results, failures, photos, and design recommendations.</span></div>
+          <span class="pill">required</span>
+        </div>
+      </div>
+
+      <div style="margin-top:18px;display:flex;gap:10px;flex-wrap:wrap;">
+        <a class="pill primary" href="PASTE_GOOGLE_FORM_UPLOAD_LINK_HERE" target="_blank" rel="noopener">Upload work</a>
+        <a class="pill" href="PASTE_TEST_BENCH_BUILDING_FILE_LINK_HERE" target="_blank" rel="noopener">Download package</a>
+      </div>
+    </section>
+  </main>
 </div>
 
+<footer class="feedback">
+  <span>feedback stays visible on every page</span>
+  <a href="mailto:elizabeth@universallimbs.com?cc=ana@universallimbs.com,saja@universallimbs.com,maria@universallimbs.com,nicole@universallimbs.com,sahitya@universallimbs.com&subject=Test%20Rig%20Page%20Feedback&body=Hi team,%0D%0A%0D%0AFeedback for the test rig page:%0D%0A%0D%0APage/section:%0D%0AIssue or suggestion:%0D%0APriority:%0D%0A%0D%0AThank you.">send feedback</a>
+</footer>
+
 <script>
-const landing=document.getElementById('landing');
-const app=document.getElementById('app');
-document.getElementById('enterApp').addEventListener('click',()=>{landing.style.display='none';app.classList.add('active');});
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const id = btn.dataset.panel;
+    document.querySelectorAll('.tab-btn').forEach(x => x.classList.remove('active'));
+    document.querySelectorAll('.panel').forEach(x => x.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById(id).classList.add('active');
+  });
+});
 
-function activateView(id){
-  document.querySelectorAll('.nav button').forEach(b=>b.classList.toggle('active',b.dataset.view===id));
-  document.querySelectorAll('.view').forEach(v=>v.classList.toggle('active',v.id===id));
-}
-document.querySelectorAll('.nav button').forEach(b=>b.addEventListener('click',()=>activateView(b.dataset.view)));
-document.querySelectorAll('[data-jump]').forEach(b=>b.addEventListener('click',()=>activateView(b.dataset.jump)));
-
-document.querySelectorAll('.year').forEach(b=>b.addEventListener('click',()=>{
-  document.querySelectorAll('.year').forEach(x=>x.classList.remove('active'));
-  b.classList.add('active');
-  document.querySelector('.top-year').textContent=b.dataset.year==='1'?'2026':'2027';
-}));
-
-document.querySelectorAll('.time-tab').forEach(b=>b.addEventListener('click',()=>{
-  document.querySelectorAll('.time-tab').forEach(x=>x.classList.remove('active'));
-  document.querySelectorAll('.goal-panel').forEach(x=>x.classList.remove('active'));
-  b.classList.add('active');
-  document.getElementById('goal-'+b.dataset.goal).classList.add('active');
-}));
-
-document.querySelectorAll('.resource-tab').forEach(b=>b.addEventListener('click',()=>{
-  document.querySelectorAll('.resource-tab').forEach(x=>x.classList.remove('active'));
-  document.querySelectorAll('.resource-panel').forEach(x=>x.classList.remove('active'));
-  b.classList.add('active');
-  document.getElementById('res-'+b.dataset.resource).classList.add('active');
-}));
-
-const slides=[...document.querySelectorAll('.update-slide')];
-const dotsBox=document.getElementById('updateDots');
-let slideIndex=0;
-slides.forEach((_,i)=>{const dot=document.createElement('button');dot.className='update-dot'+(i===0?' active':'');dot.type='button';dot.addEventListener('click',()=>showSlide(i));dotsBox.appendChild(dot);});
-function showSlide(i){slideIndex=(i+slides.length)%slides.length;slides.forEach((s,n)=>s.classList.toggle('active',n===slideIndex));document.querySelectorAll('.update-dot').forEach((d,n)=>d.classList.toggle('active',n===slideIndex));}
-document.getElementById('prevUpdate').addEventListener('click',()=>showSlide(slideIndex-1));
-document.getElementById('nextUpdate').addEventListener('click',()=>showSlide(slideIndex+1));
-setInterval(()=>showSlide(slideIndex+1),9000);
-
-const modal=document.getElementById('visualModal');
-const modalTitle=document.getElementById('modalTitle');
-const modalImg=document.getElementById('modalImg');
-const modalText=document.getElementById('modalText');
-document.querySelectorAll('.visual-dot').forEach(dot=>dot.addEventListener('click',()=>{modalTitle.textContent=dot.dataset.modalTitle;modalImg.src=dot.dataset.modalImg;modalText.textContent=dot.dataset.modalText;modal.classList.add('active');modal.setAttribute('aria-hidden','false');}));
-document.getElementById('modalClose').addEventListener('click',()=>{modal.classList.remove('active');modal.setAttribute('aria-hidden','true');});
-modal.addEventListener('click',e=>{if(e.target===modal){modal.classList.remove('active');modal.setAttribute('aria-hidden','true');}});
-
-document.querySelectorAll('.mode-btn').forEach(btn=>{
-  btn.addEventListener('click',()=>{
-    document.querySelectorAll('.mode-btn').forEach(x=>x.classList.remove('active'));
+document.querySelectorAll('.mode-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.mode-btn').forEach(x => x.classList.remove('active'));
     btn.classList.add('active');
     document.body.dataset.theme = btn.dataset.themeChoice;
   });
 });
 
-document.querySelectorAll('.lang-btn').forEach(btn=>{
-  btn.addEventListener('click',()=>{
+document.querySelectorAll('.lang-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
     const lang = btn.dataset.lang;
-    document.querySelectorAll('.lang-btn').forEach(x=>x.classList.remove('active'));
+    document.querySelectorAll('.lang-btn').forEach(x => x.classList.remove('active'));
     btn.classList.add('active');
-    document.querySelectorAll('.lang-block').forEach(block=>{
+    document.querySelectorAll('.lang-block').forEach(block => {
       block.classList.toggle('active', block.dataset.langBlock === lang);
     });
   });
 });
-
 </script>
 </body>
 </html>
