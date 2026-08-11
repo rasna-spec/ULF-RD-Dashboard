@@ -799,6 +799,69 @@ a:focus-visible {
     flex-direction:column;
   }
 }
+
+/* V18 — expanded project summary */
+.project-summary p {
+  margin:0 0 10px !important;
+  color:var(--muted);
+  line-height:1.65;
+}
+
+.project-summary p:last-of-type {
+  margin-bottom:0 !important;
+}
+
+.last-updated {
+  margin-top:14px;
+  padding-top:12px;
+  border-top:1px solid var(--line);
+  color:var(--quiet);
+  font-size:12px;
+}
+
+
+/* V19 — curved card borders */
+.project-summary,
+.team-strip,
+.carousel,
+.quick-card,
+.folder-card,
+.simple-folder,
+.resource-list,
+.portal-preview,
+.timeline,
+.modal-card {
+  border-radius:18px !important;
+  overflow:hidden;
+}
+
+.team-member {
+  border-radius:16px !important;
+}
+
+.info-tip {
+  border-radius:14px !important;
+}
+
+.folder-icon {
+  border-radius:4px !important;
+}
+
+.carousel-btn,
+.visual-dot,
+.update-dot,
+.info-dot,
+.team-photo {
+  border-radius:999px !important;
+}
+
+/* soften inner card edges */
+.update-line:last-child,
+.resource-row:last-child,
+.timeline-row:last-child {
+  border-bottom:0;
+}
+
 </style>
 </head>
 
@@ -837,7 +900,19 @@ a:focus-visible {
 
         <section class="project-summary">
           <h2>Project summary</h2>
-          <p>Child-first body-powered prosthetic hand. Current focus: lock MVP direction, survey feedback, and test-rig handoff.</p>
+          <p>
+            A low-cost, repairable, 3D-printable pediatric prosthetic hand for children aged 6–12 affected by war, eventually implemented in Egypt for Gazan evacuees.
+          </p>
+          <p>
+            The MVP focuses on safe, repeatable, articulated lateral pinch to help a child hold, stabilise and interact with light daily objects — not heavy lifting, adult-level grip strength or full independent finger control.
+          </p>
+          <p>
+            The mechanism draws on tendon-driven underactuated hand research while avoiding unnecessary complexity, targeting light daily tasks such as holding a card, paper, small toy, utensil handle or lightweight object.
+          </p>
+          <p>
+            The design prioritises repeatability, comfort, repairability and safe use in hot, resource-limited settings: lightweight, durable, affordable and clinically reviewed, with precision coming from thumb–index alignment, guided tendon routing, mechanical stops, soft contact pads and adjustable tension rather than motors.
+          </p>
+          <div class="last-updated">Last updated on July 15th, 2026</div>
         </section>
 
         <section class="team-strip">
