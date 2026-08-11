@@ -43,8 +43,19 @@ button,a{font:inherit;color:inherit}
 .brand .bar{height:20px;width:1px;background:var(--line)}
 .brand .sub{color:var(--muted);letter-spacing:.12em;text-transform:lowercase}
 .years{display:flex;gap:18px;justify-self:center}
-.year{appearance:none;border:0;background:transparent;color:var(--muted);padding:0 0 8px;border-bottom:1px solid transparent;cursor:pointer;letter-spacing:.18em}
-.year.active{color:var(--ink);border-bottom-color:var(--yellow)}
+.year {
+  background: transparent !important;
+  border: 0 !important;
+  border-bottom: 1px solid transparent !important;
+  border-radius: 0 !important;
+  padding: 0 0 8px !important;
+}
+.year.active {
+  background: transparent !important;
+  color: var(--ink) !important;
+  border-bottom: 1px solid var(--warn) !important;
+  border-radius: 0 !important;
+}
 .top-year{justify-self:end;font-weight:700}
 .layout{position:relative;z-index:2;display:grid;grid-template-columns:220px minmax(0,1fr);gap:40px;margin-top:80px;min-height:710px}
 .side{border-right:1px solid var(--line);padding:42px 0 42px 14px}
