@@ -506,9 +506,244 @@ select {
   letter-spacing:.04em !important;
 }
 
+
+/* V9 — simple dashboard additions */
+body[data-theme="light"] {
+  --bg:#f6f3fa;
+  --ink:#181a1c;
+  --muted:rgba(24,26,28,.62);
+  --quiet:rgba(24,26,28,.38);
+  --line:rgba(24,26,28,.14);
+  --line2:rgba(24,26,28,.25);
+  --panel:rgba(24,26,28,.035);
+  --panel2:rgba(24,26,28,.07);
+}
+
+body[data-theme="light"],
+body[data-theme="light"] .landing {
+  background:#f6f3fa !important;
+  color:#181a1c !important;
+}
+
+body[data-theme="light"] body,
+body[data-theme="light"] .shell {
+  background:#f6f3fa !important;
+}
+
+body[data-theme="light"] .modal-card {
+  background:#f6f3fa !important;
+}
+
+body[data-theme="light"] .feedback {
+  background:rgba(246,243,250,.92) !important;
+}
+
+.mode-toggle,
+.lang-toggle {
+  display:flex;
+  gap:12px;
+  align-items:center;
+  justify-self:end;
+}
+
+.mode-btn,
+.lang-btn {
+  appearance:none;
+  border:0;
+  border-bottom:1px solid transparent;
+  background:transparent;
+  color:var(--muted);
+  cursor:pointer;
+  padding:0 0 6px;
+  font-size:12px !important;
+}
+
+.mode-btn.active,
+.lang-btn.active {
+  color:var(--ink);
+  border-bottom-color:var(--yellow);
+}
+
+.top-actions {
+  justify-self:end;
+  display:flex;
+  align-items:center;
+  justify-content:flex-end;
+  gap:18px;
+  flex-wrap:wrap;
+}
+
+.project-summary {
+  border:1px solid var(--line);
+  background:var(--panel);
+  padding:18px;
+  margin-bottom:18px;
+}
+
+.project-summary h2 {
+  margin:0 0 8px;
+  font-size:12px !important;
+  font-weight:600 !important;
+}
+
+.project-summary p {
+  margin:0;
+  color:var(--muted);
+  line-height:1.55;
+}
+
+.team-strip {
+  border:1px solid var(--line);
+  background:var(--panel);
+  padding:18px;
+  margin-bottom:18px;
+}
+
+.team-strip h2 {
+  margin:0 0 14px;
+  font-size:12px !important;
+  font-weight:600 !important;
+}
+
+.team-grid {
+  display:grid;
+  grid-template-columns:repeat(5,minmax(0,1fr));
+  gap:12px;
+}
+
+.team-member {
+  border:1px solid var(--line);
+  padding:12px;
+  min-height:116px;
+  position:relative;
+}
+
+.team-photo {
+  width:34px;
+  height:34px;
+  border-radius:999px;
+  background:var(--yellow);
+  color:var(--bg);
+  display:grid;
+  place-items:center;
+  font-weight:600;
+  margin-bottom:10px;
+  overflow:hidden;
+}
+
+.team-photo img {
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+}
+
+.team-name {
+  font-weight:600;
+  margin-bottom:4px;
+}
+
+.team-role {
+  color:var(--muted);
+  line-height:1.4;
+}
+
+.info-dot {
+  position:absolute;
+  top:10px;
+  right:10px;
+  width:18px;
+  height:18px;
+  border:1px solid var(--line2);
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  color:var(--muted);
+  font-size:11px !important;
+  cursor:help;
+}
+
+.info-dot:hover .info-tip {
+  opacity:1;
+  transform:translateY(0);
+  pointer-events:auto;
+}
+
+.info-tip {
+  position:absolute;
+  right:0;
+  top:24px;
+  z-index:5;
+  width:230px;
+  border:1px solid var(--line2);
+  background:var(--bg);
+  color:var(--ink);
+  padding:10px;
+  line-height:1.45;
+  opacity:0;
+  transform:translateY(4px);
+  pointer-events:none;
+  transition:.15s;
+  box-shadow:0 14px 28px rgba(0,0,0,.22);
+}
+
+/* Replace visual symbols with simple dots */
+.nav svg {
+  display:none !important;
+}
+
+.nav button {
+  gap:12px !important;
+}
+
+.nav button::before {
+  content:"";
+  width:7px;
+  height:7px;
+  border-radius:50%;
+  border:1px solid var(--line2);
+  background:transparent;
+  flex:none;
+}
+
+.nav button.active::before {
+  background:var(--yellow);
+  border-color:var(--yellow);
+}
+
+/* External portal language blocks */
+.lang-block {
+  display:none;
+}
+
+.lang-block.active {
+  display:block;
+}
+
+.portal-language {
+  display:flex;
+  justify-content:flex-end;
+  margin-bottom:18px;
+}
+
+@media(max-width:1050px){
+  .top-actions {
+    justify-self:start;
+  }
+  .team-grid {
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+}
+
+@media(max-width:620px){
+  .team-grid {
+    grid-template-columns:1fr;
+  }
+}
+
 </style>
 </head>
-<body>
+<body data-theme="dark">
 
 <section class="landing" id="landing">
   <div class="landing-card">
@@ -523,7 +758,13 @@ select {
     <header class="top">
       <div class="brand"><img class="logo" src="ul-logo.png" alt="Universal Limbs logo"><span class="brand-word">ULF</span><span class="bar"></span><span class="sub">r&amp;d dashboard</span></div>
       <div class="years"><button class="year active" type="button" data-year="1">Year 1</button><button class="year" type="button" data-year="2">Year 2</button></div>
-      <div class="top-year">2026</div>
+      <div class="top-actions">
+        <div class="mode-toggle" aria-label="Theme toggle">
+          <button class="mode-btn active" type="button" data-theme-choice="dark">Dark</button>
+          <button class="mode-btn" type="button" data-theme-choice="light">Light</button>
+        </div>
+        <div class="top-year">2026</div>
+      </div>
     </header>
 
     <section class="layout">
@@ -540,7 +781,48 @@ select {
       <section class="stage" aria-live="polite">
         <div id="dashboard" class="view active">
           <div class="kicker">dashboard</div><h1 class="title">R&amp;D command center</h1><div class="rule"></div>
-          <div class="dashboard-grid">
+          <section class="project-summary">
+              <h2>Project summary</h2>
+              <p>Child-first body-powered prosthetic hand. Current focus: lock MVP direction, survey feedback, and test-rig handoff.</p>
+            </section>
+
+            <section class="team-strip">
+              <h2>R&amp;D team</h2>
+              <div class="team-grid">
+                <article class="team-member">
+                  <div class="team-photo">R</div>
+                  <div class="team-name">Rasna</div>
+                  <div class="team-role">Founder / R&amp;D direction</div>
+                  <span class="info-dot">i<span class="info-tip">Owns project direction, priorities, partner alignment, and final decision flow.</span></span>
+                </article>
+                <article class="team-member">
+                  <div class="team-photo">S</div>
+                  <div class="team-name">Sahitya</div>
+                  <div class="team-role">Project manager</div>
+                  <span class="info-dot">i<span class="info-tip">Coordinates assignments, timelines, files, team follow-up, and external handoff.</span></span>
+                </article>
+                <article class="team-member">
+                  <div class="team-photo">S</div>
+                  <div class="team-name">Saja</div>
+                  <div class="team-role">Prosthetic / rehab lead</div>
+                  <span class="info-dot">i<span class="info-tip">Provides prosthetic, rehab, and clinical practicality feedback.</span></span>
+                </article>
+                <article class="team-member">
+                  <div class="team-photo">A</div>
+                  <div class="team-name">Ana</div>
+                  <div class="team-role">Finance</div>
+                  <span class="info-dot">i<span class="info-tip">Supports budget tracking, funding readiness, and financial documentation.</span></span>
+                </article>
+                <article class="team-member">
+                  <div class="team-photo">M</div>
+                  <div class="team-name">Maria</div>
+                  <div class="team-role">University liaison</div>
+                  <span class="info-dot">i<span class="info-tip">Supports university collaboration, partner communication, and student handoff.</span></span>
+                </article>
+              </div>
+            </section>
+
+            <div class="dashboard-grid">
             <section class="carousel" aria-label="Latest updates carousel">
               <div class="carousel-head"><div class="carousel-title">Latest updates</div><div class="carousel-controls"><button class="carousel-btn" type="button" id="prevUpdate">‹</button><button class="carousel-btn" type="button" id="nextUpdate">›</button></div></div>
               <article class="update-slide active">
@@ -633,13 +915,32 @@ select {
         </div>
 
         <div id="portal" class="view">
-          <div class="kicker">external portal</div><h1 class="title">Student entry point</h1><div class="rule"></div>
-          <div class="portal-preview"><img src="testbench-architecture.webp" alt="Automated test rig architecture preview"><div>Primary external deliverable: automated test bench building package.</div></div>
-          <section class="quick-cards">
-            <article class="quick-card"><div><h2>Current goal</h2><p>Build the test bench package that supports repeatable prosthetic-hand testing.</p></div></article>
-            <article class="quick-card"><div><h2>Upload</h2><p>Submit CAD files, build notes, screenshots, and questions.</p></div><div class="actions"><a class="pill primary" href="PASTE_GOOGLE_FORM_Upload_LINK_HERE" target="_blank" rel="noopener">upload</a></div></article>
-            <article class="quick-card"><div><h2>Downloads</h2><p>Open the test bench file and required reference documents.</p></div><div class="actions"><a class="pill primary" href="PASTE_TEST_BENCH_BUILDING_FILE_LINK_HERE" target="_blank" rel="noopener">download</a></div></article>
-          </section>
+          <div class="portal-language">
+            <div class="lang-toggle" aria-label="Language toggle">
+              <button class="lang-btn active" type="button" data-lang="en">English</button>
+              <button class="lang-btn" type="button" data-lang="pt">Português</button>
+            </div>
+          </div>
+
+          <div class="lang-block active" data-lang-block="en">
+            <div class="kicker">external portal</div><h1 class="title">Student entry point</h1><div class="rule"></div>
+            <div class="portal-preview"><img src="testbench-architecture.webp" alt="Automated test rig architecture preview"><div>Primary external deliverable: automated test bench building package.</div></div>
+            <section class="quick-cards">
+              <article class="quick-card"><div><h2>Current goal</h2><p>Build the test bench package for repeatable prosthetic-hand testing.</p></div></article>
+              <article class="quick-card"><div><h2>Upload</h2><p>Submit CAD files, build notes, screenshots, and questions.</p></div><div class="actions"><a class="pill primary" href="PASTE_GOOGLE_FORM_UPLOAD_LINK_HERE" target="_blank" rel="noopener">upload</a></div></article>
+              <article class="quick-card"><div><h2>Downloads</h2><p>Open the test bench file and required reference documents.</p></div><div class="actions"><a class="pill primary" href="PASTE_TEST_BENCH_BUILDING_FILE_LINK_HERE" target="_blank" rel="noopener">download</a></div></article>
+            </section>
+          </div>
+
+          <div class="lang-block" data-lang-block="pt">
+            <div class="kicker">portal externo</div><h1 class="title">Entrada do estudante</h1><div class="rule"></div>
+            <div class="portal-preview"><img src="testbench-architecture.webp" alt="Prévia da arquitetura da bancada de teste"><div>Entrega principal: pacote de construção da bancada de teste automatizada.</div></div>
+            <section class="quick-cards">
+              <article class="quick-card"><div><h2>Objetivo atual</h2><p>Construir o pacote da bancada de teste para ensaios repetíveis da mão protética.</p></div></article>
+              <article class="quick-card"><div><h2>Enviar</h2><p>Envie arquivos CAD, notas de construção, imagens e perguntas.</p></div><div class="actions"><a class="pill primary" href="PASTE_GOOGLE_FORM_UPLOAD_LINK_HERE" target="_blank" rel="noopener">enviar</a></div></article>
+              <article class="quick-card"><div><h2>Downloads</h2><p>Abra o arquivo da bancada de teste e os documentos de referência.</p></div><div class="actions"><a class="pill primary" href="PASTE_TEST_BENCH_BUILDING_FILE_LINK_HERE" target="_blank" rel="noopener">baixar</a></div></article>
+            </section>
+          </div>
         </div>
       </section>
     </section>
@@ -704,6 +1005,26 @@ const modalText=document.getElementById('modalText');
 document.querySelectorAll('.visual-dot').forEach(dot=>dot.addEventListener('click',()=>{modalTitle.textContent=dot.dataset.modalTitle;modalImg.src=dot.dataset.modalImg;modalText.textContent=dot.dataset.modalText;modal.classList.add('active');modal.setAttribute('aria-hidden','false');}));
 document.getElementById('modalClose').addEventListener('click',()=>{modal.classList.remove('active');modal.setAttribute('aria-hidden','true');});
 modal.addEventListener('click',e=>{if(e.target===modal){modal.classList.remove('active');modal.setAttribute('aria-hidden','true');}});
+
+document.querySelectorAll('.mode-btn').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('.mode-btn').forEach(x=>x.classList.remove('active'));
+    btn.classList.add('active');
+    document.body.dataset.theme = btn.dataset.themeChoice;
+  });
+});
+
+document.querySelectorAll('.lang-btn').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    const lang = btn.dataset.lang;
+    document.querySelectorAll('.lang-btn').forEach(x=>x.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.lang-block').forEach(block=>{
+      block.classList.toggle('active', block.dataset.langBlock === lang);
+    });
+  });
+});
+
 </script>
 </body>
 </html>
