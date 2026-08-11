@@ -878,6 +878,90 @@ body.app-open .feedback {
   }
 }
 
+
+/* V14 — Google Sites embed fix: no landing scroll, click opens app */
+html,
+body {
+  width:100% !important;
+  min-height:100% !important;
+  margin:0 !important;
+  padding:0 !important;
+}
+
+body.landing-open {
+  height:100vh !important;
+  overflow:hidden !important;
+  background:#000 !important;
+}
+
+body.app-open {
+  height:auto !important;
+  overflow:auto !important;
+}
+
+body.landing-open #landing {
+  position:fixed !important;
+  inset:0 !important;
+  z-index:9999 !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  width:100vw !important;
+  height:100vh !important;
+  min-height:100vh !important;
+  padding:0 !important;
+  margin:0 !important;
+  background:#000 !important;
+  overflow:hidden !important;
+}
+
+#landing .landing-card {
+  position:absolute !important;
+  left:50% !important;
+  top:50% !important;
+  transform:translate(-50%, -50%) !important;
+  width:320px !important;
+  max-width:90vw !important;
+  display:flex !important;
+  flex-direction:column !important;
+  align-items:center !important;
+  justify-content:center !important;
+  text-align:center !important;
+}
+
+#enterApp {
+  cursor:pointer !important;
+  pointer-events:auto !important;
+  z-index:10000 !important;
+}
+
+body.landing-open #app {
+  display:none !important;
+}
+
+body.app-open #landing {
+  display:none !important;
+}
+
+body.app-open #app {
+  display:block !important;
+}
+
+body.landing-open .feedback {
+  display:none !important;
+}
+
+body.app-open .feedback {
+  display:flex !important;
+}
+
+/* Prevent feedback footer from creating landing scroll */
+body.landing-open footer,
+body.landing-open .feedback {
+  visibility:hidden !important;
+  pointer-events:none !important;
+}
+
 </style>
 </head>
 <body data-theme="dark" class="landing-open">
@@ -886,7 +970,7 @@ body.app-open .feedback {
   <div class="landing-card">
     <img class="logo large" src="ul-logo.png" alt="Universal Limbs logo">
     <div class="landing-title">R&amp;D home</div>
-    <button class="landing-enter" type="button" id="enterApp" onclick="enterDashboard()">Click here</button>
+    <button class="landing-enter" type="button" id="enterApp" onclick="enterDashboard(event)">Click here</button>
   </div>
 </section>
 
@@ -1160,6 +1244,42 @@ document.querySelectorAll('.lang-btn').forEach(btn=>{
       block.classList.toggle('active', block.dataset.langBlock === lang);
     });
   });
+});
+
+
+/* V14 click handler */
+function enterDashboard(event) {
+  if (event) {
+    event.preventDefault();
+    event.stopPropagation();
+  }
+
+  var landing = document.getElementById('landing');
+  var app = document.getElementById('app');
+
+  if (landing) {
+    landing.style.display = 'none';
+  }
+
+  if (app) {
+    app.style.display = 'block';
+    app.classList.add('active');
+  }
+
+  document.body.classList.remove('landing-open');
+  document.body.classList.add('app-open');
+  document.documentElement.style.overflow = 'auto';
+  document.body.style.overflow = 'auto';
+  window.scrollTo(0, 0);
+
+  return false;
+}
+
+window.addEventListener('DOMContentLoaded', function () {
+  var enterButton = document.getElementById('enterApp');
+  if (enterButton) {
+    enterButton.onclick = enterDashboard;
+  }
 });
 
 </script>
