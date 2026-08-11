@@ -574,12 +574,144 @@ button,a{font:inherit;color:inherit}
   white-space:nowrap;
 }
 
+
+/* Updated render treatment */
+.prosthetic-render{
+  position:relative;
+  z-index:2;
+  width:78%;
+  max-width:540px;
+  object-fit:contain;
+  filter:grayscale(1) contrast(1.08) brightness(.94);
+  transform-origin:center center;
+  animation:slowFloat 8s ease-in-out infinite;
+}
+
+.render-placeholder{
+  position:relative;
+  z-index:5;
+  margin-top:18px;
+  color:var(--muted);
+  font-size:13px;
+  letter-spacing:.08em;
+  text-transform:lowercase;
+  text-align:center;
+}
+
+.render-placeholder .cube-icon{
+  display:block;
+  margin:0 auto 9px;
+  width:24px;
+  height:24px;
+  opacity:.82;
+}
+
+.render-note{
+  margin-top:10px;
+  color:var(--quiet);
+  font-size:11px;
+  letter-spacing:.06em;
+  text-transform:none;
+  line-height:1.45;
+  max-width:520px;
+}
+
+.hold-note{
+  margin-top:16px;
+  max-width:560px;
+  padding:14px 16px;
+  border-radius:12px;
+  border:1px solid rgba(255, 190, 92, .48);
+  background:rgba(255, 190, 92, .12);
+  color:#ffd792;
+  font-family:"Inter", Arial, sans-serif;
+  font-size:13px;
+  line-height:1.45;
+  text-align:left;
+  box-shadow:0 8px 20px rgba(0,0,0,.18);
+}
+
+.hold-note strong{
+  display:block;
+  margin-bottom:5px;
+  color:#fff2d5;
+  font-size:12px;
+  letter-spacing:.04em;
+  text-transform:uppercase;
+}
+
 @media(max-width:1050px){
   .goal-panel{
     border:1px solid var(--line);
     border-radius:18px;
     padding:24px;
   }
+}
+
+
+/* Updated render treatment */
+.prosthetic-render{
+  position:relative;
+  z-index:2;
+  width:78%;
+  max-width:540px;
+  object-fit:contain;
+  filter:grayscale(1) contrast(1.08) brightness(.94);
+  transform-origin:center center;
+  animation:slowFloat 8s ease-in-out infinite;
+}
+
+.render-placeholder{
+  position:relative;
+  z-index:5;
+  margin-top:18px;
+  color:var(--muted);
+  font-size:13px;
+  letter-spacing:.08em;
+  text-transform:lowercase;
+  text-align:center;
+}
+
+.render-placeholder .cube-icon{
+  display:block;
+  margin:0 auto 9px;
+  width:24px;
+  height:24px;
+  opacity:.82;
+}
+
+.render-note{
+  margin-top:10px;
+  color:var(--quiet);
+  font-size:11px;
+  letter-spacing:.06em;
+  text-transform:none;
+  line-height:1.45;
+  max-width:520px;
+}
+
+.hold-note{
+  margin-top:16px;
+  max-width:560px;
+  padding:14px 16px;
+  border-radius:12px;
+  border:1px solid rgba(255, 190, 92, .48);
+  background:rgba(255, 190, 92, .12);
+  color:#ffd792;
+  font-family:"Inter", Arial, sans-serif;
+  font-size:13px;
+  line-height:1.45;
+  text-align:left;
+  box-shadow:0 8px 20px rgba(0,0,0,.18);
+}
+
+.hold-note strong{
+  display:block;
+  margin-bottom:5px;
+  color:#fff2d5;
+  font-size:12px;
+  letter-spacing:.04em;
+  text-transform:uppercase;
 }
 
 @media(max-width:1050px){
@@ -730,13 +862,21 @@ button,a{font:inherit;color:inherit}
         </picture>
       </div>
 
-      <div class="video-caption">
+      
+      <div class="render-placeholder">
         <svg class="cube-icon" viewBox="0 0 36 36" aria-hidden="true">
           <path d="M18 3l13 7.5v15L18 33 5 25.5v-15L18 3z" fill="none" stroke="currentColor" stroke-width="1.4"/>
           <path d="M5 10.5L18 18l13-7.5M18 18v15" fill="none" stroke="currentColor" stroke-width="1.4"/>
         </svg>
-        simulation preview
-        <div class="casimir-note">simulation by former engineer Casimir</div>
+        placeholder concept render
+        <div class="render-note">
+          This is a temporary placeholder visual and not the final product. A true interactive 3D rotation view can be added once a web-ready 3D model file (.glb / .gltf) is available.
+        </div>
+
+        <div class="hold-note">
+          <strong>Current design status</strong>
+          Based on prosthetist feedback, this concept has been assessed as mechanically complex for the intended application. Development of this architecture is currently on hold while the team reviews simpler, more clinically practical alternatives.
+        </div>
       </div>
     </section>
 
@@ -844,6 +984,22 @@ document.querySelectorAll('.side-nav .nav-item').forEach(function(item) {
     item.classList.add('active');
   });
 });
+
+
+/*
+  OPTIONAL INTERACTIVE 3D MODEL SETUP
+  -----------------------------------
+  If you later get a web-ready 3D file (recommended: .glb or .gltf),
+  you can replace the static image block with a <model-viewer> element
+  to let users rotate the hand interactively.
+
+  Example files:
+  - prosthetic-hand.glb
+  - ulf-prosthetic-render.webp
+  - ulf-prosthetic-render.png
+
+  A flat PNG image cannot rotate interactively by itself.
+*/
 
 </script>
 </body>
