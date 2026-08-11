@@ -191,7 +191,7 @@ button,a{font:inherit;color:inherit}
   min-height:650px;
 }
 
-.video-frame{
+.render-frame{
   position:relative;
   width:min(580px,100%);
   aspect-ratio:3/4;
@@ -200,7 +200,7 @@ button,a{font:inherit;color:inherit}
   filter:drop-shadow(0 30px 34px rgba(0,0,0,.45));
 }
 
-.video-frame:before{
+.render-frame:before{
   content:"";
   position:absolute;
   left:50%;
@@ -214,7 +214,7 @@ button,a{font:inherit;color:inherit}
   z-index:1;
 }
 
-.video-frame:after{
+.render-frame:after{
   content:"";
   position:absolute;
   inset:7% 8% 11%;
@@ -249,6 +249,65 @@ button,a{font:inherit;color:inherit}
   filter:grayscale(1) contrast(1.08) brightness(.92);
   opacity:.92;
   display:none;
+}
+
+
+/* Static lightweight render replacement for GitHub Pages */
+.render-frame{
+  position:relative;
+  width:min(680px,100%);
+  aspect-ratio:16/10;
+  display:grid;
+  place-items:center;
+  filter:drop-shadow(0 30px 34px rgba(0,0,0,.45));
+}
+
+.render-frame:before{
+  content:"";
+  position:absolute;
+  left:50%;
+  bottom:4%;
+  width:78%;
+  height:30%;
+  transform:translateX(-50%);
+  border:1px solid rgba(246,243,250,.22);
+  border-radius:50%;
+  opacity:.72;
+  z-index:1;
+}
+
+.render-frame:after{
+  content:"";
+  position:absolute;
+  inset:8% 2% 8%;
+  background:
+    radial-gradient(circle at 50% 45%, rgba(246,243,250,.18), transparent 44%),
+    radial-gradient(circle at 50% 80%, rgba(246,243,250,.08), transparent 42%);
+  border-radius:34px;
+  filter:blur(20px);
+  opacity:.62;
+  z-index:0;
+}
+
+.prosthetic-render{
+  position:relative;
+  z-index:2;
+  width:112%;
+  max-width:760px;
+  object-fit:contain;
+  filter:grayscale(1) contrast(1.08) brightness(.94);
+  transform-origin:center center;
+  animation:slowFloat 8s ease-in-out infinite;
+}
+
+@keyframes slowFloat{
+  0%,100%{ transform:translateY(0) rotate(-1.2deg) scale(1); }
+  50%{ transform:translateY(-10px) rotate(1.2deg) scale(1.018); }
+}
+
+.render-video,
+.poster-fallback{
+  display:none!important;
 }
 
 .video-caption{
@@ -502,11 +561,11 @@ button,a{font:inherit;color:inherit}
     </aside>
 
     <section class="center-stage" aria-label="Simulation render preview">
-      <div class="video-frame">
-        <video class="render-video" autoplay muted loop playsinline preload="metadata" poster="ulf-product-demo-poster.jpg">
-          <source src="ulf-product-demo.mp4" type="video/mp4">
-        </video>
-        <img class="poster-fallback" src="ulf-product-demo-poster.jpg" alt="Simulation preview fallback">
+      <div class="render-frame">
+        <picture>
+          <source srcset="ulf-prosthetic-render.webp" type="image/webp">
+          <img class="prosthetic-render" src="ulf-prosthetic-render.png" alt="3D render of the Universal Limbs prosthetic hand simulation">
+        </picture>
       </div>
 
       <div class="video-caption">
@@ -572,16 +631,14 @@ button,a{font:inherit;color:inherit}
 
 <script>
 /*
-  VIDEO SETUP FOR GITHUB / GOOGLE SITES
+  IMAGE SETUP FOR GITHUB / GOOGLE SITES
 
-  This page expects the video file to sit beside this HTML file:
-  - ulf-product-demo.mp4
+  Upload these files beside this HTML file:
+  - ulf-prosthetic-render.webp
+  - ulf-prosthetic-render.png
 
-  Optional fallback poster:
-  - ulf-product-demo-poster.jpg
-
-  If you host the video somewhere else, replace this line in the HTML:
-  <source src="ulf-product-demo.mp4" type="video/mp4">
+  The WebP is very small and loads first. PNG is the fallback.
+  This avoids GitHub's 25MB upload limit for the MP4 video.
 */
 </script>
 </body>
