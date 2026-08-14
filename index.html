@@ -33,8 +33,23 @@ body {
   font-size:12px;
   line-height:1.55;
   overflow-x:hidden;
+
+  /* Keep vertical scrolling functional, but hide the large page scrollbar
+     when this dashboard is embedded inside Google Sites. */
+  overflow-y:auto;
+  scrollbar-width:none;        /* Firefox */
+  -ms-overflow-style:none;     /* older Microsoft browsers */
+
   -webkit-font-smoothing:antialiased;
   text-rendering:optimizeLegibility;
+}
+
+/* Chrome, Edge, Safari */
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  width:0;
+  height:0;
+  display:none;
 }
 
 body {
@@ -1650,7 +1665,7 @@ a:focus-visible {
         <button class="active" type="button" data-view="dashboard"><span>Dashboard</span></button>
         <button type="button" data-view="goal"><span>Goal</span></button>
         <button type="button" data-view="resources"><span>Resources</span></button>
-        <button type="button" data-view="portal"><span>External portal</span></button>
+        <button type="button" data-view="portal"><span>University collaboration</span></button>
       </nav>
         <div class="side-team"><div class="side-team-title">Team</div>
           <div class="side-team-row">
