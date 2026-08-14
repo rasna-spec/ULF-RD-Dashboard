@@ -11,6 +11,7 @@
 </head>
 
 <body>
+<template id="legacy-dashboard">
 <div class="shell">
   <header class="top">
     <div class="brand">
@@ -279,9 +280,7 @@
         </section>
       </section>
 
-      <section id="goal" class="view">
-        <div id="asana-react-root"></div>
-      </section>
+      <section id="goal" class="view"></section>
 
       <section id="resources" class="view">
         <section class="resource-simple-section">
@@ -462,8 +461,9 @@
   </div>
 </div>
 
-<script type="module" src="assets/js/app.js"></script>
+</body>
+</template>
+<div id="asana-react-root"></div>
 <script type="module" src="/src/main.tsx"></script>
-
 </body>
 </html>

@@ -1,5 +1,6 @@
 import express from 'express';
 import path from 'path';
+import fs from 'fs';
 import { fileURLToPath } from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -8,16 +9,20 @@ const __dirname = path.dirname(__filename);
 const app = express();
 const PORT = 3000;
 const HOST = '0.0.0.0';
+const distDirectory = path.join(__dirname, 'dist');
 
-// Serve static files from root directory
-app.use(express.static(__dirname));
+if (!fs.existsSync(distDirectory)) {
+  console.error('Missing production build. Run "npm run build" before starting the server.');
+  process.exit(1);
+}
 
-// Route for root dashboard
+app.use(express.static(distDirectory));
+app.use('/assets', express.static(path.join(__dirname, 'assets')));
+
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'index.html'));
+  res.sendFile(path.join(distDirectory, 'index.html'));
 });
 
-// Route for survey
 app.get('/survey', (req, res) => {
   res.sendFile(path.join(__dirname, 'prosthetic-user-survey.html'));
 });

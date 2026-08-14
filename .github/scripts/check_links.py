@@ -57,7 +57,9 @@ def main() -> int:
             if url.startswith("PASTE_") or url == "#":
                 continue
 
-            target_path = (html_file.parent / url.split("#")[0].split("?")[0]).resolve()
+            link_path = url.split("#")[0].split("?")[0]
+            target_path = (ROOT / link_path.lstrip("/")) if link_path.startswith("/") else (html_file.parent / link_path)
+            target_path = target_path.resolve()
             if not target_path.exists():
                 broken.append((html_file.name, url))
 
