@@ -33,6 +33,11 @@ git fetch origin
 git checkout develop   # or main
 python3 -m http.server 8000
 ```
+or
+
+```
+git checkout develop && python3 -m http.server 8000
+```
 
 No `npm install`, `pip install`, or environment variables are required.
 
