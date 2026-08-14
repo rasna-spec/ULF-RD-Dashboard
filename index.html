@@ -6,12 +6,17 @@
 <title>Universal Limbs — R&D Dashboard</title>
 
 <link rel="stylesheet" href="assets/css/dashboard.css">
+<style>
+  .react-ready #legacy-dashboard {
+    display: none;
+  }
+</style>
 <script src="https://accounts.google.com/gsi/client" async defer></script>
 <script src="https://apis.google.com/js/api.js" async defer></script>
 </head>
 
 <body>
-<template id="legacy-dashboard">
+<div id="legacy-dashboard">
 <div class="shell">
   <header class="top">
     <div class="brand">
@@ -461,8 +466,8 @@
   </div>
 </div>
 
-</body>
-</template>
+<script type="module" src="assets/js/app.js"></script>
+</div>
 <div id="asana-react-root"></div>
 <script type="module" src="/src/main.tsx"></script>
 </body>
