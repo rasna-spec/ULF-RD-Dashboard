@@ -6,6 +6,8 @@
 <title>Universal Limbs — R&D Dashboard</title>
 
 <link rel="stylesheet" href="assets/css/dashboard.css">
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+<script src="https://apis.google.com/js/api.js" async defer></script>
 </head>
 
 <body>
@@ -278,45 +280,7 @@
       </section>
 
       <section id="goal" class="view">
-        <div class="goal-top">
-          <div>
-            <h1 class="title">Design direction</h1>
-            <div class="owner-tag">Owner: Rasna Mantha</div>
-            <div class="rule"></div>
-          </div>
-
-          <div class="goal-top-actions">
-            <button class="edit-milestones-btn" id="editMilestonesBtn" type="button">Edit milestones</button>
-            <div class="time-tabs">
-              <button class="time-tab" data-goal="week" type="button">This week</button>
-              <button class="time-tab" data-goal="month" type="button">This month</button>
-              <button class="time-tab active" data-goal="year" type="button">The year</button>
-            </div>
-          </div>
-        </div>
-
-        <div id="goal-week" class="goal-panel"><div class="goal-summary">This week: confirm survey feedback path and prepare the test bench handoff.</div><div id="gantt-week" class="timeline-container" aria-live="polite"></div></div>
-        <div id="goal-month" class="goal-panel"><div class="goal-summary">This month: lock the design requirement package, confirm survey review, and define what the university students should build first.</div><div id="gantt-month" class="timeline-container" aria-live="polite"></div></div>
-
-        <div id="goal-year" class="goal-panel active">
-          <div class="goal-summary">Click the yellow milestone dots to view the inspiration visual. Visuals are references only.</div>
-          <div id="gantt-year" class="timeline-container" aria-live="polite"></div>
-          <div class="visual-hint">● yellow dot = click to see visual</div>
-        </div>
-
-        <div class="folder-strip">
-          <article class="simple-folder">
-            <div class="folder-icon"></div>
-            <h3>Survey</h3>
-            <div class="actions"><a class="pill primary" href="prosthetic-user-survey.html" target="_blank" rel="noopener">Open</a></div>
-          </article>
-
-          <article class="simple-folder">
-            <div class="folder-icon"></div>
-            <h3>Budget</h3>
-            <div class="actions"><a class="pill primary" href="https://docs.google.com/spreadsheets/d/1GkG42z72UtrJ5_tYGXVXwijDe_5T6Ae6/edit?usp=drivesdk&ouid=101706660835918185079&rtpof=true&sd=true&urp=gmail_link" target="_blank" rel="noopener">Open</a></div>
-          </article>
-        </div>
+        <div id="asana-react-root"></div>
       </section>
 
       <section id="resources" class="view">
@@ -498,7 +462,8 @@
   </div>
 </div>
 
-<script src="assets/js/app.js"></script>
+<script type="module" src="assets/js/app.js"></script>
+<script type="module" src="/src/main.tsx"></script>
 
 </body>
 </html>

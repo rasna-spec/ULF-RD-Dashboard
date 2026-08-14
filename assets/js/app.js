@@ -243,7 +243,7 @@ function populateEditor() {
   });
 }
 
-document.getElementById('editMilestonesBtn').addEventListener('click', () => {
+const editBtn = document.getElementById('editMilestonesBtn'); if (editBtn) editBtn.addEventListener('click', () => {
   activeMilestoneTab = 0;
   populateEditor();
   milestoneEditorModal.classList.add('active');
