@@ -5,18 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Universal Limbs — R&D Dashboard</title>
 
-<link rel="stylesheet" href="assets/css/dashboard.css">
-<style>
-  .react-ready #legacy-dashboard {
-    display: none;
-  }
-</style>
+<link rel="stylesheet" href="assets/css/dashboard.css?v=20260815">
 <script src="https://accounts.google.com/gsi/client" async defer></script>
 <script src="https://apis.google.com/js/api.js" async defer></script>
 </head>
 
 <body>
-<div id="legacy-dashboard">
 <div class="shell">
   <header class="top">
     <div class="brand">
@@ -367,12 +361,9 @@
 
       <section id="portal" class="view">
         <div class="portal-actions" style="display:flex; align-items:center; gap:10px;">
-          <a class="pill primary"
-             href="https://forms.gle/tH4d6Td7iYb9pXpb8"
-             target="_blank"
-             rel="noopener">
+          <button class="pill primary" id="openDeliverableForm" type="button">
             Submit deliverable
-          </a>
+          </button>
 
           <span class="info-dot"
                 style="position:relative; display:inline-grid; place-items:center; margin-left:0;">
@@ -509,6 +500,39 @@
 <script type="module" src="assets/js/app.js"></script>
 </div>
 <div id="asana-react-root"></div>
-<script type="module" src="/src/main.tsx"></script>
+
+<div class="modal" id="deliverableModal" aria-hidden="true">
+  <div class="modal-card editor-card">
+    <div class="modal-top"><strong>Submit deliverable</strong><button class="modal-close" type="button" id="deliverableClose">×</button></div>
+    <form id="deliverableForm" class="submission-form">
+      <label><span>Your name</span><input name="submitterName" required></label>
+      <label><span>University / organization</span><input name="organization" required></label>
+      <label><span>Task name</span><input name="taskName" required></label>
+      <label><span>What are you submitting?</span><select name="submissionType" required><option value="">Choose</option><option>Concept</option><option>Working file</option><option>Final file</option><option>Research or validation result</option><option>Other</option></select></label>
+      <label><span>Version</span><input name="version" placeholder="For example: v1.2" required></label>
+      <label><span>What changed?</span><textarea name="changes" rows="3" required></textarea></label>
+      <label><span>Send to reviewer</span>
+        <select name="recipientEmail" required>
+          <option value="">Select a reviewer</option>
+          <option value="saja-amro">Saja Amro - Prosthetist</option>
+          <option value="nadine-arar">Nadine Arar - Test Lead / Mentor</option>
+          <option value="maria">Maria - University Collaboration Lead</option>
+          <option value="walid">Walid - 3D CAD designer expert</option>
+          <option value="ganesh">Ganesh - 3D validator &amp; simulator</option>
+          <option value="nili">Nili - Product Success</option>
+          <option value="abhay">Abhay - Researcher</option>
+          <option value="matthew">Matthew - Concept artist</option>
+          <option value="other">Other</option>
+        </select>
+      </label>
+      <label id="otherReviewerField" hidden><span>Other reviewer email</span><input name="otherReviewerEmail" type="email" placeholder="reviewer@universallimbs.com"></label>
+      <label><span>Expected next steps</span><select name="nextSteps" required><option value="">Choose</option><option>Review</option><option>Revision required</option><option>Approve</option><option>Testing</option><option>Other</option></select></label>
+      <label><span>Upload your deliverable file</span><input name="deliverableFile" type="file" required accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.zip,.stl,.step,.stp,.png,.jpg,.jpeg" aria-describedby="fileHelp"><small id="fileHelp">Upload the working or final file for UL review. Maximum 10 MB.</small></label>
+      <label><span>Notes</span><textarea name="notes" rows="4"></textarea></label>
+      <p id="deliverableStatus" role="status"></p>
+      <div class="editor-actions"><button class="pill primary" type="submit">Send deliverable</button></div>
+    </form>
+  </div>
+</div>
 </body>
 </html>

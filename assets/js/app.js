@@ -138,7 +138,11 @@ function renderGantt(period) {
 
     const label = document.createElement('div');
     label.className = 'milestone-label';
-    label.innerHTML = '<strong>' + milestone.label + '</strong><span>' + milestone.range + '</span>';
+    const labelTitle = document.createElement('strong');
+    labelTitle.textContent = milestone.label;
+    const labelRange = document.createElement('span');
+    labelRange.textContent = milestone.range;
+    label.append(labelTitle, labelRange);
     row.appendChild(label);
 
     for (let i = 0; i < config.columns.length; i += 1) {
@@ -414,5 +418,73 @@ document.querySelectorAll('.bell-btn, .side-bell').forEach(button => {
       button.classList.remove('is-rung');
     }, 1800);
   });
+});
+
+const deliverableModal = document.getElementById('deliverableModal');
+const deliverableForm = document.getElementById('deliverableForm');
+const deliverableStatus = document.getElementById('deliverableStatus');
+const reviewerSelect = deliverableForm.elements.recipientEmail;
+const otherReviewerField = document.getElementById('otherReviewerField');
+const otherReviewerInput = deliverableForm.elements.otherReviewerEmail;
+
+reviewerSelect.addEventListener('change', () => {
+  const isOther = reviewerSelect.value === 'other';
+  otherReviewerField.hidden = !isOther;
+  otherReviewerInput.required = isOther;
+  if (!isOther) otherReviewerInput.value = '';
+});
+
+document.getElementById('openDeliverableForm').addEventListener('click', () => {
+  deliverableStatus.textContent = '';
+  deliverableModal.classList.add('active');
+  deliverableModal.setAttribute('aria-hidden', 'false');
+});
+
+function closeDeliverableForm() {
+  deliverableModal.classList.remove('active');
+  deliverableModal.setAttribute('aria-hidden', 'true');
+}
+
+document.getElementById('deliverableClose').addEventListener('click', closeDeliverableForm);
+deliverableModal.addEventListener('click', event => {
+  if (event.target === deliverableModal) closeDeliverableForm();
+});
+
+deliverableForm.addEventListener('submit', async event => {
+  event.preventDefault();
+  const submittedForm = new FormData(deliverableForm);
+  const file = submittedForm.get('deliverableFile');
+  if (!(file instanceof File) || !file.size) {
+    deliverableStatus.textContent = 'Choose a deliverable file to continue.';
+    return;
+  }
+  if (file.size > 10 * 1024 * 1024) {
+    deliverableStatus.textContent = 'The selected file is larger than the 10 MB limit.';
+    return;
+  }
+  const formData = Object.fromEntries(submittedForm);
+  delete formData.deliverableFile;
+  formData.fileName = file.name;
+  formData.fileType = file.type || 'application/octet-stream';
+  formData.fileBase64 = await new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(String(reader.result).split(',')[1]);
+    reader.onerror = () => reject(new Error('Unable to read the selected file'));
+    reader.readAsDataURL(file);
+  });
+  deliverableStatus.textContent = 'Sending deliverable...';
+
+  try {
+    const response = await fetch('/api/deliverables', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(formData)
+    });
+    if (!response.ok) throw new Error('Submission failed');
+    deliverableStatus.textContent = 'Deliverable sent to the selected reviewer.';
+    deliverableForm.reset();
+  } catch (error) {
+    deliverableStatus.textContent = 'Unable to send. Please try again or contact the R&D team.';
+  }
 });
 

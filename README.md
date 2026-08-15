@@ -36,6 +36,24 @@ npm run preview
 
 Run the built application through Express with `npm start`. Do not use `python3 -m http.server`: it cannot compile the React TypeScript entry point.
 
+## Form Submissions
+
+The prosthetic-user survey and University Collaboration deliverable form submit through the dashboard server. The server forwards each request to Google Apps Script, which appends a row to Google Sheets. Deliverable submissions also email the reviewer selected in the form.
+
+1. Create one Google Sheet for survey responses and one for deliverables.
+2. Open `google-apps-script.gs` in a new Apps Script project, replace both sheet ID placeholders and set a long random `SUBMISSION_SECRET`.
+3. Deploy the script as a web app that runs as the account that owns the Sheets and accepts requests from the dashboard server.
+4. Set the same values in the server environment:
+
+```bash
+export GOOGLE_APPS_SCRIPT_URL='https://script.google.com/macros/s/.../exec'
+export GOOGLE_APPS_SCRIPT_SECRET='your-long-random-secret'
+export REVIEWER_EMAILS_JSON='{"ganesh":"ganesh@universallimbs.com"}'
+npm start
+```
+
+The browser never receives the secret. The server only accepts deliverable recipients from the Universal Limbs reviewer list in [server.js](server.js).
+
 ## Project structure
 
 See [project_structure.md](project_structure.md) for the full file layout and the [MVP architecture](UI_UX_doc.md#mvp-architecture) the dashboard follows (state in `assets/js/model.js`, rendering in `assets/js/view.js`, event/interaction logic in `assets/js/presenter.js`).
