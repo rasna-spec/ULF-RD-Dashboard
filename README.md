@@ -1,6 +1,6 @@
 # ULF R&D Dashboard
 
-Static, single-page R&D dashboard for the Universal Limbs Foundation prosthetic hand program. No build step, no framework, no server-side code — everything renders directly from static HTML/CSS/JS.
+React and Vite R&D dashboard for the Universal Limbs Foundation prosthetic hand program.
 
 ## Live pages
 
@@ -10,31 +10,49 @@ Static, single-page R&D dashboard for the Universal Limbs Foundation prosthetic 
 | `develop` | Active development / staging | Run locally (see below) until a preview deployment is configured |
 
 Direct pages:
-- Dashboard: `index.html`
-- Prosthetic user survey: `prosthetic-user-survey.html`
+- Dashboard: `/`
+- Prosthetic user survey: `/survey`
 
 ## Quick start (local preview)
 
-This is a static site — any static file server works. From the repo root:
+Install Node.js 20 or later, then run from the repository root:
 
 ```bash
-# Python 3 (no install needed on macOS)
-python3 -m http.server 8000
+npm install
+npm run dev
 ```
 
 Then open:
-- http://localhost:8000/index.html
-- http://localhost:8000/prosthetic-user-survey.html
+- http://localhost:8000/
+- http://localhost:8000/survey
 
-To preview a specific branch locally:
+Build and preview the production bundle:
 
 ```bash
-git fetch origin
-git checkout develop   # or main
-python3 -m http.server 8000
+npm run build
+npm run preview
 ```
 
-No `npm install`, `pip install`, or environment variables are required.
+
+Run the built application through Express with `npm start`. Do not use `python3 -m http.server`: it cannot compile the React TypeScript entry point.
+
+## Form Submissions
+
+The prosthetic-user survey and University Collaboration deliverable form submit through the dashboard server. The server forwards each request to Google Apps Script, which appends a row to Google Sheets. Deliverable submissions also email the reviewer selected in the form.
+
+1. Create one Google Sheet for survey responses and one for deliverables.
+2. Open `google-apps-script.gs` in a new Apps Script project, replace both sheet ID placeholders and set a long random `SUBMISSION_SECRET`.
+3. Deploy the script as a web app that runs as the account that owns the Sheets and accepts requests from the dashboard server.
+4. Set the same values in the server environment:
+
+```bash
+export GOOGLE_APPS_SCRIPT_URL='https://script.google.com/macros/s/.../exec'
+export GOOGLE_APPS_SCRIPT_SECRET='your-long-random-secret'
+export REVIEWER_EMAILS_JSON='{"ganesh":"ganesh@universallimbs.com"}'
+npm start
+```
+
+The browser never receives the secret. The server only accepts deliverable recipients from the Universal Limbs reviewer list in [server.js](server.js).
 
 ## Project structure
 
