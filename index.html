@@ -1,533 +1,336 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Universal Limbs — R&D Dashboard</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Universal Limbs — R&amp;D</title>
+<style>
+:root{--ink:#181a1c;--mute:#7d7a77;--orange:#f97316;--line:#e2ded9;--card:#f1eeeb}
+*{box-sizing:border-box}
+html{background:#e9e6e3}
+body{margin:0;color:var(--ink);font-family:Arial,Helvetica,sans-serif;background:#e9e6e3;min-height:100vh}
+button,a{font:inherit;color:inherit}
 
-<link rel="stylesheet" href="assets/css/dashboard.css?v=20260815">
-<script src="https://accounts.google.com/gsi/client" async defer></script>
-<script src="https://apis.google.com/js/api.js" async defer></script>
+.wrap{width:min(100%,760px);margin:0 auto;padding:52px 20px 72px}
+.topbar{display:flex;align-items:center;gap:8px;margin-bottom:22px}
+.departments{width:100%;height:38px;display:grid;grid-template-columns:repeat(4,1fr);
+  background:#f4f2ef;border-radius:12px}
+.department{position:relative;border:0;background:transparent;font-size:11px;color:#8f8b87;cursor:pointer}
+.department.active{font-weight:700;color:var(--ink)}
+.department.active:after{content:"";position:absolute;left:24%;right:24%;bottom:5px;height:2px;border-radius:2px;background:var(--orange)}
+.lang{display:flex;background:#f4f2ef;border-radius:12px;padding:3px;height:38px;align-items:center;flex:none}
+.lang button{border:0;background:none;border-radius:9px;padding:6px 10px;font-size:10px;color:#8f8b87;cursor:pointer}
+.lang button.active{background:#fff;color:var(--ink);font-weight:700;box-shadow:0 1px 3px #3c2d2314}
+
+.card{background:#faf9f7;border-radius:26px;padding:30px 32px 40px;box-shadow:0 24px 60px #3c2d230f}
+.page{display:none}.page.active{display:block}
+
+/* reference tabs */
+.references{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-bottom:30px}
+.reference{border:0;background:transparent;padding:0;cursor:pointer;text-align:center;
+  font-size:10px;color:#8f8b87;line-height:1.2}
+.reference.active{color:var(--ink);font-weight:700}
+.thumb{display:block;width:34px;height:34px;margin:0 auto 9px;
+  background-image:repeating-linear-gradient(45deg,#c4c4c4 0 2px,transparent 2px 7px)}
+.reference:nth-child(2) .thumb{background-image:repeating-linear-gradient(45deg,#f8b271 0 2px,transparent 2px 7px)}
+.reference:nth-child(3) .thumb{background-image:repeating-linear-gradient(45deg,#f9862c 0 4px,transparent 4px 8px)}
+.reference:nth-child(4) .thumb{background:#f7902f;background-image:none}
+.reference:nth-child(5) .thumb{background:#0fb875;background-image:none}
+.reference:nth-child(5).active .refUnderline{background:#0fb875}
+.refUnderline{display:block;width:30px;height:2px;background:transparent;margin:7px auto 0;border-radius:3px}
+.reference.active .refUnderline{background:var(--orange)}
+
+/* slides */
+.stage{position:relative}
+.viewport{overflow:hidden}
+.track{display:flex;transition:transform .4s cubic-bezier(.4,0,.2,1)}
+.slide{flex:0 0 100%;width:100%;display:grid;grid-template-columns:44% minmax(0,1fr);gap:24px;align-items:center;padding:0 2px}
+.art{width:100%;display:grid;place-items:center}
+.art img{display:block;width:88%;height:auto;filter:drop-shadow(0 20px 28px rgba(60,45,35,.14))}
+.copy{width:100%;text-align:left}
+.copy h1{font-size:27px;margin:0 0 12px;line-height:1.05;letter-spacing:-.6px}
+.copy p{font-size:13px;line-height:1.6;color:#55585b;margin:0}
+.liveArt{position:relative}
+.liveArt img{position:relative;z-index:1}
+.liveArt .ring,.liveArt .pill{z-index:2}
+.arcA{position:absolute;z-index:0;top:4%;left:50%;width:66%;aspect-ratio:2/1;transform:translateX(-50%);
+  border-radius:999px 999px 0 0;
+  background:radial-gradient(ellipse at 50% 100%,rgba(15,184,117,.55) 0 42%,rgba(15,184,117,.30) 42% 68%,rgba(15,184,117,.15) 68% 100%)}
+.ring{position:absolute;width:46px;height:46px;border-radius:999px;transform:translate(-50%,-50%);
+  background:radial-gradient(circle,#0d2b22 0 9%,rgba(15,184,117,.55) 9% 34%,rgba(15,184,117,.28) 34% 62%,rgba(15,184,117,.12) 62% 100%)}
+.ringA{top:13%;left:50%;width:14px;height:14px;background:radial-gradient(circle,#0d2b22 0 30%,transparent 30%)}
+.ringL{top:64%;left:32%}
+.ringR{top:64%;left:68%}
+.pill{position:absolute;background:#0fb875;color:#08281e;font-size:9px;font-weight:700;
+  letter-spacing:.03em;border-radius:999px;padding:5px 11px;white-space:nowrap}
+.pillA{top:0;left:50%;transform:translateX(-50%)}
+.pillL{top:78%;left:0}
+.pillR{top:78%;right:0}
+.liveTeam{display:flex;flex-direction:column;gap:10px}
+.liveRow{display:grid;grid-template-columns:34px minmax(0,1fr);gap:10px;align-items:center}
+.liveAv{width:34px;height:34px;border-radius:999px;background:#e6f7ef;color:#0b7a52;
+  display:grid;place-items:center;font-size:11px;font-weight:700;letter-spacing:.02em}
+.liveTasks{display:flex;flex-wrap:wrap;gap:5px}
+.task{font-size:10px;color:#3f4245;background:#f2efec;border-radius:999px;padding:4px 9px;white-space:nowrap}
+.legend{display:flex;gap:14px;flex-wrap:wrap;margin-top:10px}
+.legendItem{display:flex;align-items:center;gap:6px;font-size:10px;color:#6f6c69}
+.key{display:grid;place-items:center;width:16px;height:16px;border-radius:999px;font-size:9px;font-weight:700}
+.keyA{background:#0fb875;color:#08281e}
+.keyD{background:#dff4ea;color:#0b7a52}
+.artLegend{justify-content:center;margin-top:14px}
+.rule{height:1px;background:#e6e2dd;margin:26px 0 20px}
+.teamTitle{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#8f8b87;font-weight:700;margin-bottom:16px}
+.teamBar{margin-top:26px;padding-top:20px;border-top:1px solid #e6e2dd}
+.teamScroll{display:flex;gap:16px;overflow-x:auto;padding-bottom:6px;scrollbar-width:thin}
+.teamScroll .person{flex:0 0 68px}
+.team{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.person{text-align:center;font-size:11px;line-height:1.3}
+.avatar{width:42px;height:42px;border-radius:50%;margin:0 auto 7px;background:#e6e2de;
+  display:grid;place-items:center;font-size:15px;font-weight:600;color:#8f8b87;overflow:hidden}
+.avatar img{width:100%;height:100%;object-fit:cover}
+.person-name{font-weight:700}
+.person-role{color:var(--mute);margin-top:1px;font-size:10px}
+
+.navArrow{position:absolute;top:44%;transform:translateY(-50%);width:56px;height:56px;border:0;
+  border-radius:999px;background:#fff;box-shadow:0 8px 22px #3c2d2322;font-size:22px;color:#333;cursor:pointer;z-index:3}
+.navArrow.prev{left:-24px}.navArrow.next{right:-24px}
+.navArrow[disabled]{opacity:0;pointer-events:none}
+
+.quick-actions{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:28px}
+.action{height:70px;border:0;border-radius:14px;background:#f2efec;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:7px;text-decoration:none;font-size:11px;font-weight:700;cursor:pointer}
+.action:hover{background:#ece8e4}
+.action svg{width:22px;height:22px;fill:none;stroke:#111;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+
+.dots{display:flex;justify-content:center;gap:14px;margin-top:24px}
+.dot{width:13px;height:13px;border-radius:999px;border:0;padding:0;background:#d6d2ce;cursor:pointer}
+.dot.active{background:var(--orange)}
+
+.placeholder .card{padding:90px 24px;text-align:center;color:#7d7a77}
+.placeholder h1{color:var(--ink);font-size:24px;margin:0 0 6px}
+
+@media(max-width:480px){
+  .wrap{padding:28px 14px 44px}
+  .slide{grid-template-columns:1fr;gap:16px}
+  .art img{width:60%}
+  .copy h1{font-size:24px}
+}
+</style>
 </head>
 <body>
-  <div id="__bundler_thumbnail"><svg xmlns="http://www.w3.org/2000/svg" sc-camel-view-box="0 0 100 100"><rect width="100" height="100" fill="#ECF0F4"></rect><circle cx="50" cy="50" r="26" fill="#D6F84C"></circle><text x="50" y="58" font-family="Helvetica" font-size="20" font-weight="700" text-anchor="middle" fill="#1A1D21">UL</text></svg></div>
-  <div id="__bundler_loading">Unpacking...</div>
+<div class="wrap">
 
-  <script>
-    
-document.addEventListener('DOMContentLoaded', async function() {
-  const loading = document.getElementById('__bundler_loading');
-  function setStatus(msg) { if (loading) loading.textContent = msg; }
+  <div class="topbar">
+    <nav class="departments" aria-label="Departments">
+      <button class="department active" data-page="rd">R&amp;D</button>
+      <button class="department" data-page="pr">P&amp;R</button>
+      <button class="department" data-page="finance">Finance</button>
+      <button class="department" data-page="ulf">ULF</button>
+    </nav>
+    <div class="lang">
+      <button class="active" data-lang="en">EN</button>
+      <button data-lang="pt">PT</button>
+    </div>
+  </div>
 
-    <div class="top-year">2026</div>
-  </header>
+  <!-- ============ R&D ============ -->
+  <section class="page active" id="rd">
+    <div class="card">
 
-  <section class="layout">
-    <aside class="side">
-      <nav class="nav" aria-label="R&D sections">
-        <button class="active" type="button" data-view="dashboard"><span>Dashboard</span></button>
-        <button type="button" data-view="goal"><span>Goal</span></button>
-        <button type="button" data-view="resources"><span>Resources</span></button>
-        <button type="button" data-view="portal"><span>University collaboration</span></button>
+      <nav class="references" aria-label="Design references">
+        <button class="reference active" data-slide="0"><span class="thumb"></span><span data-i18n="ref1">Waacs</span><span class="refUnderline"></span></button>
+        <button class="reference" data-slide="1"><span class="thumb"></span><span data-i18n="ref2">YaleHand</span><span class="refUnderline"></span></button>
+        <button class="reference" data-slide="2"><span class="thumb"></span><span data-i18n="ref3">Softfoot Pro</span><span class="refUnderline"></span></button>
+        <button class="reference" data-slide="3"><span class="thumb"></span><span data-i18n="ref4">UL arm</span><span class="refUnderline"></span></button>
+        <button class="reference" data-slide="4"><span class="thumb"></span><span data-i18n="ref5">Live</span><span class="refUnderline"></span></button>
       </nav>
-        <div class="side-team"><div class="side-team-title">Team</div>
-          <div class="side-team-row">
-            <span class="side-initial">R</span>
-            <span>Rasna</span>
-            <a class="side-bell" href="mailto:rasna@universallimbs.com?subject=Friendly%20R%26D%20reminder&body=Hi%2C%0A%0AYou%20received%20a%20friendly%20reminder%20from%20a%20team%20member.%0A%0AThis%20is%20not%20meant%20to%20be%20rude%20%E2%80%94%20it%20is%20a%20kind%20nudge%20because%20your%20team%20has%20your%20back.%20The%20deadline%20is%20coming%20up%20soon%2C%20and%20the%20team%20would%20love%20to%20see%20an%20update.%0A%0AIf%20you%20need%20help%2C%20please%20update%20your%20status%20or%20ask%20for%20support.%0A%0AThank%20you.&cc=sahitya%40universallimbs.com" title="Send reminder" aria-label="Send friendly reminder">🔔</a>
-          </div>
-          <div class="side-team-row">
-            <span class="side-initial">S</span>
-            <span>Sahitya</span>
-            <a class="side-bell" href="mailto:sahitya@universallimbs.com?subject=Friendly%20R%26D%20reminder&body=Hi%2C%0A%0AYou%20received%20a%20friendly%20reminder%20from%20a%20team%20member.%0A%0AThis%20is%20not%20meant%20to%20be%20rude%20%E2%80%94%20it%20is%20a%20kind%20nudge%20because%20your%20team%20has%20your%20back.%20The%20deadline%20is%20coming%20up%20soon%2C%20and%20the%20team%20would%20love%20to%20see%20an%20update.%0A%0AIf%20you%20need%20help%2C%20please%20update%20your%20status%20or%20ask%20for%20support.%0A%0AThank%20you.&cc=sahitya%40universallimbs.com" title="Send reminder" aria-label="Send friendly reminder">🔔</a>
-          </div>
-          <div class="side-team-row">
-            <span class="side-initial">S</span>
-            <span>Saja</span>
-            <a class="side-bell" href="mailto:saja@universallimbs.com?subject=Friendly%20R%26D%20reminder&body=Hi%2C%0A%0AYou%20received%20a%20friendly%20reminder%20from%20a%20team%20member.%0A%0AThis%20is%20not%20meant%20to%20be%20rude%20%E2%80%94%20it%20is%20a%20kind%20nudge%20because%20your%20team%20has%20your%20back.%20The%20deadline%20is%20coming%20up%20soon%2C%20and%20the%20team%20would%20love%20to%20see%20an%20update.%0A%0AIf%20you%20need%20help%2C%20please%20update%20your%20status%20or%20ask%20for%20support.%0A%0AThank%20you.&cc=sahitya%40universallimbs.com" title="Send reminder" aria-label="Send friendly reminder">🔔</a>
-          </div>
-          <div class="side-team-row">
-            <span class="side-initial">A</span>
-            <span>Ana</span>
-            <a class="side-bell" href="mailto:ana@universallimbs.com?subject=Friendly%20R%26D%20reminder&body=Hi%2C%0A%0AYou%20received%20a%20friendly%20reminder%20from%20a%20team%20member.%0A%0AThis%20is%20not%20meant%20to%20be%20rude%20%E2%80%94%20it%20is%20a%20kind%20nudge%20because%20your%20team%20has%20your%20back.%20The%20deadline%20is%20coming%20up%20soon%2C%20and%20the%20team%20would%20love%20to%20see%20an%20update.%0A%0AIf%20you%20need%20help%2C%20please%20update%20your%20status%20or%20ask%20for%20support.%0A%0AThank%20you.&cc=sahitya%40universallimbs.com" title="Send reminder" aria-label="Send friendly reminder">🔔</a>
-          </div>
-          <div class="side-team-row">
-            <span class="side-initial">M</span>
-            <span>Maria</span>
-            <a class="side-bell" href="mailto:maria@universallimbs.com?subject=Friendly%20R%26D%20reminder&body=Hi%2C%0A%0AYou%20received%20a%20friendly%20reminder%20from%20a%20team%20member.%0A%0AThis%20is%20not%20meant%20to%20be%20rude%20%E2%80%94%20it%20is%20a%20kind%20nudge%20because%20your%20team%20has%20your%20back.%20The%20deadline%20is%20coming%20up%20soon%2C%20and%20the%20team%20would%20love%20to%20see%20an%20update.%0A%0AIf%20you%20need%20help%2C%20please%20update%20your%20status%20or%20ask%20for%20support.%0A%0AThank%20you.&cc=sahitya%40universallimbs.com" title="Send reminder" aria-label="Send friendly reminder">🔔</a>
-          </div>
-        </div>
-      </aside>
 
-    <main class="stage" aria-live="polite">
-      <section id="dashboard" class="view active">
-        <section class="dashboard-section">
-          <h1 class="section-heading">Project summary</h1>
-          <div class="section-rule"></div>
+      <div class="stage">
 
-          <section class="project-summary">
-            <h2>Project summary</h2>
-            <p>
-              A low-cost, repairable, 3D-printable pediatric prosthetic hand for children aged 6–12 affected by war, eventually implemented in Egypt for Gazan evacuees.
-            </p>
-            <p>
-              The MVP focuses on safe, repeatable, articulated lateral pinch to help a child hold, stabilise and interact with light daily objects — not heavy lifting, adult-level grip strength or full independent finger control.
-            </p>
-            <p>
-              The mechanism draws on tendon-driven underactuated hand research while avoiding unnecessary complexity, targeting light daily tasks such as holding a card, paper, small toy, utensil handle or lightweight object.
-            </p>
-            <p>
-              The design prioritises repeatability, comfort, repairability and safe use in hot, resource-limited settings: lightweight, durable, affordable and clinically reviewed, with precision coming from thumb–index alignment, guided tendon routing, mechanical stops, soft contact pads and adjustable tension rather than motors.
-            </p>
-            <div class="last-updated">Last updated on July 15th, 2026</div>
-          </section>
-        </section>
+        <div class="viewport">
+          <div class="track" id="track">
 
-        <section class="dashboard-section">
-          <h1 class="section-heading">R&amp;D team</h1>
-          <div class="section-rule"></div>
+            <article class="slide">
+              <div class="art"><img src="prosthetic-hand.png" alt="Waacs open source 3D printed hand"></div>
+              <div class="copy">
+                <h1 data-i18n="t1">Baseline</h1>
+                <p data-i18n="b1">For the baseline we are using an open source 3D printed arm called Waacs by e-nable. We will start our design edits and testing on this design and slowly reverse engineer from the best features Yalehand &amp; Softfoot pro. Focus is on low resource setting and 6-12 year old terminal device.</p>
+              </div>
+            </article>
 
-          <section class="team-strip">
-            <div class="team-grid">
-              <article class="team-member">
-                <div class="team-card-top">
-                  <div class="team-photo">R</div>
-                  <a class="bell-btn" href="mailto:rasna@universallimbs.com?subject=Friendly%20R%26D%20reminder&body=Hi%2C%0A%0AYou%20received%20a%20friendly%20reminder%20from%20a%20team%20member.%0A%0AThis%20is%20not%20meant%20to%20be%20rude%20%E2%80%94%20it%20is%20a%20kind%20nudge%20because%20your%20team%20has%20your%20back.%20The%20deadline%20is%20coming%20up%20soon%2C%20and%20the%20team%20would%20love%20to%20see%20an%20update.%0A%0AIf%20you%20need%20help%2C%20please%20update%20your%20status%20or%20ask%20for%20support.%0A%0AThank%20you.&cc=sahitya%40universallimbs.com" title="Send friendly reminder to Rasna" aria-label="Send friendly reminder to Rasna">
-                    <svg class="bell-icon" viewBox="0 0 24 24" aria-hidden="true">
-                    <path d="M15 17H9m9-2V10a6 6 0 0 0-12 0v5l-2 2h16l-2-2Zm-5 5a2 2 0 0 1-2 0"/>
-                  </svg>
-                  </a>
-                </div>
-                <div class="team-name">Rasna</div>
-                <div class="team-role">Founder / R&D Direction</div>
-                <div class="team-experience"><strong>Experience:</strong> Electrical engineering, program strategy, partner direction, and MVP decision flow.</div>
-                <span class="info-dot">i<span class="info-tip">Owns project direction, priorities, partner alignment, and final decision flow.</span></span>
-                <div class="team-actions">
-                  <a class="mini-pill" href="mailto:rasna@universallimbs.com?subject=R%26D%20task%20assignment&body=Hi%2C%0A%0AA%20task%20has%20been%20assigned%20or%20requested%20for%20your%20review.%0A%0ATask%3A%0ADeadline%3A%0ASupport%20needed%3A%0A%0APlease%20update%20your%20status%20when%20you%20can.%0A%0AThank%20you.&cc=sahitya%40universallimbs.com" title="Assign task to Rasna">Assign task</a>
-                </div>
-              </article>
-              <article class="team-member">
-                <div class="team-card-top">
-                  <div class="team-photo">S</div>
-                  <a class="bell-btn" href="mailto:sahitya@universallimbs.com?subject=Friendly%20R%26D%20reminder&body=Hi%2C%0A%0AYou%20received%20a%20friendly%20reminder%20from%20a%20team%20member.%0A%0AThis%20is%20not%20meant%20to%20be%20rude%20%E2%80%94%20it%20is%20a%20kind%20nudge%20because%20your%20team%20has%20your%20back.%20The%20deadline%20is%20coming%20up%20soon%2C%20and%20the%20team%20would%20love%20to%20see%20an%20update.%0A%0AIf%20you%20need%20help%2C%20please%20update%20your%20status%20or%20ask%20for%20support.%0A%0AThank%20you.&cc=sahitya%40universallimbs.com" title="Send friendly reminder to Sahitya" aria-label="Send friendly reminder to Sahitya">
-                    <svg class="bell-icon" viewBox="0 0 24 24" aria-hidden="true">
-                    <path d="M15 17H9m9-2V10a6 6 0 0 0-12 0v5l-2 2h16l-2-2Zm-5 5a2 2 0 0 1-2 0"/>
-                  </svg>
-                  </a>
-                </div>
-                <div class="team-name">Sahitya</div>
-                <div class="team-role">Project Manager</div>
-                <div class="team-experience"><strong>Experience:</strong> Coordination, timelines, task tracking, files, and external handoff support.</div>
-                <span class="info-dot">i<span class="info-tip">Coordinates assignments, timelines, files, team follow-up, and external handoff.</span></span>
-                <div class="team-actions">
-                  <a class="mini-pill" href="mailto:sahitya@universallimbs.com?subject=R%26D%20task%20assignment&body=Hi%2C%0A%0AA%20task%20has%20been%20assigned%20or%20requested%20for%20your%20review.%0A%0ATask%3A%0ADeadline%3A%0ASupport%20needed%3A%0A%0APlease%20update%20your%20status%20when%20you%20can.%0A%0AThank%20you.&cc=sahitya%40universallimbs.com" title="Assign task to Sahitya">Assign task</a>
-                </div>
-              </article>
-              <article class="team-member">
-                <div class="team-card-top">
-                  <div class="team-photo">S</div>
-                  <a class="bell-btn" href="mailto:saja@universallimbs.com?subject=Friendly%20R%26D%20reminder&body=Hi%2C%0A%0AYou%20received%20a%20friendly%20reminder%20from%20a%20team%20member.%0A%0AThis%20is%20not%20meant%20to%20be%20rude%20%E2%80%94%20it%20is%20a%20kind%20nudge%20because%20your%20team%20has%20your%20back.%20The%20deadline%20is%20coming%20up%20soon%2C%20and%20the%20team%20would%20love%20to%20see%20an%20update.%0A%0AIf%20you%20need%20help%2C%20please%20update%20your%20status%20or%20ask%20for%20support.%0A%0AThank%20you.&cc=sahitya%40universallimbs.com" title="Send friendly reminder to Saja" aria-label="Send friendly reminder to Saja">
-                    <svg class="bell-icon" viewBox="0 0 24 24" aria-hidden="true">
-                    <path d="M15 17H9m9-2V10a6 6 0 0 0-12 0v5l-2 2h16l-2-2Zm-5 5a2 2 0 0 1-2 0"/>
-                  </svg>
-                  </a>
-                </div>
-                <div class="team-name">Saja</div>
-                <div class="team-role">Director of Prosthetic Services</div>
-                <div class="team-experience"><strong>Experience:</strong> Clinical prosthetic review, rehab practicality, user safety, and device-fit feedback.</div>
-                <span class="info-dot">i<span class="info-tip">Provides prosthetic, rehab, and clinical practicality feedback.</span></span>
-                <div class="team-actions">
-                  <a class="mini-pill" href="mailto:saja@universallimbs.com?subject=R%26D%20task%20assignment&body=Hi%2C%0A%0AA%20task%20has%20been%20assigned%20or%20requested%20for%20your%20review.%0A%0ATask%3A%0ADeadline%3A%0ASupport%20needed%3A%0A%0APlease%20update%20your%20status%20when%20you%20can.%0A%0AThank%20you.&cc=sahitya%40universallimbs.com" title="Assign task to Saja">Assign task</a>
-                </div>
-              </article>
-              <article class="team-member">
-                <div class="team-card-top">
-                  <div class="team-photo">A</div>
-                  <a class="bell-btn" href="mailto:ana@universallimbs.com?subject=Friendly%20R%26D%20reminder&body=Hi%2C%0A%0AYou%20received%20a%20friendly%20reminder%20from%20a%20team%20member.%0A%0AThis%20is%20not%20meant%20to%20be%20rude%20%E2%80%94%20it%20is%20a%20kind%20nudge%20because%20your%20team%20has%20your%20back.%20The%20deadline%20is%20coming%20up%20soon%2C%20and%20the%20team%20would%20love%20to%20see%20an%20update.%0A%0AIf%20you%20need%20help%2C%20please%20update%20your%20status%20or%20ask%20for%20support.%0A%0AThank%20you.&cc=sahitya%40universallimbs.com" title="Send friendly reminder to Ana" aria-label="Send friendly reminder to Ana">
-                    <svg class="bell-icon" viewBox="0 0 24 24" aria-hidden="true">
-                    <path d="M15 17H9m9-2V10a6 6 0 0 0-12 0v5l-2 2h16l-2-2Zm-5 5a2 2 0 0 1-2 0"/>
-                  </svg>
-                  </a>
-                </div>
-                <div class="team-name">Ana</div>
-                <div class="team-role">Director of Finance</div>
-                <div class="team-experience"><strong>Experience:</strong> Budget tracking, funding readiness, finance controls, and sponsor documentation.</div>
-                <span class="info-dot">i<span class="info-tip">Supports budget tracking, funding readiness, and financial documentation.</span></span>
-                <div class="team-actions">
-                  <a class="mini-pill" href="mailto:ana@universallimbs.com?subject=R%26D%20task%20assignment&body=Hi%2C%0A%0AA%20task%20has%20been%20assigned%20or%20requested%20for%20your%20review.%0A%0ATask%3A%0ADeadline%3A%0ASupport%20needed%3A%0A%0APlease%20update%20your%20status%20when%20you%20can.%0A%0AThank%20you.&cc=sahitya%40universallimbs.com" title="Assign task to Ana">Assign task</a>
-                </div>
-              </article>
-              <article class="team-member">
-                <div class="team-card-top">
-                  <div class="team-photo">M</div>
-                  <a class="bell-btn" href="mailto:maria@universallimbs.com?subject=Friendly%20R%26D%20reminder&body=Hi%2C%0A%0AYou%20received%20a%20friendly%20reminder%20from%20a%20team%20member.%0A%0AThis%20is%20not%20meant%20to%20be%20rude%20%E2%80%94%20it%20is%20a%20kind%20nudge%20because%20your%20team%20has%20your%20back.%20The%20deadline%20is%20coming%20up%20soon%2C%20and%20the%20team%20would%20love%20to%20see%20an%20update.%0A%0AIf%20you%20need%20help%2C%20please%20update%20your%20status%20or%20ask%20for%20support.%0A%0AThank%20you.&cc=sahitya%40universallimbs.com" title="Send friendly reminder to Maria" aria-label="Send friendly reminder to Maria">
-                    <svg class="bell-icon" viewBox="0 0 24 24" aria-hidden="true">
-                    <path d="M15 17H9m9-2V10a6 6 0 0 0-12 0v5l-2 2h16l-2-2Zm-5 5a2 2 0 0 1-2 0"/>
-                  </svg>
-                  </a>
-                </div>
-                <div class="team-name">Maria</div>
-                <div class="team-role">University Partnership Lead</div>
-                <div class="team-experience"><strong>Experience:</strong> University collaboration, student coordination, partner communication, and file handoff.</div>
-                <span class="info-dot">i<span class="info-tip">Supports university collaboration, partner communication, and student handoff.</span></span>
-                <div class="team-actions">
-                  <a class="mini-pill" href="mailto:maria@universallimbs.com?subject=R%26D%20task%20assignment&body=Hi%2C%0A%0AA%20task%20has%20been%20assigned%20or%20requested%20for%20your%20review.%0A%0ATask%3A%0ADeadline%3A%0ASupport%20needed%3A%0A%0APlease%20update%20your%20status%20when%20you%20can.%0A%0AThank%20you.&cc=sahitya%40universallimbs.com" title="Assign task to Maria">Assign task</a>
-                </div>
-              </article>
-            </div>
-          </section>
-        </section>
+            <article class="slide">
+              <div class="art"><img src="prosthetic-hand.png" alt="YaleHand research reference"></div>
+              <div class="copy">
+                <h1 data-i18n="t2">YaleHand</h1>
+                <p data-i18n="b2">We will reverse engineer key features from Yalehand to improve function, durability and usability: adaptive grasp, light weight, low force actuation and research validated performance.</p>
+              </div>
+            </article>
 
-        <section class="dashboard-section">
-          <h1 class="section-heading">Latest updates</h1>
-          <div class="section-rule"></div>
+            <article class="slide">
+              <div class="art"><img src="prosthetic-hand.png" alt="Softfoot Pro research reference"></div>
+              <div class="copy">
+                <h1 data-i18n="t3">Softfoot Pro</h1>
+                <p data-i18n="b3">We will learn from Softfoot Pro to integrate the best mechanical features for simplicity and reliability: a proven, robust and field tested design with insights for low-resource use.</p>
+              </div>
+            </article>
 
-          <div class="dashboard-grid">
-            <section class="carousel" aria-label="Latest updates carousel">
-              <div class="carousel-head no-title">
-                <div class="carousel-controls">
-                  <button class="carousel-btn" type="button" id="prevUpdate">‹</button>
-                  <button class="carousel-btn" type="button" id="nextUpdate">›</button>
+            <article class="slide">
+              <div class="art"><img src="prosthetic-hand.png" alt="UL arm goal design"></div>
+              <div class="copy">
+                <h1 data-i18n="t4">UL arm</h1>
+                <p data-i18n="b4">A simplified, durable and affordable upper-limb prosthetic designed for low-resource settings and children aged 6-12 years. Accessible, easy to assemble, child-focused and built for real-world use.</p>
+              </div>
+            </article>
+
+
+            <article class="slide">
+              <div>
+              <div class="art liveArt">
+                <img src="prosthetic-hand.png" alt="UL arm live testing focus areas">
+                <span class="arcA"></span>
+                <span class="ring ringA"></span>
+                <span class="pill pillA" data-i18n="liveA">A - 30 SEPT</span>
+                <span class="ring ringL"></span>
+                <span class="pill pillL" data-i18n="liveL">D - 30 SEPT</span>
+                <span class="ring ringR"></span>
+                <span class="pill pillR" data-i18n="liveR">D - 30 SEPT</span>
+              </div>
+              <div class="legend artLegend">
+                  <span class="legendItem"><span class="key keyA">A</span><span data-i18n="legA">Active now</span></span>
+                  <span class="legendItem"><span class="key keyD">D</span><span data-i18n="legD">Design next</span></span>
                 </div>
               </div>
-
-              <article class="update-slide active">
-                <div class="update-title">Survey updates</div>
-                <div class="update-line"><strong>Current</strong><span>Getting feedback from Alex Low.</span></div>
-                <div class="update-line"><strong>Next</strong><span>Send to 2 prosthetic users for early feedback.</span></div>
-                <div class="update-line"><strong>Link</strong><span><a class="pill primary" href="prosthetic-user-survey.html" target="_blank" rel="noopener">View Survey</a></span></div>
-              </article>
-
-              <article class="update-slide">
-                <div class="update-title">Presentation for UTFPR</div>
-                <div class="update-line"><strong>Current</strong><span>Prepare partner-facing presentation for external review.</span></div>
-                <div class="update-line"><strong>Next</strong><span>Add final scope, test bench ask, and file handoff instructions.</span></div>
-                <div class="update-line"><strong>Link</strong><span><a class="pill primary" href="PASTE_PRESENTATION_LINK_HERE" target="_blank" rel="noopener">presentation placeholder</a></span></div>
-              </article>
-
-              <article class="update-slide">
-                <div class="update-title">Base design ready to print</div>
-                <div class="update-line"><strong>Current</strong><span>WAACS / e-NABLE-style base design is the starting printable basis.</span></div>
-                <div class="update-line"><strong>Next</strong><span>Attach print link, material notes, and estimated price.</span></div>
-                <div class="update-line"><strong>Link</strong><span><a class="pill primary" href="https://docs.google.com/spreadsheets/d/1Cf-Qrm9P4SmOiynSsROKjqrrjdEQIn6SukNvNQSpMGU/edit?usp=sharing" target="_blank" rel="noopener">attach links / price</a></span></div>
-              </article>
-
-              <article class="update-slide">
-                <div class="update-title">Stay open to hybrid methods</div>
-                <div class="update-line"><strong>Current</strong><span>Advice from prosthetist at OPRC: keep design options open and avoid overcommitting too early.</span></div>
-                <div class="update-line"><strong>Next</strong><span>Compare hybrid approaches against simplicity, repairability, and child use.</span></div>
-                <div class="update-line"><strong>Link</strong><span><a class="pill primary" href="https://docs.google.com/spreadsheets/d/1Cf-Qrm9P4SmOiynSsROKjqrrjdEQIn6SukNvNQSpMGU/edit?usp=sharing" target="_blank" rel="noopener">notes placeholder</a></span></div>
-              </article>
-
-              <div class="update-dots" id="updateDots"></div>
-            </section>
-          </div>
-        </section>
-
-        <section class="dashboard-section">
-          <h1 class="section-heading">Documents</h1>
-          <div class="section-rule"></div>
-
-          <section class="document-grid">
-            <article class="document-card">
-              <div class="folder-icon"></div>
-              <h2>Design requirements</h2>
-              <p>Owner: Ganesh, Rasna, Abhay, Nili.</p>
-              <div class="actions"><button class="pill primary" data-jump="goal" type="button">Open</button></div>
-            </article>
-
-            <article class="document-card">
-              <div class="folder-icon"></div>
-              <h2>Surveys</h2>
-              <p>Open prosthetic-user survey and feedback files.</p>
-              <div class="actions"><a class="pill primary" href="prosthetic-user-survey.html" target="_blank" rel="noopener">Open</a></div>
-            </article>
-
-            <article class="document-card">
-              <div class="folder-icon"></div>
-              <h2>Budget</h2>
-              <p>Open budget approval and funding tracker.</p>
-              <div class="actions"><a class="pill primary" href="https://docs.google.com/spreadsheets/d/1GkG42z72UtrJ5_tYGXVXwijDe_5T6Ae6/edit?usp=drivesdk&amp;ouid=101706660835918185079&amp;rtpof=true&amp;sd=true&amp;urp=gmail_link" target="_blank" rel="noopener">Open</a></div>
-            </article>
-
-            <article class="document-card">
-              <div class="folder-icon"></div>
-              <h2>Test bench package</h2>
-              <p>Open the University collaboration tab for the test rig build reference and handoff package.</p>
-              <div class="actions"><button class="pill primary" data-jump="portal" type="button">Open</button></div>
-            </article>
-
-            <article class="document-card">
-              <div class="folder-icon"></div>
-              <h2>Requirements tracker</h2>
-              <p>Open design requirement tracker and status notes.</p>
-              <div class="actions"><a class="pill primary" href="https://docs.google.com/spreadsheets/d/1Cf-Qrm9P4SmOiynSsROKjqrrjdEQIn6SukNvNQSpMGU/edit?usp=sharing" target="_blank" rel="noopener">Open</a></div>
-            </article>
-
-            <article class="document-card">
-              <div class="folder-icon"></div>
-              <h2>Reference visuals</h2>
-              <p>Open inspiration visuals inside the Goal section.</p>
-              <div class="actions"><button class="pill primary" data-jump="goal" type="button">Open</button></div>
-            </article>
-          </section>
-        </section>
-      </section>
-
-      <section id="goal" class="view">
-        <div class="goal-top">
-          <div>
-            <h1 class="title">Design direction</h1>
-            <div class="owner-tag">Owner: Rasna Mantha</div>
-            <div class="rule"></div>
-          </div>
-
-          <div class="goal-top-actions">
-            <button class="edit-milestones-btn" id="editMilestonesBtn" type="button">Edit milestones</button>
-            <div class="time-tabs">
-              <button class="time-tab" data-goal="week" type="button">This week</button>
-              <button class="time-tab" data-goal="month" type="button">This month</button>
-              <button class="time-tab active" data-goal="year" type="button">The year</button>
-            </div>
-          </div>
-        </div>
-
-        <div id="goal-week" class="goal-panel"><div class="goal-summary">This week: confirm survey feedback path and prepare the test bench handoff.</div><div id="gantt-week" class="timeline-container" aria-live="polite"></div></div>
-        <div id="goal-month" class="goal-panel"><div class="goal-summary">This month: lock the design requirement package, confirm survey review, and define what the university students should build first.</div><div id="gantt-month" class="timeline-container" aria-live="polite"></div></div>
-
-        <div id="goal-year" class="goal-panel active">
-          <div class="goal-summary">Click the yellow milestone dots to view the inspiration visual. Visuals are references only.</div>
-          <div id="gantt-year" class="timeline-container" aria-live="polite"></div>
-          <div class="visual-hint">● yellow dot = click to see visual</div>
-        </div>
-
-        <div class="folder-strip">
-          <article class="simple-folder">
-            <div class="folder-icon"></div>
-            <h3>Survey</h3>
-            <div class="actions"><a class="pill primary" href="prosthetic-user-survey.html" target="_blank" rel="noopener">Open</a></div>
-          </article>
-
-          <article class="simple-folder">
-            <div class="folder-icon"></div>
-            <h3>Budget</h3>
-            <div class="actions"><a class="pill primary" href="https://docs.google.com/spreadsheets/d/1GkG42z72UtrJ5_tYGXVXwijDe_5T6Ae6/edit?usp=drivesdk&ouid=101706660835918185079&rtpof=true&sd=true&urp=gmail_link" target="_blank" rel="noopener">Open</a></div>
-          </article>
-        </div>
-      </section>
-
-      <section id="resources" class="view">
-        <section class="resource-simple-section">
-          <h1 class="section-heading">Playbooks</h1>
-          <div class="section-rule"></div>
-          <div class="resource-list">
-            <div class="resource-row"><strong>R&amp;D Playbook</strong><span>Team process and decision rules placeholder.</span><a class="pill primary" href="#">Add link</a></div>
-            <div class="resource-row"><strong>Testing Playbook</strong><span>Test setup, logging, and review method placeholder.</span><a class="pill primary" href="#">Add link</a></div>
-          </div>
-        </section>
-
-        <section class="resource-simple-section">
-          <h1 class="section-heading">SOPs</h1>
-          <div class="section-rule"></div>
-          <div class="resource-list">
-            <div class="resource-row"><strong>Design Intake SOP</strong><span>Requesting concept, CAD, and design work.</span><a class="pill primary" href="#">Add link</a></div>
-            <div class="resource-row"><strong>Document Upload SOP</strong><span>Naming, versioning, and handoff process.</span><a class="pill primary" href="#">Add link</a></div>
-          </div>
-        </section>
-
-        <section class="resource-simple-section">
-          <h1 class="section-heading">Links</h1>
-          <div class="section-rule"></div>
-          <div class="resource-list">
-            <div class="resource-row"><strong>Project Software</strong><span>Current project management software placeholder.</span><a class="pill primary" href="PASTE_PROJECT_MANAGEMENT_SOFTWARE_LINK_HERE" target="_blank" rel="noopener">Open</a></div>
-            <div class="resource-row"><strong>Drive Folder</strong><span>Main Google Drive folder placeholder.</span><a class="pill primary" href="PASTE_GOOGLE_DRIVE_FOLDER_LINK_HERE" target="_blank" rel="noopener">Open</a></div>
-          </div>
-        </section>
-
-        <section class="resource-simple-section">
-          <h1 class="section-heading">Presentations</h1>
-          <div class="section-rule"></div>
-          <div class="resource-list">
-            <div class="resource-row"><strong>UTFPR Presentation</strong><span>Partner-facing presentation placeholder.</span><a class="pill primary" href="PASTE_PRESENTATION_LINK_HERE" target="_blank" rel="noopener">Open</a></div>
-            <div class="resource-row"><strong>Project Overview Deck</strong><span>General R&amp;D overview presentation placeholder.</span><a class="pill primary" href="#">Add link</a></div>
-          </div>
-        </section>
-      </section>
-
-      <section id="portal" class="view">
-        <div class="portal-actions" style="display:flex; align-items:center; gap:10px;">
-          <button class="pill primary" id="openDeliverableForm" type="button">
-            Submit deliverable
-          </button>
-
-          <span class="info-dot"
-                style="position:relative; display:inline-grid; place-items:center; margin-left:0;">
-            i
-            <span class="info-tip">
-              University collaboration → Submit deliverable → Required information and file are recorded → Reviewer receives an email → UL reviews → Approved file moves to the Shared Drive → Aquido is updated → Next owner continues.
-            </span>
-          </span>
-        </div>
-
-        <section class="portal-reference-section">
-          <div class="portal-topbar">
-            <div class="portal-top-label">Process flow</div>
-            <div class="portal-top-center">Automated test rig architecture</div>
-            <div class="portal-top-spacer"></div>
-          </div>
-
-          <div class="portal-rig-layout">
-            <aside class="portal-process-list">
-              <div class="process-item"><div><strong>Linear motor</strong><small>Provides controlled linear motion.</small></div></div>
-              <div class="process-item"><div><strong>Cable load cell</strong><small>Measures tension in the cable.</small></div></div>
-              <div class="process-item"><div><strong>Bowden cable / tendon input</strong><small>Transfers force to the hand.</small></div></div>
-              <div class="process-item"><div><strong>Fixed bed</strong><small>Rigid base to hold the mount in place.</small></div></div>
-              <div class="process-item"><div><strong>Wrist mount</strong><small>Secures the 3D printed hand.</small></div></div>
-              <div class="process-item"><div><strong>3D printed hand</strong><small>Device under test.</small></div></div>
-              <div class="process-item"><div><strong>Grip target load cell</strong><small>Measures grip force applied by the hand.</small></div></div>
-              <div class="process-item"><div><strong>DAQ controller</strong><small>Collects data from sensors and motors.</small></div></div>
-              <div class="process-item"><div><strong>Python interface</strong><small>Plotting, control, and data logging.</small></div></div>
-            </aside>
-
-            <div class="portal-image-panel">
-              <div class="portal-rig-image-wrap" aria-label="Automated test rig overview">
-                <img class="portal-rig-image" src="testbench-architecture.webp" alt="Automated test rig architecture">
-
-              </div>
-
-              <div class="hover-help">Hover or click a number to see the part detail.</div>
-            </div>
-          </div>
-
-          <div class="portal-info-row">
-            <div class="portal-mini-panel">
-              <h3>Parts labelled</h3>
-              <div class="portal-label-grid">
-                <div class="label-item"><span>Linear actuator</span></div>
-                <div class="label-item"><span>Cable load cell</span></div>
-                <div class="label-item"><span>Bowden / tendon cable</span></div>
-                <div class="label-item"><span>Fixed bed</span></div>
-                <div class="label-item"><span>Wrist mount</span></div>
-                <div class="label-item"><span>3D printed hand</span></div>
-                <div class="label-item"><span>Grip target load cell</span></div>
-                <div class="label-item"><span>DAQ controller</span></div>
-                <div class="label-item"><span>Python interface</span></div>
-              </div>
-            </div>
-
-            <div class="portal-mini-panel system-overview-panel">
-              <h3>System overview</h3>
-              <div class="system-flow">
-                <div class="flow-row">
-                  <div class="flow-item">Linear actuator</div>
-                  <div class="flow-arrow">→</div>
-                  <div class="flow-item">Cable load cell</div>
-                  <div class="flow-arrow">→</div>
-                  <div class="flow-item">Bowden / tendon cable</div>
-                </div>
-                <div class="flow-row">
-                  <div class="flow-item">3D printed hand</div>
-                  <div class="flow-arrow">→</div>
-                  <div class="flow-item">Grip target load cell</div>
-                  <div class="flow-arrow">→</div>
-                  <div class="flow-item">DAQ + Python log</div>
+              <div class="copy">
+                <h1 data-i18n="t5">UL arm &ndash; Live</h1>
+                <p data-i18n="b5">Current testing focus areas and timeline.</p>
+                <div class="rule"></div>
+                <div class="teamTitle" data-i18n="liveTeam">Team &amp; key tasks</div>
+                <div class="liveTeam">
+                  <div class="liveRow">
+                    <span class="liveAv">WA</span>
+                    <span class="liveTasks">
+                      <span class="task" data-i18n="rm1">Wrist design</span>
+                      <span class="task" data-i18n="rm3">Finger design</span>
+                      <span class="task" data-i18n="rm4">Preliminary testing</span>
+                    </span>
+                  </div>
+                  <div class="liveRow">
+                    <span class="liveAv">SD</span>
+                    <span class="liveTasks">
+                      <span class="task" data-i18n="an1">Budget</span>
+                      <span class="task" data-i18n="an2">Timeline</span>
+                      <span class="task" data-i18n="an3">Task assignment</span>
+                    </span>
+                  </div>
+                  <div class="liveRow">
+                    <span class="liveAv">AL</span>
+                    <span class="liveTasks">
+                      <span class="task" data-i18n="sj1">Survey review</span>
+                      <span class="task" data-i18n="sj2">Test review</span>
+                    </span>
+                  </div>
+                  <div class="liveRow">
+                    <span class="liveAv">NU</span>
+                    <span class="liveTasks">
+                      <span class="task" data-i18n="ch1">Test lead volunteer</span>
+                      <span class="task" data-i18n="ch2">Silicon glove MVP</span>
+                      <span class="task" data-i18n="ch3">Test case review</span>
+                    </span>
+                  </div>
                 </div>
               </div>
-            </div>
+            </article>
           </div>
-
-          <section class="student-brief">
-            <h3>Student build brief</h3>
-            <div class="brief-grid">
-              <article class="brief-card">
-                <h4>Project goal</h4>
-                <p>Design and validate a compact benchtop test rig for 3D-printed prosthetic hands that can measure force transfer, cable loading, and grip performance under repeatable operating conditions.</p>
-              </article>
-              <article class="brief-card">
-                <h4>Core concept</h4>
-                <p>The rig applies a controlled cable pull, measures input and output force using load cells, and logs the data for repeatable evaluation of fatigue, wear, and slip behavior.</p>
-              </article>
-              <article class="brief-card">
-                <h4>Flexible hardware</h4>
-                <p>Teams may use equivalent motors, drivers, sensors, and fixtures based on cost, availability, and experience. The objective is to achieve similar test fidelity with a practical, buildable system.</p>
-              </article>
-              <article class="brief-card">
-                <h4>Evaluation themes</h4>
-                <p>Key test themes include force transfer, cyclic fatigue, grip retention, slip resistance, creep, and environmental wear under repeated loading.</p>
-              </article>
-            </div>
-          </section>
-
-        </section>
-      </section>
-
-    </main>
-  </section>
-</div>
-
-<footer class="feedback">
-  <span>feedback stays visible on every page</span>
-  <a href="mailto:elizabeth@universallimbs.com?cc=ana@universallimbs.com,saja@universallimbs.com,maria@universallimbs.com,nicole@universallimbs.com,sahitya@universallimbs.com&subject=R&D%20Dashboard%20Feedback&body=Hi team,%0D%0A%0D%0AFeedback for the R%26D dashboard:%0D%0A%0D%0APage/section:%0D%0AIssue or suggestion:%0D%0APriority:%0D%0A%0D%0AThank you.">send feedback</a>
-</footer>
-
-<div class="modal" id="visualModal" aria-hidden="true">
-  <div class="modal-card">
-    <div class="modal-top"><strong id="modalTitle">Visual</strong><button class="modal-close" type="button" id="modalClose">×</button></div>
-    <img id="modalImg" src="" alt="Milestone visual">
-    <p id="modalText"></p>
-  </div>
-</div>
-
-<div class="modal" id="milestoneEditorModal" aria-hidden="true">
-  <div class="modal-card editor-card">
-    <div class="modal-top"><strong>Edit milestones</strong><button class="modal-close" type="button" id="milestoneEditorClose">×</button></div>
-    <form id="milestoneEditorForm">
-      <div class="editor-tabs" id="milestoneEditorTabs"></div>
-      <div id="milestoneEditorFields"></div>
-      <div class="editor-actions">
-        <button class="pill" type="button" id="addMilestoneBtn">Add milestone</button>
-        <button class="pill primary" type="submit">Save changes</button>
+        </div>
       </div>
-    </form>
-  </div>
+
+      <div class="teamBar">
+        <div class="teamTitle" data-i18n="team">Team</div>
+        <div class="teamScroll">
+          <div class="person"><div class="avatar">R</div><div class="person-name">Rasna</div><div class="person-role" data-i18n="roleFounder">Founder</div></div>
+          <div class="person"><div class="avatar">A</div><div class="person-name">Ana</div><div class="person-role" data-i18n="roleFinance">Finance</div></div>
+          <div class="person"><div class="avatar">S</div><div class="person-name">Saja</div><div class="person-role" data-i18n="roleProsthetics">Prosthetics</div></div>
+          <div class="person"><div class="avatar">C</div><div class="person-name">Christopher</div><div class="person-role" data-i18n="roleEA">EA</div></div>
+          <div class="person"><div class="avatar">SD</div><div class="person-name">Sahitya D</div><div class="person-role" data-i18n="roleRD">R&amp;D lead</div></div>
+          <div class="person"><div class="avatar">NU</div><div class="person-name">Nili U</div><div class="person-role" data-i18n="roleSys">Systems eng.</div></div>
+          <div class="person"><div class="avatar">GA</div><div class="person-name">Ganesh A</div><div class="person-role" data-i18n="roleSim">Simulation</div></div>
+          <div class="person"><div class="avatar">MA</div><div class="person-name">Maria</div><div class="person-role" data-i18n="roleUni">University</div></div>
+          <div class="person"><div class="avatar">WA</div><div class="person-name">Walid</div><div class="person-role" data-i18n="roleCad">3D CAD</div></div>
+          <div class="person"><div class="avatar">NA</div><div class="person-name">Nadine A</div><div class="person-role" data-i18n="roleDocs">Documentation</div></div>
+        </div>
+      </div>
+
+      <nav class="quick-actions" aria-label="Quick links">
+        <a class="action" href="https://drive.google.com/drive/folders/1Ivb5dBSLBMFxxECXYnxrvsyfE7t819Is?usp=drive_link" target="_blank" rel="noopener">
+          <svg viewBox="0 0 28 28"><path d="M3.5 23V7.5h8l2 2h11V23z"/></svg><span data-i18n="aDown">Down</span></a>
+        <a class="action" href="https://drive.google.com/drive/folders/1Ivb5dBSLBMFxxECXYnxrvsyfE7t819Is?usp=drive_link" target="_blank" rel="noopener">
+          <svg viewBox="0 0 28 28"><path d="M8 21H6.5a5 5 0 0 1-.5-10A7 7 0 0 1 19 9a6 6 0 0 1 1.5 12H20"/><path d="M14 23V11m-4 4 4-4 4 4"/></svg><span data-i18n="aUp">UP</span></a>
+        <a class="action" href="https://anqido.app/social" target="_blank" rel="noopener">
+          <svg viewBox="0 0 28 28"><path d="m11 17-2 2a4 4 0 0 1-6-6l4-4a4 4 0 0 1 6 0"/><path d="m17 11 2-2a4 4 0 0 1 6 6l-4 4a4 4 0 0 1-6 0"/><path d="m9 19 10-10"/></svg><span data-i18n="aLinks">Links &amp; Mins</span></a>
+      </nav>
+
+    </div>
+  </section>
+
+  <section class="page placeholder" id="pr"><div class="card"><h1>P&amp;R</h1><p data-i18n="ready">This department is ready for its content.</p></div></section>
+  <section class="page placeholder" id="finance"><div class="card"><h1>Finance</h1><p data-i18n="ready">This department is ready for its content.</p></div></section>
+  <section class="page placeholder" id="ulf"><div class="card"><h1>ULF</h1><p data-i18n="ready">This department is ready for its content.</p></div></section>
 </div>
 
-<script type="module" src="assets/js/app.js"></script>
-</div>
-<div id="asana-react-root"></div>
+<script>
+document.querySelectorAll('.department').forEach(btn => btn.addEventListener('click', () => {
+  document.querySelectorAll('.department,.page').forEach(el => el.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById(btn.dataset.page).classList.add('active');
+}));
 
-<div class="modal" id="deliverableModal" aria-hidden="true">
-  <div class="modal-card editor-card">
-    <div class="modal-top"><strong>Submit deliverable</strong><button class="modal-close" type="button" id="deliverableClose">×</button></div>
-    <form id="deliverableForm" class="submission-form">
-      <label><span>Your name</span><input name="submitterName" required></label>
-      <label><span>University / organization</span><input name="organization" required></label>
-      <label><span>Task name</span><input name="taskName" required></label>
-      <label><span>What are you submitting?</span><select name="submissionType" required><option value="">Choose</option><option>Concept</option><option>Working file</option><option>Final file</option><option>Research or validation result</option><option>Other</option></select></label>
-      <label><span>Version</span><input name="version" placeholder="For example: v1.2" required></label>
-      <label><span>What changed?</span><textarea name="changes" rows="3" required></textarea></label>
-      <label><span>Send to reviewer</span>
-        <select name="recipientEmail" required>
-          <option value="">Select a reviewer</option>
-          <option value="saja-amro">Saja Amro - Prosthetist</option>
-          <option value="nadine-arar">Nadine Arar - Test Lead / Mentor</option>
-          <option value="maria">Maria - University Collaboration Lead</option>
-          <option value="walid">Walid - 3D CAD designer expert</option>
-          <option value="ganesh">Ganesh - 3D validator &amp; simulator</option>
-          <option value="nili">Nili - Product Success</option>
-          <option value="abhay">Abhay - Researcher</option>
-          <option value="matthew">Matthew - Concept artist</option>
-          <option value="other">Other</option>
-        </select>
-      </label>
-      <label id="otherReviewerField" hidden><span>Other reviewer email</span><input name="otherReviewerEmail" type="email" placeholder="reviewer@universallimbs.com"></label>
-      <label><span>Expected next steps</span><select name="nextSteps" required><option value="">Choose</option><option>Review</option><option>Revision required</option><option>Approve</option><option>Testing</option><option>Other</option></select></label>
-      <label><span>Upload your deliverable file</span><input name="deliverableFile" type="file" required accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.zip,.stl,.step,.stp,.png,.jpg,.jpeg" aria-describedby="fileHelp"><small id="fileHelp">Upload the working or final file for UL review. Maximum 10 MB.</small></label>
-      <label><span>Notes</span><textarea name="notes" rows="4"></textarea></label>
-      <p id="deliverableStatus" role="status"></p>
-      <div class="editor-actions"><button class="pill primary" type="submit">Send deliverable</button></div>
-    </form>
-  </div>
-</div>
+const track = document.getElementById('track');
+const refs = [...document.querySelectorAll('.reference')];
+const COUNT = refs.length;
+let i = 0;
+
+refs.forEach((r, n) => r.addEventListener('click', () => go(n)));
+
+function go(n) {
+  i = Math.max(0, Math.min(COUNT - 1, n));
+  track.style.transform = 'translateX(-' + (i * 100) + '%)';
+  refs.forEach((r, k) => r.classList.toggle('active', k === i));
+}
+go(0);
+
+const COPY = {
+  en: {},
+  pt: {
+    ref1: "Waacs", ref2: "YaleHand", ref3: "Softfoot Pro", ref4: "Braço UL", ref5: "Ao vivo",
+    t5: "Braço UL – Ao vivo", b5: "Áreas de teste em curso e respetivo calendário.",
+    liveA: "A - 30 SET", liveL: "D - 30 SET", liveR: "D - 30 SET",
+    liveTeam: "Equipa e tarefas-chave",
+    legA: "Ativo agora", legD: "Desenho a seguir",
+    rm1: "Desenho do punho", rm2: "Validação do parceiro", rm3: "Desenho dos dedos", rm4: "Testes preliminares",
+    an1: "Orçamento", an2: "Calendário", an3: "Atribuição de tarefas",
+    sj1: "Revisão do inquérito", sj2: "Revisão dos testes", sj3: "Preparação de ensaio",
+    ch1: "Voluntário responsável pelos testes", ch2: "MVP da luva de silicone", ch3: "Revisão dos casos de teste",
+    t1: "Base", t2: "YaleHand", t3: "Softfoot Pro", t4: "Braço UL",
+    b1: "Como base estamos a usar um braço impresso em 3D de código aberto chamado Waacs, da e-nable. Vamos começar as nossas alterações de desenho e os testes nesta base e, gradualmente, fazer engenharia inversa das melhores funcionalidades da Yalehand e da Softfoot Pro. O foco está em contextos de poucos recursos e num dispositivo terminal para crianças dos 6 aos 12 anos.",
+    b2: "Vamos fazer engenharia inversa das principais funcionalidades da Yalehand para melhorar função, durabilidade e usabilidade: preensão adaptativa, peso reduzido, atuação de baixa força e desempenho validado por investigação.",
+    b3: "Vamos aprender com a Softfoot Pro para integrar as melhores soluções mecânicas em simplicidade e fiabilidade: um desenho comprovado, robusto e testado em campo, com lições para contextos de poucos recursos.",
+    b4: "Uma prótese de membro superior simples, durável e acessível, desenhada para contextos de poucos recursos e crianças dos 6 aos 12 anos. Acessível, fácil de montar, focada em crianças e feita para uso real.",
+    team: "Equipa", roleFounder: "Fundadora", roleFinance: "Finanças",
+    roleRD: "Direção de I&D", roleSys: "Eng. de sistemas", roleSim: "Simulação",
+    roleUni: "Universidades", roleCad: "CAD 3D", roleDocs: "Documentação",
+    roleProsthetics: "Próteses", roleEA: "Assistente executiva",
+    aDown: "Descarregar", aUp: "Enviar", aLinks: "Ligações e atas",
+    ready: "Este departamento está pronto para o seu conteúdo."
+  }
+};
+document.querySelectorAll('[data-i18n]').forEach(el => { COPY.en[el.dataset.i18n] = el.textContent; });
+document.querySelectorAll('.lang button').forEach(btn => btn.addEventListener('click', () => {
+  document.querySelectorAll('.lang button').forEach(b => b.classList.toggle('active', b === btn));
+  const dict = COPY[btn.dataset.lang] || COPY.en;
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    el.textContent = dict[el.dataset.i18n] || COPY.en[el.dataset.i18n];
+  });
+}));
+</script>
 </body>
 </html>
