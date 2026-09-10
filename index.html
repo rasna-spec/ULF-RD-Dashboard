@@ -4,174 +4,899 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Universal Limbs — R&amp;D</title>
+
 <style>
-:root{--ink:#181a1c;--mute:#7d7a77;--orange:#f97316;--line:#e2ded9;--card:#f1eeeb}
-*{box-sizing:border-box}
-html{background:#e9e6e3}
-body{margin:0;color:var(--ink);font-family:Arial,Helvetica,sans-serif;background:#e9e6e3;min-height:100vh}
-button,a{font:inherit;color:inherit}
+:root {
+  --ink:#181a1c;
+  --mute:#7d7a77;
+  --orange:#f97316;
+  --line:#e2ded9;
+  --card:#f1eeeb;
+}
 
-.wrap{width:min(100%,760px);margin:0 auto;padding:52px 20px 72px}
-.topbar{display:flex;align-items:center;gap:8px;margin-bottom:22px}
-.departments{width:100%;height:38px;display:grid;grid-template-columns:repeat(4,1fr);
-  background:#f4f2ef;border-radius:12px}
-.department{position:relative;border:0;background:transparent;font-size:11px;color:#8f8b87;cursor:pointer}
-.department.active{font-weight:700;color:var(--ink)}
-.department.active:after{content:"";position:absolute;left:24%;right:24%;bottom:5px;height:2px;border-radius:2px;background:var(--orange)}
-.lang{display:flex;background:#f4f2ef;border-radius:12px;padding:3px;height:38px;align-items:center;flex:none}
-.lang button{border:0;background:none;border-radius:9px;padding:6px 10px;font-size:10px;color:#8f8b87;cursor:pointer}
-.lang button.active{background:#fff;color:var(--ink);font-weight:700;box-shadow:0 1px 3px #3c2d2314}
+* { box-sizing:border-box; }
 
-.card{background:#faf9f7;border-radius:26px;padding:30px 32px 40px;box-shadow:0 24px 60px #3c2d230f}
-.page{display:none}.page.active{display:block}
+html,
+body {
+  background:#e9e6e3;
+}
 
-/* reference tabs */
-.references{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-bottom:30px}
-.reference{border:0;background:transparent;padding:0;cursor:pointer;text-align:center;
-  font-size:10px;color:#8f8b87;line-height:1.2}
-.reference.active{color:var(--ink);font-weight:700}
-.thumb{display:block;width:34px;height:34px;margin:0 auto 9px;
-  background-image:repeating-linear-gradient(45deg,#c4c4c4 0 2px,transparent 2px 7px)}
-.reference:nth-child(2) .thumb{background-image:repeating-linear-gradient(45deg,#f8b271 0 2px,transparent 2px 7px)}
-.reference:nth-child(3) .thumb{background-image:repeating-linear-gradient(45deg,#f9862c 0 4px,transparent 4px 8px)}
-.reference:nth-child(4) .thumb{background:#f7902f;background-image:none}
-.reference:nth-child(5) .thumb{background:#0fb875;background-image:none}
-.reference:nth-child(5).active .refUnderline{background:#0fb875}
-.refUnderline{display:block;width:30px;height:2px;background:transparent;margin:7px auto 0;border-radius:3px}
-.reference.active .refUnderline{background:var(--orange)}
+body {
+  margin:0;
+  color:var(--ink);
+  font-family:Arial,Helvetica,sans-serif;
+  min-height:100vh;
+}
 
-/* slides */
-.stage{position:relative}
-.viewport{overflow:hidden}
-.track{display:flex;transition:transform .4s cubic-bezier(.4,0,.2,1)}
-.slide{flex:0 0 100%;width:100%;display:grid;grid-template-columns:44% minmax(0,1fr);gap:24px;align-items:center;padding:0 2px}
-.art{width:100%;display:grid;place-items:center}
-.art img{display:block;width:88%;height:auto;filter:drop-shadow(0 20px 28px rgba(60,45,35,.14))}
-.copy{width:100%;text-align:left}
-.copy h1{font-size:27px;margin:0 0 12px;line-height:1.05;letter-spacing:-.6px}
-.copy p{font-size:13px;line-height:1.6;color:#55585b;margin:0}
-.liveArt{position:relative}
-.liveArt img{position:relative;z-index:1}
-.liveArt .ring,.liveArt .pill{z-index:2}
-.arcA{position:absolute;z-index:0;top:4%;left:50%;width:66%;aspect-ratio:2/1;transform:translateX(-50%);
+button,
+a {
+  font:inherit;
+  color:inherit;
+}
+
+.wrap {
+  width:min(100%,760px);
+  margin:0 auto;
+  padding:52px 20px 72px;
+}
+
+.topbar {
+  display:flex;
+  align-items:center;
+  gap:8px;
+  margin-bottom:22px;
+}
+
+.departments {
+  width:100%;
+  height:38px;
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  background:#f4f2ef;
+  border-radius:12px;
+}
+
+.department {
+  position:relative;
+  border:0;
+  background:transparent;
+  font-size:11px;
+  color:#8f8b87;
+  cursor:pointer;
+}
+
+.department.active {
+  font-weight:700;
+  color:var(--ink);
+}
+
+.department.active::after {
+  content:"";
+  position:absolute;
+  left:24%;
+  right:24%;
+  bottom:5px;
+  height:2px;
+  border-radius:2px;
+  background:var(--orange);
+}
+
+.lang {
+  display:flex;
+  background:#f4f2ef;
+  border-radius:12px;
+  padding:3px;
+  height:38px;
+  align-items:center;
+  flex:none;
+}
+
+.lang button {
+  border:0;
+  background:none;
+  border-radius:9px;
+  padding:6px 10px;
+  font-size:10px;
+  color:#8f8b87;
+  cursor:pointer;
+}
+
+.lang button.active {
+  background:#fff;
+  color:var(--ink);
+  font-weight:700;
+  box-shadow:0 1px 3px #3c2d2314;
+}
+
+.card {
+  background:#faf9f7;
+  border-radius:26px;
+  padding:30px 32px 40px;
+  box-shadow:0 24px 60px #3c2d230f;
+}
+
+.page {
+  display:none;
+}
+
+.page.active {
+  display:block;
+}
+
+/* Reference tabs */
+
+.references {
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:6px;
+  margin-bottom:30px;
+}
+
+.reference {
+  border:0;
+  background:transparent;
+  padding:0;
+  cursor:pointer;
+  text-align:center;
+  font-size:10px;
+  color:#8f8b87;
+  line-height:1.2;
+}
+
+.reference.active {
+  color:var(--ink);
+  font-weight:700;
+}
+
+.thumb {
+  display:block;
+  width:34px;
+  height:34px;
+  margin:0 auto 9px;
+  background-image:repeating-linear-gradient(
+    45deg,
+    #c4c4c4 0 2px,
+    transparent 2px 7px
+  );
+}
+
+.reference:nth-child(2) .thumb {
+  background-image:repeating-linear-gradient(
+    45deg,
+    #f8b271 0 2px,
+    transparent 2px 7px
+  );
+}
+
+.reference:nth-child(3) .thumb {
+  background-image:repeating-linear-gradient(
+    45deg,
+    #f9862c 0 4px,
+    transparent 4px 8px
+  );
+}
+
+.reference:nth-child(4) .thumb {
+  background:#f7902f;
+  background-image:none;
+}
+
+.reference:nth-child(5) .thumb {
+  background:#0fb875;
+  background-image:none;
+}
+
+.reference:nth-child(5).active .refUnderline {
+  background:#0fb875;
+}
+
+.refUnderline {
+  display:block;
+  width:30px;
+  height:2px;
+  background:transparent;
+  margin:7px auto 0;
+  border-radius:3px;
+}
+
+.reference.active .refUnderline {
+  background:var(--orange);
+}
+
+/* Slides */
+
+.stage {
+  position:relative;
+}
+
+.viewport {
+  overflow:hidden;
+}
+
+.track {
+  display:flex;
+  transition:transform .4s cubic-bezier(.4,0,.2,1);
+}
+
+.slide {
+  flex:0 0 100%;
+  width:100%;
+  display:grid;
+  grid-template-columns:44% minmax(0,1fr);
+  gap:24px;
+  align-items:center;
+  padding:0 2px;
+}
+
+.art {
+  width:100%;
+  display:grid;
+  place-items:center;
+}
+
+.art img {
+  display:block;
+  width:88%;
+  height:auto;
+  filter:drop-shadow(0 20px 28px rgba(60,45,35,.14));
+}
+
+.copy {
+  width:100%;
+  text-align:left;
+}
+
+.copy h1 {
+  font-size:27px;
+  margin:0 0 12px;
+  line-height:1.05;
+  letter-spacing:-.6px;
+}
+
+.copy p {
+  font-size:13px;
+  line-height:1.6;
+  color:#55585b;
+  margin:0;
+}
+
+.liveArt {
+  position:relative;
+}
+
+.liveArt img {
+  position:relative;
+  z-index:1;
+}
+
+.liveArt .ring,
+.liveArt .pill {
+  z-index:2;
+}
+
+.arcA {
+  position:absolute;
+  z-index:0;
+  top:4%;
+  left:50%;
+  width:66%;
+  aspect-ratio:2/1;
+  transform:translateX(-50%);
   border-radius:999px 999px 0 0;
-  background:radial-gradient(ellipse at 50% 100%,rgba(15,184,117,.55) 0 42%,rgba(15,184,117,.30) 42% 68%,rgba(15,184,117,.15) 68% 100%)}
-.ring{position:absolute;width:46px;height:46px;border-radius:999px;transform:translate(-50%,-50%);
-  background:radial-gradient(circle,#0d2b22 0 9%,rgba(15,184,117,.55) 9% 34%,rgba(15,184,117,.28) 34% 62%,rgba(15,184,117,.12) 62% 100%)}
-.ringA{top:13%;left:50%;width:14px;height:14px;background:radial-gradient(circle,#0d2b22 0 30%,transparent 30%)}
-.ringL{top:64%;left:32%}
-.ringR{top:64%;left:68%}
-.pill{position:absolute;background:#0fb875;color:#08281e;font-size:9px;font-weight:700;
-  letter-spacing:.03em;border-radius:999px;padding:5px 11px;white-space:nowrap}
-.pillA{top:0;left:50%;transform:translateX(-50%)}
-.pillL{top:78%;left:0}
-.pillR{top:78%;right:0}
-.liveTeam{display:flex;flex-direction:column;gap:10px}
-.liveRow{display:grid;grid-template-columns:34px minmax(0,1fr);gap:10px;align-items:center}
-.liveAv{width:34px;height:34px;border-radius:999px;background:#e6f7ef;color:#0b7a52;
-  display:grid;place-items:center;font-size:11px;font-weight:700;letter-spacing:.02em}
-.liveTasks{display:flex;flex-wrap:wrap;gap:5px}
-.task{font-size:10px;color:#3f4245;background:#f2efec;border-radius:999px;padding:4px 9px;white-space:nowrap}
-.legend{display:flex;gap:14px;flex-wrap:wrap;margin-top:10px}
-.legendItem{display:flex;align-items:center;gap:6px;font-size:10px;color:#6f6c69}
-.key{display:grid;place-items:center;width:16px;height:16px;border-radius:999px;font-size:9px;font-weight:700}
-.keyA{background:#0fb875;color:#08281e}
-.keyD{background:#dff4ea;color:#0b7a52}
-.artLegend{justify-content:center;margin-top:14px}
-.rule{height:1px;background:#e6e2dd;margin:26px 0 20px}
-.teamTitle{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#8f8b87;font-weight:700;margin-bottom:16px}
-.teamBar{margin-top:26px;padding-top:20px;border-top:1px solid #e6e2dd}
-.teamScroll{display:flex;gap:16px;overflow-x:auto;padding-bottom:6px;scrollbar-width:thin}
-.teamScroll .person{flex:0 0 68px}
-.team{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
-.person{text-align:center;font-size:11px;line-height:1.3}
-.avatar{width:42px;height:42px;border-radius:50%;margin:0 auto 7px;background:#e6e2de;
-  display:grid;place-items:center;font-size:15px;font-weight:600;color:#8f8b87;overflow:hidden}
-.avatar img{width:100%;height:100%;object-fit:cover}
-.person-name{font-weight:700}
-.person-role{color:var(--mute);margin-top:1px;font-size:10px}
+  background:radial-gradient(
+    ellipse at 50% 100%,
+    rgba(15,184,117,.55) 0 42%,
+    rgba(15,184,117,.30) 42% 68%,
+    rgba(15,184,117,.15) 68% 100%
+  );
+}
 
-.navArrow{position:absolute;top:44%;transform:translateY(-50%);width:56px;height:56px;border:0;
-  border-radius:999px;background:#fff;box-shadow:0 8px 22px #3c2d2322;font-size:22px;color:#333;cursor:pointer;z-index:3}
-.navArrow.prev{left:-24px}.navArrow.next{right:-24px}
-.navArrow[disabled]{opacity:0;pointer-events:none}
+.ring {
+  position:absolute;
+  width:46px;
+  height:46px;
+  border-radius:999px;
+  transform:translate(-50%,-50%);
+  background:radial-gradient(
+    circle,
+    #0d2b22 0 9%,
+    rgba(15,184,117,.55) 9% 34%,
+    rgba(15,184,117,.28) 34% 62%,
+    rgba(15,184,117,.12) 62% 100%
+  );
+}
 
-.quick-actions{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:28px}
-.action{height:70px;border:0;border-radius:14px;background:#f2efec;display:flex;flex-direction:column;
-  align-items:center;justify-content:center;gap:7px;text-decoration:none;font-size:11px;font-weight:700;cursor:pointer}
-.action:hover{background:#ece8e4}
-.action svg{width:22px;height:22px;fill:none;stroke:#111;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.ringA {
+  top:13%;
+  left:50%;
+  width:14px;
+  height:14px;
+  background:radial-gradient(circle,#0d2b22 0 30%,transparent 30%);
+}
 
-.dots{display:flex;justify-content:center;gap:14px;margin-top:24px}
-.dot{width:13px;height:13px;border-radius:999px;border:0;padding:0;background:#d6d2ce;cursor:pointer}
-.dot.active{background:var(--orange)}
+.ringL {
+  top:64%;
+  left:32%;
+}
 
-.finHead{display:flex;align-items:baseline;justify-content:space-between;gap:20px;flex-wrap:wrap}
-.finTitle{font-size:26px;margin:0;letter-spacing:-.6px}
-.finAsof{font-size:12px;color:var(--mute);margin-top:4px}
-.finSummary{font-size:13px;color:var(--mute)}
-.finSummary b{color:var(--ink)}
-.fundRow{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:28px}
-.fundCard{background:#f3f0ed;border-radius:18px;padding:18px 20px}
-.fundCard.lead{background:#eef8f2}
-.fundL{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--mute);font-weight:700}
-.fundN{font-size:28px;font-weight:700;letter-spacing:-1.2px;margin-top:8px}
-.fundCard.lead .fundN{color:#0b7a52}
-.fundM{font-size:11px;color:#7d7975;margin-top:6px;line-height:1.45}
-.finSec{margin:30px 0 14px}
-.clickable{cursor:pointer}
-.clickable:hover{background:#efebe7}
-.fundL{display:flex;align-items:center;justify-content:space-between;gap:8px}
-.chev{font-size:15px;color:var(--mute);transition:transform .25s ease}
-.chev.open{transform:rotate(90deg)}
-.breakdown{display:none;margin-top:12px;background:#f8f6f4;border-radius:18px;padding:20px 22px}
-.breakdown.open{display:block}
-.donutWrap{display:grid;grid-template-columns:150px minmax(0,1fr);gap:22px;align-items:center}
-.donut{position:relative;width:150px;height:150px;border-radius:999px;
-  background:conic-gradient(#14a08a 0 35%,#f2604c 35% 61%,#f5a623 61% 78%,#2f3234 78% 91%,#d3cec9 91% 100%)}
-.donutHole{position:absolute;inset:17px;border-radius:999px;background:#f8f6f4;display:grid;place-content:center;text-align:center}
-.donutN{font-size:22px;font-weight:700;letter-spacing:-.8px}
-.donutL{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#7d7975;margin-top:2px}
-.breakList{display:flex;flex-direction:column;gap:9px}
-.breakRow{display:grid;grid-template-columns:10px minmax(0,1fr) auto;gap:10px;align-items:center;font-size:12px;color:#3f4245}
-.sw{width:10px;height:10px;border-radius:3px}
-@media(max-width:520px){.donutWrap{grid-template-columns:1fr;justify-items:center}}
-.needGrid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;align-items:stretch}
-.need{background:#f3f0ed;border-radius:14px;padding:14px 15px;display:flex;flex-direction:column}
-.need .fundL{font-size:10px;letter-spacing:.08em;line-height:13px;min-height:26px;align-items:center;justify-content:flex-start}
-.needN{font-size:17px;font-weight:700;letter-spacing:-.5px;margin-top:7px;line-height:22px;min-height:22px;display:flex;align-items:center}
-.needN.tbc{font-size:13px;font-weight:400;color:#7d7975}
-.need .fundM{margin-top:auto;padding-top:6px}
-.needNote{margin-top:14px}
-.needKeyRow{display:flex;align-items:center;gap:7px;flex-wrap:wrap}
-.needKeyRow .key+span{margin-right:8px}
-.keyP{background:#0fb875;color:#08281e}
-.keyPR{background:#0fb875;color:#08281e;width:auto;padding:0 7px;border-radius:999px;font-size:8px}
-.need .fundL .keyPR{margin-left:6px}
-.need .fundL .keyP{margin-left:6px}
-.needNote2{margin-top:4px}
-@media(max-width:620px){.needGrid{grid-template-columns:repeat(2,1fr)}}
-.finTable{width:100%;border-collapse:collapse;font-size:13px}
-.finTable th{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#7d7975;font-weight:700;text-align:right;padding:0 0 14px}
-.finTable th:first-child{text-align:left}
-.finTable td{padding:13px 0;border-top:1px solid #ece8e3;text-align:right}
-.finTable td:first-child{text-align:left}
-.finTable td.z{color:#7d7975}
-.finTable td.p{color:var(--orange);font-weight:700}
-.finTable tr.total td{font-weight:700;border-top:1px solid #ddd8d2;padding-top:15px}
-.finNote{font-size:11px;color:#7d7975;margin-top:22px}
-.finActions{margin-top:26px}
-.placeholder .card{padding:90px 24px;text-align:center;color:#7d7a77}
-.placeholder h1{color:var(--ink);font-size:24px;margin:0 0 6px}
+.ringR {
+  top:64%;
+  left:68%;
+}
 
-@media(max-width:480px){
-  .wrap{padding:28px 14px 44px}
-  .slide{grid-template-columns:1fr;gap:16px}
-  .art img{width:60%}
-  .copy h1{font-size:24px}
+.pill {
+  position:absolute;
+  background:#0fb875;
+  color:#08281e;
+  font-size:9px;
+  font-weight:700;
+  letter-spacing:.03em;
+  border-radius:999px;
+  padding:5px 11px;
+  white-space:nowrap;
+}
+
+.pillA {
+  top:0;
+  left:50%;
+  transform:translateX(-50%);
+}
+
+.pillL {
+  top:78%;
+  left:0;
+}
+
+.pillR {
+  top:78%;
+  right:0;
+}
+
+.liveTeam {
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+
+.liveRow {
+  display:grid;
+  grid-template-columns:34px minmax(0,1fr);
+  gap:10px;
+  align-items:center;
+}
+
+.liveAv {
+  width:34px;
+  height:34px;
+  border-radius:999px;
+  background:#e6f7ef;
+  color:#0b7a52;
+  display:grid;
+  place-items:center;
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:.02em;
+}
+
+.liveTasks {
+  display:flex;
+  flex-wrap:wrap;
+  gap:5px;
+}
+
+.task {
+  font-size:10px;
+  color:#3f4245;
+  background:#f2efec;
+  border-radius:999px;
+  padding:4px 9px;
+  white-space:nowrap;
+}
+
+.legend {
+  display:flex;
+  gap:14px;
+  flex-wrap:wrap;
+  margin-top:10px;
+}
+
+.legendItem {
+  display:flex;
+  align-items:center;
+  gap:6px;
+  font-size:10px;
+  color:#6f6c69;
+}
+
+.key {
+  display:grid;
+  place-items:center;
+  width:16px;
+  height:16px;
+  border-radius:999px;
+  font-size:9px;
+  font-weight:700;
+}
+
+.keyA {
+  background:#0fb875;
+  color:#08281e;
+}
+
+.keyD {
+  background:#dff4ea;
+  color:#0b7a52;
+}
+
+.artLegend {
+  justify-content:center;
+  margin-top:14px;
+}
+
+.rule {
+  height:1px;
+  background:#e6e2dd;
+  margin:26px 0 20px;
+}
+
+.teamTitle {
+  font-size:11px;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  color:#8f8b87;
+  font-weight:700;
+  margin-bottom:16px;
+}
+
+.teamBar {
+  margin-top:26px;
+  padding-top:20px;
+  border-top:1px solid #e6e2dd;
+}
+
+.teamScroll {
+  display:flex;
+  gap:16px;
+  overflow-x:auto;
+  padding-bottom:6px;
+  scrollbar-width:thin;
+}
+
+.teamScroll .person {
+  flex:0 0 68px;
+}
+
+.person {
+  text-align:center;
+  font-size:11px;
+  line-height:1.3;
+}
+
+.avatar {
+  width:42px;
+  height:42px;
+  border-radius:50%;
+  margin:0 auto 7px;
+  background:#e6e2de;
+  display:grid;
+  place-items:center;
+  font-size:15px;
+  font-weight:600;
+  color:#8f8b87;
+  overflow:hidden;
+}
+
+.avatar img {
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+.person-name {
+  font-weight:700;
+}
+
+.person-role {
+  color:var(--mute);
+  margin-top:1px;
+  font-size:10px;
+}
+
+.quick-actions {
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+  margin-top:28px;
+}
+
+.action {
+  height:70px;
+  border:0;
+  border-radius:14px;
+  background:#f2efec;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:7px;
+  text-decoration:none;
+  font-size:11px;
+  font-weight:700;
+  cursor:pointer;
+}
+
+.action:hover {
+  background:#ece8e4;
+}
+
+.action svg {
+  width:22px;
+  height:22px;
+  fill:none;
+  stroke:#111;
+  stroke-width:1.9;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+
+/* Finance */
+
+.finHead {
+  display:flex;
+  align-items:baseline;
+  justify-content:space-between;
+  gap:20px;
+  flex-wrap:wrap;
+}
+
+.finTitle {
+  font-size:26px;
+  margin:0;
+  letter-spacing:-.6px;
+}
+
+.finAsof {
+  font-size:12px;
+  color:var(--mute);
+  margin-top:4px;
+}
+
+.finSummary {
+  font-size:13px;
+  color:var(--mute);
+}
+
+.finSummary b {
+  color:var(--ink);
+}
+
+.fundRow {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+  margin-top:28px;
+}
+
+.fundCard {
+  background:#f3f0ed;
+  border-radius:18px;
+  padding:18px 20px;
+}
+
+.fundCard.lead {
+  background:#eef8f2;
+}
+
+.fundL {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:8px;
+  font-size:11px;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  color:var(--mute);
+  font-weight:700;
+}
+
+.fundN {
+  font-size:28px;
+  font-weight:700;
+  letter-spacing:-1.2px;
+  margin-top:8px;
+}
+
+.fundCard.lead .fundN {
+  color:#0b7a52;
+}
+
+.fundM {
+  font-size:11px;
+  color:#7d7975;
+  margin-top:6px;
+  line-height:1.45;
+}
+
+.finSec {
+  margin:30px 0 14px;
+}
+
+.clickable {
+  cursor:pointer;
+}
+
+.clickable:hover {
+  background:#efebe7;
+}
+
+.chev {
+  font-size:15px;
+  color:var(--mute);
+  transition:transform .25s ease;
+}
+
+.chev.open {
+  transform:rotate(90deg);
+}
+
+.breakdown {
+  display:none;
+  margin-top:12px;
+  background:#f8f6f4;
+  border-radius:18px;
+  padding:20px 22px;
+}
+
+.breakdown.open {
+  display:block;
+}
+
+.donutWrap {
+  display:grid;
+  grid-template-columns:150px minmax(0,1fr);
+  gap:22px;
+  align-items:center;
+}
+
+.donut {
+  position:relative;
+  width:150px;
+  height:150px;
+  border-radius:999px;
+  background:conic-gradient(
+    #14a08a 0 35%,
+    #f2604c 35% 61%,
+    #f5a623 61% 78%,
+    #2f3234 78% 91%,
+    #d3cec9 91% 100%
+  );
+}
+
+.donutHole {
+  position:absolute;
+  inset:17px;
+  border-radius:999px;
+  background:#f8f6f4;
+  display:grid;
+  place-content:center;
+  text-align:center;
+}
+
+.donutN {
+  font-size:22px;
+  font-weight:700;
+  letter-spacing:-.8px;
+}
+
+.donutL {
+  font-size:10px;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  color:#7d7975;
+  margin-top:2px;
+}
+
+.breakList {
+  display:flex;
+  flex-direction:column;
+  gap:9px;
+}
+
+.breakRow {
+  display:grid;
+  grid-template-columns:10px minmax(0,1fr) auto;
+  gap:10px;
+  align-items:center;
+  font-size:12px;
+  color:#3f4245;
+}
+
+.sw {
+  width:10px;
+  height:10px;
+  border-radius:3px;
+}
+
+.needGrid {
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:10px;
+  align-items:stretch;
+}
+
+.need {
+  background:#f3f0ed;
+  border-radius:14px;
+  padding:14px 15px;
+  display:flex;
+  flex-direction:column;
+}
+
+.need .fundL {
+  font-size:10px;
+  letter-spacing:.08em;
+  line-height:13px;
+  min-height:26px;
+  align-items:center;
+  justify-content:flex-start;
+}
+
+.needN {
+  font-size:17px;
+  font-weight:700;
+  letter-spacing:-.5px;
+  margin-top:7px;
+  line-height:22px;
+  min-height:22px;
+  display:flex;
+  align-items:center;
+}
+
+.needN.tbc {
+  font-size:13px;
+  font-weight:400;
+  color:#7d7975;
+}
+
+.need .fundM {
+  margin-top:auto;
+  padding-top:6px;
+}
+
+.needNote {
+  margin-top:14px;
+}
+
+.needKeyRow {
+  display:flex;
+  align-items:center;
+  gap:7px;
+  flex-wrap:wrap;
+}
+
+.needKeyRow .key + span {
+  margin-right:8px;
+}
+
+.keyP {
+  background:#0fb875;
+  color:#08281e;
+}
+
+.keyPR {
+  background:#0fb875;
+  color:#08281e;
+  width:auto;
+  padding:0 7px;
+  border-radius:999px;
+  font-size:8px;
+}
+
+.needNote2 {
+  margin-top:4px;
+}
+
+.finTable {
+  width:100%;
+  border-collapse:collapse;
+  font-size:13px;
+}
+
+.finTable th {
+  font-size:11px;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:#7d7975;
+  font-weight:700;
+  text-align:right;
+  padding:0 0 14px;
+}
+
+.finTable th:first-child {
+  text-align:left;
+}
+
+.finTable td {
+  padding:13px 0;
+  border-top:1px solid #ece8e3;
+  text-align:right;
+}
+
+.finTable td:first-child {
+  text-align:left;
+}
+
+.finTable td.z {
+  color:#7d7975;
+}
+
+.finTable td.p {
+  color:var(--orange);
+  font-weight:700;
+}
+
+.finTable tr.total td {
+  font-weight:700;
+  border-top:1px solid #ddd8d2;
+  padding-top:15px;
+}
+
+.finNote {
+  font-size:11px;
+  color:#7d7975;
+  margin-top:22px;
+}
+
+.finActions {
+  margin-top:26px;
+}
+
+.placeholder .card {
+  padding:90px 24px;
+  text-align:center;
+  color:#7d7a77;
+}
+
+.placeholder h1 {
+  color:var(--ink);
+  font-size:24px;
+  margin:0 0 6px;
+}
+
+@media (max-width:620px) {
+  .needGrid {
+    grid-template-columns:repeat(2,1fr);
+  }
+}
+
+@media (max-width:520px) {
+  .donutWrap {
+    grid-template-columns:1fr;
+    justify-items:center;
+  }
+}
+
+@media (max-width:480px) {
+  .wrap {
+    padding:28px 14px 44px;
+  }
+
+  .slide {
+    grid-template-columns:1fr;
+    gap:16px;
+  }
+
+  .art img {
+    width:60%;
+  }
+
+  .copy h1 {
+    font-size:24px;
+  }
 }
 </style>
 </head>
+
 <body>
 <div class="wrap">
 
@@ -182,93 +907,182 @@ button,a{font:inherit;color:inherit}
       <button class="department" data-page="finance">Finance</button>
       <button class="department" data-page="ulf">ULF</button>
     </nav>
+
     <div class="lang">
       <button class="active" data-lang="en">EN</button>
       <button data-lang="pt">PT</button>
     </div>
   </div>
 
-  <!-- ============ R&D ============ -->
   <section class="page active" id="rd">
     <div class="card">
 
       <nav class="references" aria-label="Design references">
-        <button class="reference active" data-slide="0"><span class="thumb"></span><span data-i18n="ref1">Waacs</span><span class="refUnderline"></span></button>
-        <button class="reference" data-slide="1"><span class="thumb"></span><span data-i18n="ref2">YaleHand</span><span class="refUnderline"></span></button>
-        <button class="reference" data-slide="2"><span class="thumb"></span><span data-i18n="ref3">Softfoot Pro</span><span class="refUnderline"></span></button>
-        <button class="reference" data-slide="3"><span class="thumb"></span><span data-i18n="ref4">UL arm</span><span class="refUnderline"></span></button>
-        <button class="reference" data-slide="4"><span class="thumb"></span><span data-i18n="ref5">Live</span><span class="refUnderline"></span></button>
+        <button class="reference active" data-slide="0">
+          <span class="thumb"></span>
+          <span data-i18n="ref1">Waacs</span>
+          <span class="refUnderline"></span>
+        </button>
+
+        <button class="reference" data-slide="1">
+          <span class="thumb"></span>
+          <span data-i18n="ref2">YaleHand</span>
+          <span class="refUnderline"></span>
+        </button>
+
+        <button class="reference" data-slide="2">
+          <span class="thumb"></span>
+          <span data-i18n="ref3">Softfoot Pro</span>
+          <span class="refUnderline"></span>
+        </button>
+
+        <button class="reference" data-slide="3">
+          <span class="thumb"></span>
+          <span data-i18n="ref4">UL arm</span>
+          <span class="refUnderline"></span>
+        </button>
+
+        <button class="reference" data-slide="4">
+          <span class="thumb"></span>
+          <span data-i18n="ref5">Live</span>
+          <span class="refUnderline"></span>
+        </button>
       </nav>
 
       <div class="stage">
-
         <div class="viewport">
           <div class="track" id="track">
 
             <article class="slide">
-              <div class="art"><img src="prosthetic-hand.png" alt="Waacs open source 3D printed hand"></div>
+              <div class="art">
+                <img
+                  src="prosthetic-hand.png"
+                  alt="Waacs open source 3D printed hand"
+                >
+              </div>
+
               <div class="copy">
                 <h1 data-i18n="t1">Baseline</h1>
-                <p data-i18n="b1">For the baseline we are using an open source 3D printed arm called Waacs by e-nable. We will start our design edits and testing on this design and slowly reverse engineer from the best features Yalehand &amp; Softfoot pro. Focus is on low resource setting and 6-12 year old terminal device.</p>
+                <p data-i18n="b1">
+                  For the baseline we are using an open source 3D printed arm
+                  called Waacs by e-nable. We will start our design edits and
+                  testing on this design and slowly reverse engineer from the
+                  best features Yalehand and Softfoot Pro. Focus is on a
+                  low-resource setting and a terminal device for children
+                  aged 6–12 years.
+                </p>
               </div>
             </article>
 
             <article class="slide">
-              <div class="art"><img src="prosthetic-hand.png" alt="YaleHand research reference"></div>
+              <div class="art">
+                <img
+                  src="prosthetic-hand.png"
+                  alt="YaleHand research reference"
+                >
+              </div>
+
               <div class="copy">
                 <h1 data-i18n="t2">YaleHand</h1>
-                <p data-i18n="b2">We will reverse engineer key features from Yalehand to improve function, durability and usability: adaptive grasp, light weight, low force actuation and research validated performance.</p>
+                <p data-i18n="b2">
+                  We will reverse engineer key features from YaleHand to
+                  improve function, durability and usability: adaptive grasp,
+                  light weight, low-force actuation and research-validated
+                  performance.
+                </p>
               </div>
             </article>
 
             <article class="slide">
-              <div class="art"><img src="prosthetic-hand.png" alt="Softfoot Pro research reference"></div>
+              <div class="art">
+                <img
+                  src="prosthetic-hand.png"
+                  alt="Softfoot Pro research reference"
+                >
+              </div>
+
               <div class="copy">
                 <h1 data-i18n="t3">Softfoot Pro</h1>
-                <p data-i18n="b3">We will learn from Softfoot Pro to integrate the best mechanical features for simplicity and reliability: a proven, robust and field tested design with insights for low-resource use.</p>
+                <p data-i18n="b3">
+                  We will learn from Softfoot Pro to integrate the best
+                  mechanical features for simplicity and reliability: a
+                  proven, robust and field-tested design with insights for
+                  low-resource use.
+                </p>
               </div>
             </article>
 
             <article class="slide">
-              <div class="art"><img src="prosthetic-hand.png" alt="UL arm goal design"></div>
+              <div class="art">
+                <img
+                  src="prosthetic-hand.png"
+                  alt="UL arm goal design"
+                >
+              </div>
+
               <div class="copy">
                 <h1 data-i18n="t4">UL arm</h1>
-                <p data-i18n="b4">A simplified, durable and affordable upper-limb prosthetic designed for low-resource settings and children aged 6-12 years. Accessible, easy to assemble, child-focused and built for real-world use.</p>
+                <p data-i18n="b4">
+                  A simplified, durable and affordable upper-limb prosthetic
+                  designed for low-resource settings and children aged
+                  6–12 years. Accessible, easy to assemble, child-focused
+                  and built for real-world use.
+                </p>
               </div>
             </article>
-
 
             <article class="slide">
               <div>
-              <div class="art liveArt">
-                <img src="prosthetic-hand.png" alt="UL arm live testing focus areas">
-                <span class="arcA"></span>
-                <span class="ring ringA"></span>
-                <span class="pill pillA" data-i18n="liveA">A - 30 SEPT</span>
-                <span class="ring ringL"></span>
-                <span class="pill pillL" data-i18n="liveL">D - 30 SEPT</span>
-                <span class="ring ringR"></span>
-                <span class="pill pillR" data-i18n="liveR">D - 30 SEPT</span>
-              </div>
-              <div class="legend artLegend">
-                  <span class="legendItem"><span class="key keyA">A</span><span data-i18n="legA">Active now</span></span>
-                  <span class="legendItem"><span class="key keyD">D</span><span data-i18n="legD">Design next</span></span>
+                <div class="art liveArt">
+                  <img
+                    src="prosthetic-hand.png"
+                    alt="UL arm live testing focus areas"
+                  >
+
+                  <span class="arcA"></span>
+                  <span class="ring ringA"></span>
+                  <span class="pill pillA" data-i18n="liveA">A - 30 SEPT</span>
+                  <span class="ring ringL"></span>
+                  <span class="pill pillL" data-i18n="liveL">D - 30 SEPT</span>
+                  <span class="ring ringR"></span>
+                  <span class="pill pillR" data-i18n="liveR">D - 30 SEPT</span>
+                </div>
+
+                <div class="legend artLegend">
+                  <span class="legendItem">
+                    <span class="key keyA">A</span>
+                    <span data-i18n="legA">Active now</span>
+                  </span>
+
+                  <span class="legendItem">
+                    <span class="key keyD">D</span>
+                    <span data-i18n="legD">Design next</span>
+                  </span>
                 </div>
               </div>
+
               <div class="copy">
-                <h1 data-i18n="t5">UL arm &ndash; Live</h1>
+                <h1 data-i18n="t5">UL arm – Live</h1>
                 <p data-i18n="b5">Current testing focus areas and timeline.</p>
+
                 <div class="rule"></div>
-                <div class="teamTitle" data-i18n="liveTeam">Team &amp; key tasks</div>
+
+                <div class="teamTitle" data-i18n="liveTeam">
+                  Team &amp; key tasks
+                </div>
+
                 <div class="liveTeam">
                   <div class="liveRow">
                     <span class="liveAv">WA</span>
                     <span class="liveTasks">
                       <span class="task" data-i18n="rm1">Wrist design</span>
                       <span class="task" data-i18n="rm3">Finger design</span>
-                      <span class="task" data-i18n="rm4">Preliminary testing</span>
+                      <span class="task" data-i18n="rm4">
+                        Preliminary testing
+                      </span>
                     </span>
                   </div>
+
                   <div class="liveRow">
                     <span class="liveAv">SD</span>
                     <span class="liveTasks">
@@ -277,6 +1091,7 @@ button,a{font:inherit;color:inherit}
                       <span class="task" data-i18n="an3">Task assignment</span>
                     </span>
                   </div>
+
                   <div class="liveRow">
                     <span class="liveAv">AL</span>
                     <span class="liveTasks">
@@ -284,66 +1099,182 @@ button,a{font:inherit;color:inherit}
                       <span class="task" data-i18n="sj2">Test review</span>
                     </span>
                   </div>
+
                   <div class="liveRow">
                     <span class="liveAv">NU</span>
                     <span class="liveTasks">
-                      <span class="task" data-i18n="ch1">Test lead volunteer</span>
-                      <span class="task" data-i18n="ch2">Silicon glove MVP</span>
-                      <span class="task" data-i18n="ch3">Test case review</span>
+                      <span class="task" data-i18n="ch1">
+                        Test lead volunteer
+                      </span>
+                      <span class="task" data-i18n="ch2">
+                        Silicon glove MVP
+                      </span>
+                      <span class="task" data-i18n="ch3">
+                        Test case review
+                      </span>
                     </span>
                   </div>
                 </div>
               </div>
             </article>
+
           </div>
         </div>
       </div>
 
       <div class="teamBar">
         <div class="teamTitle" data-i18n="team">Team</div>
+
         <div class="teamScroll">
-          <div class="person"><div class="avatar">R</div><div class="person-name">Rasna</div><div class="person-role" data-i18n="roleFounder">Founder</div></div>
-          <div class="person"><div class="avatar">A</div><div class="person-name">Ana</div><div class="person-role" data-i18n="roleFinance">Finance</div></div>
-          <div class="person"><div class="avatar">S</div><div class="person-name">Saja</div><div class="person-role" data-i18n="roleProsthetics">Prosthetics</div></div>
-          <div class="person"><div class="avatar">C</div><div class="person-name">Christopher</div><div class="person-role" data-i18n="roleEA">EA</div></div>
-          <div class="person"><div class="avatar">SD</div><div class="person-name">Sahitya D</div><div class="person-role" data-i18n="roleRD">R&amp;D lead</div></div>
-          <div class="person"><div class="avatar">NU</div><div class="person-name">Nili U</div><div class="person-role" data-i18n="roleSys">Systems eng.</div></div>
-          <div class="person"><div class="avatar">GA</div><div class="person-name">Ganesh A</div><div class="person-role" data-i18n="roleSim">Simulation</div></div>
-          <div class="person"><div class="avatar">MA</div><div class="person-name">Maria</div><div class="person-role" data-i18n="roleUni">University</div></div>
-          <div class="person"><div class="avatar">WA</div><div class="person-name">Walid</div><div class="person-role" data-i18n="roleCad">3D CAD</div></div>
-          <div class="person"><div class="avatar">NA</div><div class="person-name">Nadine A</div><div class="person-role" data-i18n="roleDocs">Documentation</div></div>
+          <div class="person">
+            <div class="avatar">R</div>
+            <div class="person-name">Rasna</div>
+            <div class="person-role" data-i18n="roleFounder">Founder</div>
+          </div>
+
+          <div class="person">
+            <div class="avatar">A</div>
+            <div class="person-name">Ana</div>
+            <div class="person-role" data-i18n="roleFinance">Finance</div>
+          </div>
+
+          <div class="person">
+            <div class="avatar">S</div>
+            <div class="person-name">Saja</div>
+            <div class="person-role" data-i18n="roleProsthetics">
+              Prosthetics
+            </div>
+          </div>
+
+          <div class="person">
+            <div class="avatar">C</div>
+            <div class="person-name">Christopher</div>
+            <div class="person-role" data-i18n="roleEA">EA</div>
+          </div>
+
+          <div class="person">
+            <div class="avatar">SD</div>
+            <div class="person-name">Sahitya D</div>
+            <div class="person-role" data-i18n="roleRD">R&amp;D lead</div>
+          </div>
+
+          <div class="person">
+            <div class="avatar">NU</div>
+            <div class="person-name">Nili U</div>
+            <div class="person-role" data-i18n="roleSys">Systems eng.</div>
+          </div>
+
+          <div class="person">
+            <div class="avatar">GA</div>
+            <div class="person-name">Ganesh A</div>
+            <div class="person-role" data-i18n="roleSim">Simulation</div>
+          </div>
+
+          <div class="person">
+            <div class="avatar">MA</div>
+            <div class="person-name">Maria</div>
+            <div class="person-role" data-i18n="roleUni">University</div>
+          </div>
+
+          <div class="person">
+            <div class="avatar">WA</div>
+            <div class="person-name">Walid</div>
+            <div class="person-role" data-i18n="roleCad">3D CAD</div>
+          </div>
+
+          <div class="person">
+            <div class="avatar">NA</div>
+            <div class="person-name">Nadine A</div>
+            <div class="person-role" data-i18n="roleDocs">
+              Documentation
+            </div>
+          </div>
         </div>
       </div>
 
       <nav class="quick-actions" aria-label="Quick links">
-        <a class="action" href="https://drive.google.com/drive/folders/0ADmo99RbP0YAUk9PVA" target="_blank" rel="noopener" aria-label="Open UTFPR approved downloads" title="UTFPR approved downloads">
-          <svg viewBox="0 0 28 28"><path d="M3.5 23V7.5h8l2 2h11V23z"/></svg><span data-i18n="aDown">Download</span></a>
-        <a class="action" href="https://drive.google.com/drive/folders/1Ivb5dBSLBMFxxECXYnxrvsyfE7t819Is?usp=drive_link" target="_blank" rel="noopener">
-          <svg viewBox="0 0 28 28"><path d="M3.5 23V7.5h8l2 2h11V23z"/><path d="M14 20v-7m-3 3 3-3 3 3"/></svg><span data-i18n="aUp">Upload</span></a>
-        <a class="action" href="https://anqido.app/social" target="_blank" rel="noopener">
-          <svg viewBox="0 0 28 28"><path d="M3.5 23V7.5h8l2 2h11V23z"/></svg><span data-i18n="aLinks">Links &amp; Mins</span></a>
+        <a
+          class="action"
+          href="https://drive.google.com/drive/folders/0ADmo99RbP0YAUk9PVA"
+          target="_blank"
+          rel="noopener"
+          aria-label="Open UTFPR shared drive"
+          title="UTFPR shared drive"
+        >
+          <svg viewBox="0 0 28 28">
+            <path d="M3.5 23V7.5h8l2 2h11V23z"/>
+          </svg>
+          <span data-i18n="aDown">Downloads</span>
+        </a>
+
+        <a
+          class="action"
+          href="https://drive.google.com/drive/folders/1Ivb5dBSLBMFxxECXYnxrvsyfE7t819Is"
+          target="_blank"
+          rel="noopener"
+        >
+          <svg viewBox="0 0 28 28">
+            <path d="M3.5 23V7.5h8l2 2h11V23z"/>
+            <path d="M14 20v-7m-3 3 3-3 3 3"/>
+          </svg>
+          <span data-i18n="aUp">Upload</span>
+        </a>
+
+        <a
+          class="action"
+          href="https://anqido.app/social"
+          target="_blank"
+          rel="noopener"
+        >
+          <svg viewBox="0 0 28 28">
+            <path d="M3.5 23V7.5h8l2 2h11V23z"/>
+          </svg>
+          <span data-i18n="aLinks">Links &amp; Mins</span>
+        </a>
       </nav>
 
     </div>
   </section>
 
-  <section class="page placeholder" id="pr"><div class="card"><h1>P&amp;R</h1><p data-i18n="ready">This department is ready for its content.</p></div></section>
+  <section class="page placeholder" id="pr">
+    <div class="card">
+      <h1>P&amp;R</h1>
+      <p data-i18n="ready">
+        This department is ready for its content.
+      </p>
+    </div>
+  </section>
+
   <section class="page" id="finance">
     <div class="card">
+
       <div class="finHead">
         <div>
           <h1 class="finTitle" data-i18n="finTitle">Finance</h1>
-          <div class="finAsof" id="finAsof">Loading tracker&hellip;</div>
+          <div class="finAsof" id="finAsof">
+            Loading tracker&hellip;
+          </div>
         </div>
+
         <div class="finSummary" id="finSummary"></div>
       </div>
+
       <div class="fundRow">
         <div class="fundCard lead">
           <div class="fundL" data-i18n="fAvail">Funds available</div>
           <div class="fundN">$8,000</div>
         </div>
-        <div class="fundCard clickable" id="spentCard" role="button" tabindex="0">
-          <div class="fundL"><span data-i18n="fSpent">Spent to date</span><span class="chev" id="spentChev">&#8250;</span></div>
+
+        <div
+          class="fundCard clickable"
+          id="spentCard"
+          role="button"
+          tabindex="0"
+        >
+          <div class="fundL">
+            <span data-i18n="fSpent">Spent to date</span>
+            <span class="chev" id="spentChev">&#8250;</span>
+          </div>
           <div class="fundN">$23,000</div>
           <div class="fundM" data-i18n="fApprox">Approx.</div>
         </div>
@@ -351,233 +1282,655 @@ button,a{font:inherit;color:inherit}
 
       <div class="breakdown" id="spentPanel">
         <div class="donutWrap">
-          <div class="donut" id="donut">
+          <div class="donut">
             <div class="donutHole">
               <div class="donutN">$23K</div>
-              <div class="donutL" data-i18n="fSpent">Spent to date</div>
+              <div class="donutL" data-i18n="fSpent">
+                Spent to date
+              </div>
             </div>
           </div>
+
           <div class="breakList">
-            <div class="breakRow"><span class="sw" style="background:#14a08a"></span><span data-i18n="e1">Research &amp; development</span><b>$8,000</b></div>
-            <div class="breakRow"><span class="sw" style="background:#f2604c"></span><span data-i18n="e2">Prototyping &amp; materials</span><b>$6,000</b></div>
-            <div class="breakRow"><span class="sw" style="background:#f5a623"></span><span data-i18n="e3">Travel &amp; logistics</span><b>$4,000</b></div>
-            <div class="breakRow"><span class="sw" style="background:#2f3234"></span><span data-i18n="e4">Admin</span><b>$3,000</b></div>
-            <div class="breakRow"><span class="sw" style="background:#d3cec9"></span><span data-i18n="e5">Other</span><b>$2,000</b></div>
+            <div class="breakRow">
+              <span class="sw" style="background:#14a08a"></span>
+              <span data-i18n="e1">Research &amp; development</span>
+              <b>$8,000</b>
+            </div>
+
+            <div class="breakRow">
+              <span class="sw" style="background:#f2604c"></span>
+              <span data-i18n="e2">Prototyping &amp; materials</span>
+              <b>$6,000</b>
+            </div>
+
+            <div class="breakRow">
+              <span class="sw" style="background:#f5a623"></span>
+              <span data-i18n="e3">Travel &amp; logistics</span>
+              <b>$4,000</b>
+            </div>
+
+            <div class="breakRow">
+              <span class="sw" style="background:#2f3234"></span>
+              <span data-i18n="e4">Admin</span>
+              <b>$3,000</b>
+            </div>
+
+            <div class="breakRow">
+              <span class="sw" style="background:#d3cec9"></span>
+              <span data-i18n="e5">Other</span>
+              <b>$2,000</b>
+            </div>
           </div>
         </div>
-        <div class="fundM" data-i18n="ePlaceholder">Placeholder split — to be confirmed against the ledger.</div>
+
+        <div class="fundM" data-i18n="ePlaceholder">
+          Placeholder split — to be confirmed against the ledger.
+        </div>
       </div>
 
-      <div class="teamTitle finSec" data-i18n="fNeeded">Funding needed</div>
+      <div class="teamTitle finSec" data-i18n="fNeeded">
+        Funding needed
+      </div>
+
       <div class="needGrid">
         <div class="need">
-          <div class="fundL"><span data-i18n="nPsy">Psychosocial</span><span class="key keyPR">P&amp;R</span></div>
+          <div class="fundL">
+            <span data-i18n="nPsy">Psychosocial</span>
+            <span class="key keyPR">P&amp;R</span>
+          </div>
           <div class="needN">$60,000</div>
-          <div class="fundM"><span data-i18n="dTarget">Target</span> <span data-i18n="dPsy">31 Dec 2026</span></div>
+          <div class="fundM">
+            <span data-i18n="dTarget">Target</span>
+            <span data-i18n="dPsy">31 Dec 2026</span>
+          </div>
         </div>
-        <div class="need">
-          <div class="fundL"><span data-i18n="nPhys">Physical therapy</span><span class="key keyPR">P&amp;R</span></div>
-          <div class="needN tbc" data-i18n="tbc">TBD</div>
-          <div class="fundM"><span data-i18n="dTarget">Target</span> <span data-i18n="dPhys">31 Mar 2027</span></div>
-        </div>
-        <div class="need">
-          <div class="fundL"><span data-i18n="nPart">Local clinic</span><span class="key keyP">P</span></div>
-          <div class="needN">$60,000</div>
-          <div class="fundM"><span data-i18n="dTarget">Target</span> <span data-i18n="dPart">30 Nov 2026</span></div>
-        </div>
-        <div class="need">
-          <div class="fundL"><span data-i18n="nRd">Terminal device</span><span class="key keyPR">R&amp;D</span></div>
-          <div class="needN">$1,000</div>
-          <div class="fundM"><span data-i18n="dTarget">Target</span> <span data-i18n="dRd">31 Oct 2026</span></div>
-        </div>
-      </div>
-      <div class="fundM needNote needKeyRow">
-        <span class="key keyP">P</span><span data-i18n="needKey">Partnership</span>
-        <span class="key keyPR">P&amp;R</span><span data-i18n="needKeyPR">Prosthesis &amp; rehab</span>
-      </div>
-      <div class="fundM needNote2" data-i18n="needNote">R&amp;D covered by a Vancouver print shop sponsorship and university collaboration &middot; psychosocial figure approximate, to confirm</div>
 
-      <div class="teamTitle finSec" data-i18n="byBranch">By branch</div>
+        <div class="need">
+          <div class="fundL">
+            <span data-i18n="nPhys">Physical therapy</span>
+            <span class="key keyPR">P&amp;R</span>
+          </div>
+          <div class="needN tbc" data-i18n="tbc">TBD</div>
+          <div class="fundM">
+            <span data-i18n="dTarget">Target</span>
+            <span data-i18n="dPhys">31 Mar 2027</span>
+          </div>
+        </div>
+
+        <div class="need">
+          <div class="fundL">
+            <span data-i18n="nPart">Local clinic</span>
+            <span class="key keyP">P</span>
+          </div>
+          <div class="needN">$60,000</div>
+          <div class="fundM">
+            <span data-i18n="dTarget">Target</span>
+            <span data-i18n="dPart">30 Nov 2026</span>
+          </div>
+        </div>
+
+        <div class="need">
+          <div class="fundL">
+            <span data-i18n="nRd">Terminal device</span>
+            <span class="key keyPR">R&amp;D</span>
+          </div>
+          <div class="needN">$1,000</div>
+          <div class="fundM">
+            <span data-i18n="dTarget">Target</span>
+            <span data-i18n="dRd">31 Oct 2026</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="teamTitle finSec" data-i18n="byBranch">
+        By branch
+      </div>
+
       <table class="finTable">
-        <thead><tr>
-          <th data-i18n="thBranch">Branch</th><th data-i18n="kNot">Not started</th><th data-i18n="kProg">In progress</th>
-          <th data-i18n="thAppr">Approval</th><th data-i18n="thDone">Done</th><th data-i18n="thTotal">Total</th>
-        </tr></thead>
+        <thead>
+          <tr>
+            <th data-i18n="thBranch">Branch</th>
+            <th data-i18n="kNot">Not started</th>
+            <th data-i18n="kProg">In progress</th>
+            <th data-i18n="thAppr">Approval</th>
+            <th data-i18n="thDone">Done</th>
+            <th data-i18n="thTotal">Total</th>
+          </tr>
+        </thead>
+
         <tbody id="finBody"></tbody>
       </table>
+
       <div class="finNote" id="finNote"></div>
+
       <nav class="quick-actions finActions" aria-label="Finance links">
-        <a class="action" href="https://drive.google.com/drive/folders/1Ivb5dBSLBMFxxECXYnxrvsyfE7t819Is?usp=drive_link" target="_blank" rel="noopener">
-          <svg viewBox="0 0 28 28"><path d="M3.5 23V7.5h8l2 2h11V23z"/></svg><span data-i18n="fLinks">Links</span></a>
-        <a class="action" href="https://drive.google.com/drive/folders/1Ivb5dBSLBMFxxECXYnxrvsyfE7t819Is?usp=drive_link" target="_blank" rel="noopener">
-          <svg viewBox="0 0 28 28"><path d="M3.5 23V7.5h8l2 2h11V23z"/></svg><span data-i18n="fReport">Finance report</span></a>
-        <a class="action" href="https://docs.google.com/spreadsheets/d/1ihMYkOskDxoHKgJluGO3LgG5tfyCxJdDFA3nbi9sZHg/edit" target="_blank" rel="noopener">
-          <svg viewBox="0 0 28 28"><path d="M3.5 23V7.5h8l2 2h11V23z"/></svg><span data-i18n="fSheet">Tracker sheet</span></a>
+        <a
+          class="action"
+          href="https://drive.google.com/drive/folders/1Ivb5dBSLBMFxxECXYnxrvsyfE7t819Is"
+          target="_blank"
+          rel="noopener"
+        >
+          <svg viewBox="0 0 28 28">
+            <path d="M3.5 23V7.5h8l2 2h11V23z"/>
+          </svg>
+          <span data-i18n="fLinks">Links</span>
+        </a>
+
+        <a
+          class="action"
+          href="https://drive.google.com/drive/folders/1Ivb5dBSLBMFxxECXYnxrvsyfE7t819Is"
+          target="_blank"
+          rel="noopener"
+        >
+          <svg viewBox="0 0 28 28">
+            <path d="M3.5 23V7.5h8l2 2h11V23z"/>
+          </svg>
+          <span data-i18n="fReport">Finance report</span>
+        </a>
+
+        <a
+          class="action"
+          href="https://docs.google.com/spreadsheets/d/1ihMYkOskDxoHKgJluGO3LgG5tfyCxJdDFA3nbi9sZHg/edit"
+          target="_blank"
+          rel="noopener"
+        >
+          <svg viewBox="0 0 28 28">
+            <path d="M3.5 23V7.5h8l2 2h11V23z"/>
+          </svg>
+          <span data-i18n="fSheet">Tracker sheet</span>
+        </a>
       </nav>
+
     </div>
   </section>
-  <section class="page placeholder" id="ulf"><div class="card"><h1>ULF</h1><p data-i18n="ready">This department is ready for its content.</p></div></section>
+
+  <section class="page placeholder" id="ulf">
+    <div class="card">
+      <h1>ULF</h1>
+      <p data-i18n="ready">
+        This department is ready for its content.
+      </p>
+    </div>
+  </section>
+
 </div>
 
 <script>
-document.querySelectorAll('.department').forEach(btn => btn.addEventListener('click', () => {
-  document.querySelectorAll('.department,.page').forEach(el => el.classList.remove('active'));
-  btn.classList.add('active');
-  document.getElementById(btn.dataset.page).classList.add('active');
-}));
+document.querySelectorAll(".department").forEach(button => {
+  button.addEventListener("click", () => {
+    document.querySelectorAll(".department,.page").forEach(element => {
+      element.classList.remove("active");
+    });
 
-const track = document.getElementById('track');
-const refs = [...document.querySelectorAll('.reference')];
-const COUNT = refs.length;
-let i = 0;
+    button.classList.add("active");
+    document.getElementById(button.dataset.page).classList.add("active");
+  });
+});
 
-refs.forEach((r, n) => r.addEventListener('click', () => go(n)));
+const track = document.getElementById("track");
+const references = [...document.querySelectorAll(".reference")];
+const slideCount = references.length;
+let currentSlide = 0;
 
-function go(n) {
-  i = Math.max(0, Math.min(COUNT - 1, n));
-  track.style.transform = 'translateX(-' + (i * 100) + '%)';
-  refs.forEach((r, k) => r.classList.toggle('active', k === i));
+references.forEach((reference, index) => {
+  reference.addEventListener("click", () => showSlide(index));
+});
+
+function showSlide(index) {
+  currentSlide = Math.max(0, Math.min(slideCount - 1, index));
+  track.style.transform =
+    "translateX(-" + currentSlide * 100 + "%)";
+
+  references.forEach((reference, referenceIndex) => {
+    reference.classList.toggle(
+      "active",
+      referenceIndex === currentSlide
+    );
+  });
 }
-go(0);
 
+showSlide(0);
 
-/* ---------- Finance: live from the published Google Sheet ---------- */
-/* Sheet › File › Share › Publish to web › Tracker › CSV, then paste that URL here. */
-const FIN_CSV = "https://docs.google.com/spreadsheets/d/1ihMYkOskDxoHKgJluGO3LgG5tfyCxJdDFA3nbi9sZHg/gviz/tq?tqx=out:csv&gid=153656831";
+/*
+  LIVE GOOGLE SHEET
+
+  This is the safe ULF Google Sites – Live Summary Sheet.
+  The website checks for updated data every 60 seconds.
+*/
+
+const FIN_CSV =
+  "https://docs.google.com/spreadsheets/d/1fZ7Oc7-zvANEcZIE18DEbDzvbtZEk5iXZ8eI6DTC1uk/gviz/tq?tqx=out:csv&gid=0";
 
 function parseCSV(text) {
-  const rows = []; let row = [], val = '', q = false;
-  for (let k = 0; k < text.length; k++) {
-    const ch = text[k];
-    if (q) {
-      if (ch === '"' && text[k + 1] === '"') { val += '"'; k++; }
-      else if (ch === '"') q = false;
-      else val += ch;
-    } else if (ch === '"') q = true;
-    else if (ch === ',') { row.push(val); val = ''; }
-    else if (ch === '\n') { row.push(val); rows.push(row); row = []; val = ''; }
-    else if (ch !== '\r') val += ch;
+  const rows = [];
+  let row = [];
+  let value = "";
+  let insideQuotes = false;
+
+  for (let index = 0; index < text.length; index++) {
+    const character = text[index];
+
+    if (insideQuotes) {
+      if (
+        character === '"' &&
+        text[index + 1] === '"'
+      ) {
+        value += '"';
+        index++;
+      } else if (character === '"') {
+        insideQuotes = false;
+      } else {
+        value += character;
+      }
+    } else if (character === '"') {
+      insideQuotes = true;
+    } else if (character === ",") {
+      row.push(value);
+      value = "";
+    } else if (character === "\n") {
+      row.push(value);
+      rows.push(row);
+      row = [];
+      value = "";
+    } else if (character !== "\r") {
+      value += character;
+    }
   }
-  row.push(val); rows.push(row);
-  return rows.filter(r => r.some(c => c.trim() !== ''));
+
+  row.push(value);
+  rows.push(row);
+
+  return rows.filter(rowData =>
+    rowData.some(cellValue => cellValue.trim() !== "")
+  );
 }
 
-let FIN = { asof: '', note: 'loading' };
-function finStrings() {
-  const pt = document.querySelector('.lang button[data-lang="pt"]').classList.contains('active');
-  return pt
-    ? { loading: 'A carregar o mapa…', live: 'Em direto a partir do Google Sheets · atualize a página depois de editar a folha.', stale: 'A mostrar os últimos valores conhecidos — a folha ainda não está publicada (Ficheiro › Partilhar › Publicar na Web › CSV).', fallbackAsof: 'Em 10 de setembro de 2026', sheet: 'Em direto a partir da folha Tracker', tracked: 'em curso de registo', inProg: 'em progresso', doneWord: 'concluídos' }
-    : { loading: 'Loading tracker…', live: 'Live from Google Sheets · refresh the page after editing the sheet.', stale: 'Showing the last known figures — the sheet is not published to the web yet (File › Share › Publish to web › CSV).', fallbackAsof: 'As of 10 September 2026', sheet: 'Live from the Tracker sheet', tracked: 'tracked', inProg: 'in progress', doneWord: 'completed' };
-}
-function paintFinMeta() {
-  const s = finStrings();
-  document.getElementById('finAsof').textContent = FIN.asof || s.sheet;
-  document.getElementById('finNote').textContent = FIN.note === 'live' ? s.live : FIN.note === 'stale' ? s.stale : '';
+let financeState = {
+  asOf:"",
+  note:"loading"
+};
+
+let latestFinanceData = null;
+
+function financeStrings() {
+  const portugueseButton = document.querySelector(
+    '.lang button[data-lang="pt"]'
+  );
+
+  const isPortuguese =
+    portugueseButton &&
+    portugueseButton.classList.contains("active");
+
+  if (isPortuguese) {
+    return {
+      live:
+        "Em direto a partir do Google Sheets · atualização automática a cada minuto.",
+      stale:
+        "A mostrar os últimos valores conhecidos — a folha de resumo ainda não está publicada.",
+      fallbackAsOf:"Em 10 de setembro de 2026",
+      sheet:"Em direto a partir da folha de resumo",
+      tracked:"em curso de registo",
+      inProgress:"em progresso",
+      completed:"concluídos"
+    };
+  }
+
+  return {
+    live:
+      "Live from Google Sheets · updates automatically every minute.",
+    stale:
+      "Showing the last known figures — the summary Sheet has not been published yet.",
+    fallbackAsOf:"As of 10 September 2026",
+    sheet:"Live from the summary Sheet",
+    tracked:"tracked",
+    inProgress:"in progress",
+    completed:"completed"
+  };
 }
 
-function cell(v, prog) {
-  if (!v) return '<td class="z">–</td>';
-  return '<td' + (prog ? ' class="p"' : '') + '>' + v + '</td>';
-}
-let FIN_LAST = null;
-function paintFinance(body, asof, note) {
-  FIN_LAST = { body, asof, note };
-  const tot = [0, 0, 0, 0, 0];
-  const html = body.map(r => {
-    const v = [r[1], r[2], r[3], r[4]];
-    const total = (r[5] === '' || r[5] == null) ? v.reduce((a, b) => a + b, 0) : r[5];
-    v.forEach((n, k) => tot[k] += n); tot[4] += total;
-    return '<tr><td>' + r[0] + '</td>' + cell(v[0]) + cell(v[1], true) + cell(v[2]) + cell(v[3]) + (total ? '<td>' + total + '</td>' : '<td class="z">–</td>') + '</tr>';
-  }).join('');
-  document.getElementById('finBody').innerHTML = html +
-    '<tr class="total"><td>Total</td>' + cell(tot[0]) + cell(tot[1], true) + cell(tot[2]) + cell(tot[3]) + '<td>' + tot[4] + '</td></tr>';
-  const s = finStrings();
-  document.getElementById('finSummary').innerHTML =
-    '<b>' + tot[4] + '</b> ' + s.tracked + ' · <b>' + tot[1] + '</b> ' + s.inProg + ' · <b>' + tot[3] + '</b> ' + s.doneWord;
-  FIN = { asof: asof || '', note };
-  paintFinMeta();
+function updateFinanceStatus() {
+  const text = financeStrings();
+
+  document.getElementById("finAsof").textContent =
+    financeState.asOf || text.sheet;
+
+  document.getElementById("finNote").textContent =
+    financeState.note === "live"
+      ? text.live
+      : financeState.note === "stale"
+        ? text.stale
+        : "";
 }
 
-function renderFinance(rows) {
-  const num = (v) => { const n = parseFloat(String(v).replace(/[^0-9.\-]/g, '')); return isNaN(n) ? 0 : n; };
-  const headIdx = rows.findIndex(r => /branch/i.test(r[0] || ''));
-  if (headIdx === -1) throw new Error('no header row');
-  const asof = rows.slice(0, headIdx).map(r => r[0]).filter(Boolean)[0];
-  const body = rows.slice(headIdx + 1)
-    .filter(r => (r[0] || '').trim() && !/^total$/i.test(r[0].trim()))
-    .map(r => [r[0], num(r[1]), num(r[2]), num(r[3]), num(r[4]), (r[5] || '').trim() === '' ? '' : num(r[5])]);
-  paintFinance(body, asof, 'live');
+function createNumberCell(value, highlight) {
+  if (!value) {
+    return '<td class="z">–</td>';
+  }
+
+  return (
+    "<td" +
+    (highlight ? ' class="p"' : "") +
+    ">" +
+    value +
+    "</td>"
+  );
 }
 
-fetch(FIN_CSV)
-  .then(r => { if (!r.ok) throw new Error(r.status); return r.text(); })
-  .then(t => renderFinance(parseCSV(t)))
-  .catch(() => {
-    paintFinance([['Grants',0,2,0,0,2],['Sponsorships',0,0,0,0,0],['Donors',0,0,0,0,3],['Partnerships',0,2,0,0,0],['Admin',3,2,0,0,5],['Fundraising',2,1,0,0,3],['Charitable Status',1,0,0,0,1]], finStrings().fallbackAsof, 'stale');
+function displayFinance(rows, asOf, note) {
+  latestFinanceData = {
+    rows,
+    asOf,
+    note
+  };
+
+  const totals = [0,0,0,0,0];
+
+  const tableRows = rows.map(row => {
+    const values = [
+      row[1],
+      row[2],
+      row[3],
+      row[4]
+    ];
+
+    const total =
+      row[5] === "" || row[5] == null
+        ? values.reduce((sum, value) => sum + value, 0)
+        : row[5];
+
+    values.forEach((value, index) => {
+      totals[index] += value;
+    });
+
+    totals[4] += total;
+
+    return (
+      "<tr>" +
+        "<td>" + row[0] + "</td>" +
+        createNumberCell(values[0], false) +
+        createNumberCell(values[1], true) +
+        createNumberCell(values[2], false) +
+        createNumberCell(values[3], false) +
+        createNumberCell(total, false) +
+      "</tr>"
+    );
+  }).join("");
+
+  document.getElementById("finBody").innerHTML =
+    tableRows +
+    '<tr class="total">' +
+      "<td>Total</td>" +
+      createNumberCell(totals[0], false) +
+      createNumberCell(totals[1], true) +
+      createNumberCell(totals[2], false) +
+      createNumberCell(totals[3], false) +
+      createNumberCell(totals[4], false) +
+    "</tr>";
+
+  const text = financeStrings();
+
+  document.getElementById("finSummary").innerHTML =
+    "<b>" + totals[4] + "</b> " + text.tracked +
+    " · <b>" + totals[1] + "</b> " + text.inProgress +
+    " · <b>" + totals[3] + "</b> " + text.completed;
+
+  financeState = {
+    asOf:asOf || "",
+    note
+  };
+
+  updateFinanceStatus();
+}
+
+function renderFinanceCSV(rows) {
+  function numberValue(value) {
+    const parsed = parseFloat(
+      String(value).replace(/[^0-9.\-]/g, "")
+    );
+
+    return Number.isNaN(parsed) ? 0 : parsed;
+  }
+
+  const headerIndex = rows.findIndex(row =>
+    /branch/i.test(row[0] || "")
+  );
+
+  if (headerIndex === -1) {
+    throw new Error("The Branch header was not found.");
+  }
+
+  const asOf = rows
+    .slice(0, headerIndex)
+    .map(row => row[0])
+    .filter(Boolean)[0];
+
+  const body = rows
+    .slice(headerIndex + 1)
+    .filter(row => {
+      const label = (row[0] || "").trim();
+
+      return label && !/^total$/i.test(label);
+    })
+    .map(row => [
+      row[0],
+      numberValue(row[1]),
+      numberValue(row[2]),
+      numberValue(row[3]),
+      numberValue(row[4]),
+      (row[5] || "").trim() === ""
+        ? ""
+        : numberValue(row[5])
+    ]);
+
+  displayFinance(body, asOf, "live");
+}
+
+function loadFinance() {
+  const freshURL =
+    FIN_CSV + "&cache=" + Date.now();
+
+  fetch(freshURL, {
+    cache:"no-store"
+  })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error("Google Sheet request failed.");
+      }
+
+      return response.text();
+    })
+    .then(csvText => {
+      renderFinanceCSV(parseCSV(csvText));
+    })
+    .catch(() => {
+      displayFinance(
+        [
+          ["Grants",0,2,0,0,2],
+          ["Sponsorships",0,0,0,0,0],
+          ["Donors",0,0,0,0,3],
+          ["Partnerships",0,2,0,0,0],
+          ["Admin",3,2,0,0,5],
+          ["Fundraising",2,1,0,0,3],
+          ["Charitable Status",1,0,0,0,1]
+        ],
+        financeStrings().fallbackAsOf,
+        "stale"
+      );
+    });
+}
+
+loadFinance();
+
+/* Check for new spreadsheet data every 60 seconds. */
+setInterval(loadFinance, 60000);
+
+(function setUpFinanceDetails() {
+  const card = document.getElementById("spentCard");
+  const panel = document.getElementById("spentPanel");
+  const arrow = document.getElementById("spentChev");
+
+  function toggleDetails() {
+    panel.classList.toggle("open");
+    arrow.classList.toggle("open");
+  }
+
+  card.addEventListener("click", toggleDetails);
+
+  card.addEventListener("keydown", event => {
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      toggleDetails();
+    }
   });
-
-(function () {
-  const card = document.getElementById('spentCard');
-  const panel = document.getElementById('spentPanel');
-  const chev = document.getElementById('spentChev');
-  const toggle = () => { panel.classList.toggle('open'); chev.classList.toggle('open'); };
-  card.addEventListener('click', toggle);
-  card.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); } });
 })();
 
 const COPY = {
-  en: {},
-  pt: {
-    ref1: "Waacs", ref2: "YaleHand", ref3: "Softfoot Pro", ref4: "Braço UL", ref5: "Ao vivo",
-    t5: "Braço UL – Ao vivo", b5: "Áreas de teste em curso e respetivo calendário.",
-    liveA: "A - 30 SET", liveL: "D - 30 SET", liveR: "D - 30 SET",
-    liveTeam: "Equipa e tarefas-chave",
-    finTitle: "Finanças", byBranch: "Por área",
-    fAvail: "Fundos disponíveis", fSpent: "Gasto até à data", fApprox: "Aprox.",
-    dAvail: "Em 10 de setembro de 2026", dSpent: "Fase 2 · em 10 de setembro de 2026 · valor aproximado, a confirmar",
-    e1: "Investigação e desenvolvimento", e2: "Protótipos e materiais", e3: "Viagens e logística",
-    e4: "Administração", e5: "Outros", ePlaceholder: "Distribuição provisória — a confirmar com o registo.",
-    fLinks: "Ligações", fReport: "Relatório financeiro", fSheet: "Folha do tracker",
-    dTarget: "Meta", dPsy: "31 dez 2026", dPhys: "31 mar 2027", dPart: "30 nov 2026", dRd: "31 out 2026",
-    fNeeded: "Financiamento necessário", nPsy: "Psicossocial", nPhys: "Fisioterapia",
-    nPart: "Clínica local", nRd: "Dispositivo terminal", tbc: "A definir",
-    needKey: "Parceria", needKeyPR: "Prótese e reabilitação",
-    needNote: "I&D coberto por patrocínio de uma gráfica de Vancouver e colaboração universitária · valor psicossocial aproximado, a confirmar",
-    nRdNote: "Coberto por patrocínio de uma gráfica de Vancouver e colaboração universitária",
-    kNot: "Por iniciar", kProg: "Em curso", kAppr: "Requer aprovação", kDone: "Concluído",
-    thBranch: "Área", thAppr: "Aprovação", thDone: "Concluído", thTotal: "Total",
-    legA: "Ativo agora", legD: "Desenho a seguir",
-    rm1: "Desenho do punho", rm2: "Validação do parceiro", rm3: "Desenho dos dedos", rm4: "Testes preliminares",
-    an1: "Orçamento", an2: "Calendário", an3: "Atribuição de tarefas",
-    sj1: "Revisão do inquérito", sj2: "Revisão dos testes", sj3: "Preparação de ensaio",
-    ch1: "Voluntário responsável pelos testes", ch2: "MVP da luva de silicone", ch3: "Revisão dos casos de teste",
-    t1: "Base", t2: "YaleHand", t3: "Softfoot Pro", t4: "Braço UL",
-    b1: "Como base estamos a usar um braço impresso em 3D de código aberto chamado Waacs, da e-nable. Vamos começar as nossas alterações de desenho e os testes nesta base e, gradualmente, fazer engenharia inversa das melhores funcionalidades da Yalehand e da Softfoot Pro. O foco está em contextos de poucos recursos e num dispositivo terminal para crianças dos 6 aos 12 anos.",
-    b2: "Vamos fazer engenharia inversa das principais funcionalidades da Yalehand para melhorar função, durabilidade e usabilidade: preensão adaptativa, peso reduzido, atuação de baixa força e desempenho validado por investigação.",
-    b3: "Vamos aprender com a Softfoot Pro para integrar as melhores soluções mecânicas em simplicidade e fiabilidade: um desenho comprovado, robusto e testado em campo, com lições para contextos de poucos recursos.",
-    b4: "Uma prótese de membro superior simples, durável e acessível, desenhada para contextos de poucos recursos e crianças dos 6 aos 12 anos. Acessível, fácil de montar, focada em crianças e feita para uso real.",
-    team: "Equipa", roleFounder: "Fundadora", roleFinance: "Finanças",
-    roleRD: "Direção de I&D", roleSys: "Eng. de sistemas", roleSim: "Simulação",
-    roleUni: "Universidades", roleCad: "CAD 3D", roleDocs: "Documentação",
-    roleProsthetics: "Próteses", roleEA: "Assistente executiva",
-    aDown: "Descarregar", aUp: "Enviar", aLinks: "Ligações e atas",
-    ready: "Este departamento está pronto para o seu conteúdo."
+  en:{},
+
+  pt:{
+    ref1:"Waacs",
+    ref2:"YaleHand",
+    ref3:"Softfoot Pro",
+    ref4:"Braço UL",
+    ref5:"Ao vivo",
+
+    t1:"Base",
+    t2:"YaleHand",
+    t3:"Softfoot Pro",
+    t4:"Braço UL",
+    t5:"Braço UL – Ao vivo",
+
+    b1:
+      "Como base estamos a usar um braço impresso em 3D de código aberto chamado Waacs, da e-nable. Vamos começar as alterações de desenho e os testes nesta base.",
+    b2:
+      "Vamos fazer engenharia inversa das principais funcionalidades da YaleHand para melhorar a função, durabilidade e utilização.",
+    b3:
+      "Vamos aprender com a Softfoot Pro para integrar soluções mecânicas simples e fiáveis.",
+    b4:
+      "Uma prótese de membro superior simples, durável e acessível, desenhada para crianças e contextos de poucos recursos.",
+    b5:
+      "Áreas de teste em curso e respetivo calendário.",
+
+    liveA:"A - 30 SET",
+    liveL:"D - 30 SET",
+    liveR:"D - 30 SET",
+    liveTeam:"Equipa e tarefas-chave",
+
+    legA:"Ativo agora",
+    legD:"Desenho a seguir",
+
+    rm1:"Desenho do punho",
+    rm3:"Desenho dos dedos",
+    rm4:"Testes preliminares",
+
+    an1:"Orçamento",
+    an2:"Calendário",
+    an3:"Atribuição de tarefas",
+
+    sj1:"Revisão do inquérito",
+    sj2:"Revisão dos testes",
+
+    ch1:"Voluntário responsável pelos testes",
+    ch2:"MVP da luva de silicone",
+    ch3:"Revisão dos casos de teste",
+
+    team:"Equipa",
+    roleFounder:"Fundadora",
+    roleFinance:"Finanças",
+    roleProsthetics:"Próteses",
+    roleEA:"Assistente executiva",
+    roleRD:"Direção de I&D",
+    roleSys:"Eng. de sistemas",
+    roleSim:"Simulação",
+    roleUni:"Universidades",
+    roleCad:"CAD 3D",
+    roleDocs:"Documentação",
+
+    aDown:"Descarregar",
+    aUp:"Enviar",
+    aLinks:"Ligações e atas",
+
+    finTitle:"Finanças",
+    fAvail:"Fundos disponíveis",
+    fSpent:"Gasto até à data",
+    fApprox:"Aprox.",
+    fNeeded:"Financiamento necessário",
+
+    nPsy:"Psicossocial",
+    nPhys:"Fisioterapia",
+    nPart:"Clínica local",
+    nRd:"Dispositivo terminal",
+
+    dTarget:"Meta",
+    dPsy:"31 dez 2026",
+    dPhys:"31 mar 2027",
+    dPart:"30 nov 2026",
+    dRd:"31 out 2026",
+
+    tbc:"A definir",
+    byBranch:"Por área",
+
+    thBranch:"Área",
+    kNot:"Por iniciar",
+    kProg:"Em curso",
+    thAppr:"Aprovação",
+    thDone:"Concluído",
+    thTotal:"Total",
+
+    fLinks:"Ligações",
+    fReport:"Relatório financeiro",
+    fSheet:"Folha do tracker",
+
+    e1:"Investigação e desenvolvimento",
+    e2:"Protótipos e materiais",
+    e3:"Viagens e logística",
+    e4:"Administração",
+    e5:"Outros",
+
+    ePlaceholder:
+      "Distribuição provisória — a confirmar com o registo.",
+
+    ready:
+      "Este departamento está pronto para o seu conteúdo."
   }
 };
-document.querySelectorAll('[data-i18n]').forEach(el => { COPY.en[el.dataset.i18n] = el.textContent; });
-document.querySelectorAll('.lang button').forEach(btn => btn.addEventListener('click', () => {
-  document.querySelectorAll('.lang button').forEach(b => b.classList.toggle('active', b === btn));
-  const dict = COPY[btn.dataset.lang] || COPY.en;
-  document.querySelectorAll('[data-i18n]').forEach(el => {
-    el.textContent = dict[el.dataset.i18n] || COPY.en[el.dataset.i18n];
+
+document.querySelectorAll("[data-i18n]").forEach(element => {
+  COPY.en[element.dataset.i18n] = element.textContent;
+});
+
+document.querySelectorAll(".lang button").forEach(button => {
+  button.addEventListener("click", () => {
+    document.querySelectorAll(".lang button").forEach(languageButton => {
+      languageButton.classList.toggle(
+        "active",
+        languageButton === button
+      );
+    });
+
+    const dictionary =
+      COPY[button.dataset.lang] || COPY.en;
+
+    document.querySelectorAll("[data-i18n]").forEach(element => {
+      element.textContent =
+        dictionary[element.dataset.i18n] ||
+        COPY.en[element.dataset.i18n];
+    });
+
+    if (latestFinanceData) {
+      displayFinance(
+        latestFinanceData.rows,
+        latestFinanceData.note === "stale"
+          ? financeStrings().fallbackAsOf
+          : latestFinanceData.asOf,
+        latestFinanceData.note
+      );
+    } else {
+      updateFinanceStatus();
+    }
   });
-  if (FIN_LAST) {
-    if (FIN_LAST.note === 'stale') FIN_LAST.asof = finStrings().fallbackAsof;
-    paintFinance(FIN_LAST.body, FIN_LAST.asof, FIN_LAST.note);
-  } else {
-    paintFinMeta();
-  }
-}));
+});
 </script>
 </body>
 </html>
