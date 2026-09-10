@@ -106,6 +106,61 @@ button,a{font:inherit;color:inherit}
 .dot{width:13px;height:13px;border-radius:999px;border:0;padding:0;background:#d6d2ce;cursor:pointer}
 .dot.active{background:var(--orange)}
 
+.finHead{display:flex;align-items:baseline;justify-content:space-between;gap:20px;flex-wrap:wrap}
+.finTitle{font-size:26px;margin:0;letter-spacing:-.6px}
+.finAsof{font-size:12px;color:var(--mute);margin-top:4px}
+.finSummary{font-size:13px;color:var(--mute)}
+.finSummary b{color:var(--ink)}
+.fundRow{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:28px}
+.fundCard{background:#f3f0ed;border-radius:18px;padding:18px 20px}
+.fundCard.lead{background:#eef8f2}
+.fundL{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--mute);font-weight:700}
+.fundN{font-size:28px;font-weight:700;letter-spacing:-1.2px;margin-top:8px}
+.fundCard.lead .fundN{color:#0b7a52}
+.fundM{font-size:11px;color:#7d7975;margin-top:6px;line-height:1.45}
+.finSec{margin:30px 0 14px}
+.clickable{cursor:pointer}
+.clickable:hover{background:#efebe7}
+.fundL{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.chev{font-size:15px;color:var(--mute);transition:transform .25s ease}
+.chev.open{transform:rotate(90deg)}
+.breakdown{display:none;margin-top:12px;background:#f8f6f4;border-radius:18px;padding:20px 22px}
+.breakdown.open{display:block}
+.donutWrap{display:grid;grid-template-columns:150px minmax(0,1fr);gap:22px;align-items:center}
+.donut{position:relative;width:150px;height:150px;border-radius:999px;
+  background:conic-gradient(#14a08a 0 35%,#f2604c 35% 61%,#f5a623 61% 78%,#2f3234 78% 91%,#d3cec9 91% 100%)}
+.donutHole{position:absolute;inset:17px;border-radius:999px;background:#f8f6f4;display:grid;place-content:center;text-align:center}
+.donutN{font-size:22px;font-weight:700;letter-spacing:-.8px}
+.donutL{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#7d7975;margin-top:2px}
+.breakList{display:flex;flex-direction:column;gap:9px}
+.breakRow{display:grid;grid-template-columns:10px minmax(0,1fr) auto;gap:10px;align-items:center;font-size:12px;color:#3f4245}
+.sw{width:10px;height:10px;border-radius:3px}
+@media(max-width:520px){.donutWrap{grid-template-columns:1fr;justify-items:center}}
+.needGrid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;align-items:stretch}
+.need{background:#f3f0ed;border-radius:14px;padding:14px 15px;display:flex;flex-direction:column}
+.need .fundL{font-size:10px;letter-spacing:.08em;line-height:13px;min-height:26px;align-items:center;justify-content:flex-start}
+.needN{font-size:17px;font-weight:700;letter-spacing:-.5px;margin-top:7px;line-height:22px;min-height:22px;display:flex;align-items:center}
+.needN.tbc{font-size:13px;font-weight:400;color:#7d7975}
+.need .fundM{margin-top:auto;padding-top:6px}
+.needNote{margin-top:14px}
+.needKeyRow{display:flex;align-items:center;gap:7px;flex-wrap:wrap}
+.needKeyRow .key+span{margin-right:8px}
+.keyP{background:#0fb875;color:#08281e}
+.keyPR{background:#0fb875;color:#08281e;width:auto;padding:0 7px;border-radius:999px;font-size:8px}
+.need .fundL .keyPR{margin-left:6px}
+.need .fundL .keyP{margin-left:6px}
+.needNote2{margin-top:4px}
+@media(max-width:620px){.needGrid{grid-template-columns:repeat(2,1fr)}}
+.finTable{width:100%;border-collapse:collapse;font-size:13px}
+.finTable th{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#7d7975;font-weight:700;text-align:right;padding:0 0 14px}
+.finTable th:first-child{text-align:left}
+.finTable td{padding:13px 0;border-top:1px solid #ece8e3;text-align:right}
+.finTable td:first-child{text-align:left}
+.finTable td.z{color:#7d7975}
+.finTable td.p{color:var(--orange);font-weight:700}
+.finTable tr.total td{font-weight:700;border-top:1px solid #ddd8d2;padding-top:15px}
+.finNote{font-size:11px;color:#7d7975;margin-top:22px}
+.finActions{margin-top:26px}
 .placeholder .card{padding:90px 24px;text-align:center;color:#7d7a77}
 .placeholder h1{color:var(--ink);font-size:24px;margin:0 0 6px}
 
@@ -261,24 +316,106 @@ button,a{font:inherit;color:inherit}
       </div>
 
       <nav class="quick-actions" aria-label="Quick links">
-        <a class="action"
-           href="https://drive.google.com/drive/folders/0ADmo99RbP0YAUk9PVA"
-           target="_blank"
-           rel="noopener"
-           aria-label="Open UTFPR approved downloads"
-           title="UTFPR approved downloads">
+        <a class="action" href="https://drive.google.com/drive/folders/0ADmo99RbP0YAUk9PVA" target="_blank" rel="noopener" aria-label="Open UTFPR approved downloads" title="UTFPR approved downloads">
           <svg viewBox="0 0 28 28"><path d="M3.5 23V7.5h8l2 2h11V23z"/></svg><span data-i18n="aDown">Download</span></a>
-        <a class="action" href="https://drive.google.com/drive/folders/1Ivb5dBSLBMFxxECXYnxrvsyfE7t819Is" target="_blank" rel="noopener">
-          <svg viewBox="0 0 28 28"><path d="M8 21H6.5a5 5 0 0 1-.5-10A7 7 0 0 1 19 9a6 6 0 0 1 1.5 12H20"/><path d="M14 23V11m-4 4 4-4 4 4"/></svg><span data-i18n="aUp">Upload</span></a>
+        <a class="action" href="https://drive.google.com/drive/folders/1Ivb5dBSLBMFxxECXYnxrvsyfE7t819Is?usp=drive_link" target="_blank" rel="noopener">
+          <svg viewBox="0 0 28 28"><path d="M3.5 23V7.5h8l2 2h11V23z"/><path d="M14 20v-7m-3 3 3-3 3 3"/></svg><span data-i18n="aUp">Upload</span></a>
         <a class="action" href="https://anqido.app/social" target="_blank" rel="noopener">
-          <svg viewBox="0 0 28 28"><path d="m11 17-2 2a4 4 0 0 1-6-6l4-4a4 4 0 0 1 6 0"/><path d="m17 11 2-2a4 4 0 0 1 6 6l-4 4a4 4 0 0 1-6 0"/><path d="m9 19 10-10"/></svg><span data-i18n="aLinks">Links &amp; Mins</span></a>
+          <svg viewBox="0 0 28 28"><path d="M3.5 23V7.5h8l2 2h11V23z"/></svg><span data-i18n="aLinks">Links &amp; Mins</span></a>
       </nav>
 
     </div>
   </section>
 
   <section class="page placeholder" id="pr"><div class="card"><h1>P&amp;R</h1><p data-i18n="ready">This department is ready for its content.</p></div></section>
-  <section class="page placeholder" id="finance"><div class="card"><h1>Finance</h1><p data-i18n="ready">This department is ready for its content.</p></div></section>
+  <section class="page" id="finance">
+    <div class="card">
+      <div class="finHead">
+        <div>
+          <h1 class="finTitle" data-i18n="finTitle">Finance</h1>
+          <div class="finAsof" id="finAsof">Loading tracker&hellip;</div>
+        </div>
+        <div class="finSummary" id="finSummary"></div>
+      </div>
+      <div class="fundRow">
+        <div class="fundCard lead">
+          <div class="fundL" data-i18n="fAvail">Funds available</div>
+          <div class="fundN">$8,000</div>
+        </div>
+        <div class="fundCard clickable" id="spentCard" role="button" tabindex="0">
+          <div class="fundL"><span data-i18n="fSpent">Spent to date</span><span class="chev" id="spentChev">&#8250;</span></div>
+          <div class="fundN">$23,000</div>
+          <div class="fundM" data-i18n="fApprox">Approx.</div>
+        </div>
+      </div>
+
+      <div class="breakdown" id="spentPanel">
+        <div class="donutWrap">
+          <div class="donut" id="donut">
+            <div class="donutHole">
+              <div class="donutN">$23K</div>
+              <div class="donutL" data-i18n="fSpent">Spent to date</div>
+            </div>
+          </div>
+          <div class="breakList">
+            <div class="breakRow"><span class="sw" style="background:#14a08a"></span><span data-i18n="e1">Research &amp; development</span><b>$8,000</b></div>
+            <div class="breakRow"><span class="sw" style="background:#f2604c"></span><span data-i18n="e2">Prototyping &amp; materials</span><b>$6,000</b></div>
+            <div class="breakRow"><span class="sw" style="background:#f5a623"></span><span data-i18n="e3">Travel &amp; logistics</span><b>$4,000</b></div>
+            <div class="breakRow"><span class="sw" style="background:#2f3234"></span><span data-i18n="e4">Admin</span><b>$3,000</b></div>
+            <div class="breakRow"><span class="sw" style="background:#d3cec9"></span><span data-i18n="e5">Other</span><b>$2,000</b></div>
+          </div>
+        </div>
+        <div class="fundM" data-i18n="ePlaceholder">Placeholder split — to be confirmed against the ledger.</div>
+      </div>
+
+      <div class="teamTitle finSec" data-i18n="fNeeded">Funding needed</div>
+      <div class="needGrid">
+        <div class="need">
+          <div class="fundL"><span data-i18n="nPsy">Psychosocial</span><span class="key keyPR">P&amp;R</span></div>
+          <div class="needN">$60,000</div>
+          <div class="fundM"><span data-i18n="dTarget">Target</span> <span data-i18n="dPsy">31 Dec 2026</span></div>
+        </div>
+        <div class="need">
+          <div class="fundL"><span data-i18n="nPhys">Physical therapy</span><span class="key keyPR">P&amp;R</span></div>
+          <div class="needN tbc" data-i18n="tbc">TBD</div>
+          <div class="fundM"><span data-i18n="dTarget">Target</span> <span data-i18n="dPhys">31 Mar 2027</span></div>
+        </div>
+        <div class="need">
+          <div class="fundL"><span data-i18n="nPart">Local clinic</span><span class="key keyP">P</span></div>
+          <div class="needN">$60,000</div>
+          <div class="fundM"><span data-i18n="dTarget">Target</span> <span data-i18n="dPart">30 Nov 2026</span></div>
+        </div>
+        <div class="need">
+          <div class="fundL"><span data-i18n="nRd">Terminal device</span><span class="key keyPR">R&amp;D</span></div>
+          <div class="needN">$1,000</div>
+          <div class="fundM"><span data-i18n="dTarget">Target</span> <span data-i18n="dRd">31 Oct 2026</span></div>
+        </div>
+      </div>
+      <div class="fundM needNote needKeyRow">
+        <span class="key keyP">P</span><span data-i18n="needKey">Partnership</span>
+        <span class="key keyPR">P&amp;R</span><span data-i18n="needKeyPR">Prosthesis &amp; rehab</span>
+      </div>
+      <div class="fundM needNote2" data-i18n="needNote">R&amp;D covered by a Vancouver print shop sponsorship and university collaboration &middot; psychosocial figure approximate, to confirm</div>
+
+      <div class="teamTitle finSec" data-i18n="byBranch">By branch</div>
+      <table class="finTable">
+        <thead><tr>
+          <th data-i18n="thBranch">Branch</th><th data-i18n="kNot">Not started</th><th data-i18n="kProg">In progress</th>
+          <th data-i18n="thAppr">Approval</th><th data-i18n="thDone">Done</th><th data-i18n="thTotal">Total</th>
+        </tr></thead>
+        <tbody id="finBody"></tbody>
+      </table>
+      <div class="finNote" id="finNote"></div>
+      <nav class="quick-actions finActions" aria-label="Finance links">
+        <a class="action" href="https://drive.google.com/drive/folders/1Ivb5dBSLBMFxxECXYnxrvsyfE7t819Is?usp=drive_link" target="_blank" rel="noopener">
+          <svg viewBox="0 0 28 28"><path d="M3.5 23V7.5h8l2 2h11V23z"/></svg><span data-i18n="fLinks">Links</span></a>
+        <a class="action" href="https://drive.google.com/drive/folders/1Ivb5dBSLBMFxxECXYnxrvsyfE7t819Is?usp=drive_link" target="_blank" rel="noopener">
+          <svg viewBox="0 0 28 28"><path d="M3.5 23V7.5h8l2 2h11V23z"/></svg><span data-i18n="fReport">Finance report</span></a>
+        <a class="action" href="https://docs.google.com/spreadsheets/d/1ihMYkOskDxoHKgJluGO3LgG5tfyCxJdDFA3nbi9sZHg/edit" target="_blank" rel="noopener">
+          <svg viewBox="0 0 28 28"><path d="M3.5 23V7.5h8l2 2h11V23z"/></svg><span data-i18n="fSheet">Tracker sheet</span></a>
+      </nav>
+    </div>
+  </section>
   <section class="page placeholder" id="ulf"><div class="card"><h1>ULF</h1><p data-i18n="ready">This department is ready for its content.</p></div></section>
 </div>
 
@@ -303,6 +440,91 @@ function go(n) {
 }
 go(0);
 
+
+/* ---------- Finance: live from the published Google Sheet ---------- */
+/* Sheet › File › Share › Publish to web › Tracker › CSV, then paste that URL here. */
+const FIN_CSV = "https://docs.google.com/spreadsheets/d/1ihMYkOskDxoHKgJluGO3LgG5tfyCxJdDFA3nbi9sZHg/gviz/tq?tqx=out:csv&gid=153656831";
+
+function parseCSV(text) {
+  const rows = []; let row = [], val = '', q = false;
+  for (let k = 0; k < text.length; k++) {
+    const ch = text[k];
+    if (q) {
+      if (ch === '"' && text[k + 1] === '"') { val += '"'; k++; }
+      else if (ch === '"') q = false;
+      else val += ch;
+    } else if (ch === '"') q = true;
+    else if (ch === ',') { row.push(val); val = ''; }
+    else if (ch === '\n') { row.push(val); rows.push(row); row = []; val = ''; }
+    else if (ch !== '\r') val += ch;
+  }
+  row.push(val); rows.push(row);
+  return rows.filter(r => r.some(c => c.trim() !== ''));
+}
+
+let FIN = { asof: '', note: 'loading' };
+function finStrings() {
+  const pt = document.querySelector('.lang button[data-lang="pt"]').classList.contains('active');
+  return pt
+    ? { loading: 'A carregar o mapa…', live: 'Em direto a partir do Google Sheets · atualize a página depois de editar a folha.', stale: 'A mostrar os últimos valores conhecidos — a folha ainda não está publicada (Ficheiro › Partilhar › Publicar na Web › CSV).', fallbackAsof: 'Em 10 de setembro de 2026', sheet: 'Em direto a partir da folha Tracker', tracked: 'em curso de registo', inProg: 'em progresso', doneWord: 'concluídos' }
+    : { loading: 'Loading tracker…', live: 'Live from Google Sheets · refresh the page after editing the sheet.', stale: 'Showing the last known figures — the sheet is not published to the web yet (File › Share › Publish to web › CSV).', fallbackAsof: 'As of 10 September 2026', sheet: 'Live from the Tracker sheet', tracked: 'tracked', inProg: 'in progress', doneWord: 'completed' };
+}
+function paintFinMeta() {
+  const s = finStrings();
+  document.getElementById('finAsof').textContent = FIN.asof || s.sheet;
+  document.getElementById('finNote').textContent = FIN.note === 'live' ? s.live : FIN.note === 'stale' ? s.stale : '';
+}
+
+function cell(v, prog) {
+  if (!v) return '<td class="z">–</td>';
+  return '<td' + (prog ? ' class="p"' : '') + '>' + v + '</td>';
+}
+let FIN_LAST = null;
+function paintFinance(body, asof, note) {
+  FIN_LAST = { body, asof, note };
+  const tot = [0, 0, 0, 0, 0];
+  const html = body.map(r => {
+    const v = [r[1], r[2], r[3], r[4]];
+    const total = (r[5] === '' || r[5] == null) ? v.reduce((a, b) => a + b, 0) : r[5];
+    v.forEach((n, k) => tot[k] += n); tot[4] += total;
+    return '<tr><td>' + r[0] + '</td>' + cell(v[0]) + cell(v[1], true) + cell(v[2]) + cell(v[3]) + (total ? '<td>' + total + '</td>' : '<td class="z">–</td>') + '</tr>';
+  }).join('');
+  document.getElementById('finBody').innerHTML = html +
+    '<tr class="total"><td>Total</td>' + cell(tot[0]) + cell(tot[1], true) + cell(tot[2]) + cell(tot[3]) + '<td>' + tot[4] + '</td></tr>';
+  const s = finStrings();
+  document.getElementById('finSummary').innerHTML =
+    '<b>' + tot[4] + '</b> ' + s.tracked + ' · <b>' + tot[1] + '</b> ' + s.inProg + ' · <b>' + tot[3] + '</b> ' + s.doneWord;
+  FIN = { asof: asof || '', note };
+  paintFinMeta();
+}
+
+function renderFinance(rows) {
+  const num = (v) => { const n = parseFloat(String(v).replace(/[^0-9.\-]/g, '')); return isNaN(n) ? 0 : n; };
+  const headIdx = rows.findIndex(r => /branch/i.test(r[0] || ''));
+  if (headIdx === -1) throw new Error('no header row');
+  const asof = rows.slice(0, headIdx).map(r => r[0]).filter(Boolean)[0];
+  const body = rows.slice(headIdx + 1)
+    .filter(r => (r[0] || '').trim() && !/^total$/i.test(r[0].trim()))
+    .map(r => [r[0], num(r[1]), num(r[2]), num(r[3]), num(r[4]), (r[5] || '').trim() === '' ? '' : num(r[5])]);
+  paintFinance(body, asof, 'live');
+}
+
+fetch(FIN_CSV)
+  .then(r => { if (!r.ok) throw new Error(r.status); return r.text(); })
+  .then(t => renderFinance(parseCSV(t)))
+  .catch(() => {
+    paintFinance([['Grants',0,2,0,0,2],['Sponsorships',0,0,0,0,0],['Donors',0,0,0,0,3],['Partnerships',0,2,0,0,0],['Admin',3,2,0,0,5],['Fundraising',2,1,0,0,3],['Charitable Status',1,0,0,0,1]], finStrings().fallbackAsof, 'stale');
+  });
+
+(function () {
+  const card = document.getElementById('spentCard');
+  const panel = document.getElementById('spentPanel');
+  const chev = document.getElementById('spentChev');
+  const toggle = () => { panel.classList.toggle('open'); chev.classList.toggle('open'); };
+  card.addEventListener('click', toggle);
+  card.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); } });
+})();
+
 const COPY = {
   en: {},
   pt: {
@@ -310,6 +532,20 @@ const COPY = {
     t5: "Braço UL – Ao vivo", b5: "Áreas de teste em curso e respetivo calendário.",
     liveA: "A - 30 SET", liveL: "D - 30 SET", liveR: "D - 30 SET",
     liveTeam: "Equipa e tarefas-chave",
+    finTitle: "Finanças", byBranch: "Por área",
+    fAvail: "Fundos disponíveis", fSpent: "Gasto até à data", fApprox: "Aprox.",
+    dAvail: "Em 10 de setembro de 2026", dSpent: "Fase 2 · em 10 de setembro de 2026 · valor aproximado, a confirmar",
+    e1: "Investigação e desenvolvimento", e2: "Protótipos e materiais", e3: "Viagens e logística",
+    e4: "Administração", e5: "Outros", ePlaceholder: "Distribuição provisória — a confirmar com o registo.",
+    fLinks: "Ligações", fReport: "Relatório financeiro", fSheet: "Folha do tracker",
+    dTarget: "Meta", dPsy: "31 dez 2026", dPhys: "31 mar 2027", dPart: "30 nov 2026", dRd: "31 out 2026",
+    fNeeded: "Financiamento necessário", nPsy: "Psicossocial", nPhys: "Fisioterapia",
+    nPart: "Clínica local", nRd: "Dispositivo terminal", tbc: "A definir",
+    needKey: "Parceria", needKeyPR: "Prótese e reabilitação",
+    needNote: "I&D coberto por patrocínio de uma gráfica de Vancouver e colaboração universitária · valor psicossocial aproximado, a confirmar",
+    nRdNote: "Coberto por patrocínio de uma gráfica de Vancouver e colaboração universitária",
+    kNot: "Por iniciar", kProg: "Em curso", kAppr: "Requer aprovação", kDone: "Concluído",
+    thBranch: "Área", thAppr: "Aprovação", thDone: "Concluído", thTotal: "Total",
     legA: "Ativo agora", legD: "Desenho a seguir",
     rm1: "Desenho do punho", rm2: "Validação do parceiro", rm3: "Desenho dos dedos", rm4: "Testes preliminares",
     an1: "Orçamento", an2: "Calendário", an3: "Atribuição de tarefas",
@@ -335,6 +571,12 @@ document.querySelectorAll('.lang button').forEach(btn => btn.addEventListener('c
   document.querySelectorAll('[data-i18n]').forEach(el => {
     el.textContent = dict[el.dataset.i18n] || COPY.en[el.dataset.i18n];
   });
+  if (FIN_LAST) {
+    if (FIN_LAST.note === 'stale') FIN_LAST.asof = finStrings().fallbackAsof;
+    paintFinance(FIN_LAST.body, FIN_LAST.asof, FIN_LAST.note);
+  } else {
+    paintFinMeta();
+  }
 }));
 </script>
 </body>
